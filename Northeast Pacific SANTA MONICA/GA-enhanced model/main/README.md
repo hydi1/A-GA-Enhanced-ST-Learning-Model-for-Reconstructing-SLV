@@ -1,4 +1,4 @@
-# Based on the GA-enhanced model, Remove one path
+#  GA-enhanced  model
 
 ## Project Overview
 
@@ -6,9 +6,6 @@ This repository is intended for experimental research on long-term time series f
 Based on a general long-sequence forecasting framework, it implements and extends the training
 and evaluation pipeline of the GA-enhanced  model.
 
-The codebase is designed for research and experimental purposes, supporting multi-random-seed
-training, model evaluation, and component ablation studies, enabling systematic comparison
-of different model structures and configurations within a unified framework.
 
 The repository currently includes:
 - Training and evaluation pipeline for the GAConvGRU model

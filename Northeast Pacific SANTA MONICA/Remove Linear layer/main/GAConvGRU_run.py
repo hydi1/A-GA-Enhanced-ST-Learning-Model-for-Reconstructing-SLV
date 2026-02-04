@@ -1,22 +1,25 @@
 import numpy as np
 import torch
-from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
 
-# ------------------------------
-# 计算模型参数量
-# ------------------------------
 def count_param(model):
+    """计算模型的总可训练参数量"""
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
 def train_and_evaluate_once():
+    """
+    单次独立运行：
+    - 不设随机种子
+    - 不做多次 run / seed 对比
+    - 每次启动脚本即为一次全新实验
+    """
 
     args = {
-        'task_name': 'Transformerdepth41993-2023',
+        'task_name': 'uvst',
         'model_id': 'single_run',
-        'model': 'Transformer',
+        'model': 'GAConvGRU',
         'data': 'ssta',
         'features': 'MS',
         'learning_rate': 0.0005,
@@ -39,7 +42,7 @@ def train_and_evaluate_once():
         "use_norm": False,
         'd_core': 512,
         'freq': 'D',
-        'input_size': 4 * 29 * 6 * 11,
+        'input_size': 1056,
         'hidden_size': 64,
         'output_size': 1,
         'num_layers': 3,
@@ -52,50 +55,30 @@ def train_and_evaluate_once():
         'use_amp': False,
         'output_attention': False,
         "lradj": "type1",
-        'checkpoints': r'D:\sea level variability\code_nepo\GRU - 12\SOFTS-main\checkpoints',
+        'checkpoints': r'D:\project\组件消融\convgru-移除Linear\SOFTS-main\checkpoints',
         "save_model": True,
         'device_ids': [0],
         'scale': True,
+        'num_heads': 4,
     }
 
+    # ❌ 不设置 random / numpy / torch 随机种子
+    # ❌ 不强制 cudnn deterministic
+    # → 每次运行都是完全独立随机实验
 
     exp = Exp_Long_Term_Forecast(args)
 
-    # ------------------------------
-    # 构建模型 & 参数量
-    # ------------------------------
+    # ---- 构建模型并统计参数量 ----
     model = exp._build_model()
     print("总可训练参数量：", count_param(model))
 
-    # ------------------------------
-    # 打印模型结构（真实 batch）
-    # ------------------------------
-    train_data, train_loader = exp._get_data(flag='train')
-    batch = next(iter(train_loader))
-    batch_x, batch_y, batch_x_mark, batch_y_mark = batch
-
-    device = torch.device('cuda' if args['use_gpu'] and torch.cuda.is_available() else 'cpu')
-    batch_x = batch_x.float().to(device)
-    batch_y = batch_y.float().to(device)
-    batch_x_mark = batch_x_mark.float().to(device) if batch_x_mark is not None else None
-    batch_y_mark = batch_y_mark.float().to(device) if batch_y_mark is not None else None
-
-    dec_inp = batch_y
-    input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
-
-    print(summary(model, input_data=input_data))
-
-    # ------------------------------
-    # 训练
-    # ------------------------------
+    # ---- 训练 ----
     print("\n开始训练（单次独立运行）...")
     exp.train(args)
     print("训练完成！")
 
-    # ------------------------------
-    # 测试（去重叠指标）
-    # ------------------------------
-    print("\n开始在测试集上评估...")
+    # ---- 测试（去重叠全局指标）----
+    print("\n开始在测试集上评估 (去重叠全局指标)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],
@@ -117,14 +100,17 @@ def train_and_evaluate_once():
 
     result = exp.test(setting)
 
-    rmse = result['rmse_full_norm_avg']
-    mae = result['mae_full_norm_avg']
+    rmse_norm_full = result.get('rmse_norm_full')
+    mae_norm_full = result.get('mae_norm_full')
+    r2_eff_norm_full = result.get('r2_eff_norm_full')
+    rmse_denorm_full = result.get('rmse_denorm_full')
+    mae_denorm_full = result.get('mae_denorm_full')
 
     print("\n✅ 单次运行评估结果")
-    print(f"RMSE: {rmse:.4f}")
-    print(f"MAE : {mae:.4f}")
+    print(f"[Normalized]    RMSE: {rmse_norm_full:.4f}, MAE: {mae_norm_full:.4f}, R2_eff: {r2_eff_norm_full:.4f}")
+    print(f"[De-normalized] RMSE: {rmse_denorm_full:.4f}, MAE: {mae_denorm_full:.4f}")
 
-    return rmse, mae
+    return rmse_norm_full, mae_norm_full, r2_eff_norm_full, rmse_denorm_full, mae_denorm_full
 
 
 if __name__ == "__main__":
