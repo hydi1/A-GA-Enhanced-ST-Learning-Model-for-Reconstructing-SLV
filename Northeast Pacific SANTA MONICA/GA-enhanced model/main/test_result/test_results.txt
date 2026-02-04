@@ -1,0 +1,506 @@
+
+----------20个种子------------------
+seed=seed42 | lr=0.0005
+[Normalized]    RMSE: 0.2559, MAE: 0.2175, R2_eff: 0.7262
+[De-normalized] RMSE: 8.6582, MAE: 7.3559
+
+seed=seed43 | lr=0.0005
+[Normalized]    RMSE: 0.3064, MAE: 0.2530, R2_eff: 0.6076
+[De-normalized] RMSE: 10.3648, MAE: 8.5593
+
+seed=seed44 | lr=0.0005
+[Normalized]    RMSE: 0.3592, MAE: 0.3126, R2_eff: 0.4607
+[De-normalized] RMSE: 12.1516, MAE: 10.5730
+
+seed=seed45 | lr=0.0005
+[Normalized]    RMSE: 0.3268, MAE: 0.2885, R2_eff: 0.5537
+[De-normalized] RMSE: 11.0540, MAE: 9.7598
+
+seed=seed46 | lr=0.0005
+[Normalized]    RMSE: 0.3512, MAE: 0.3109, R2_eff: 0.4845
+[De-normalized] RMSE: 11.8797, MAE: 10.5165
+
+seed=seed100 | lr=0.0005
+[Normalized]    RMSE: 0.3264, MAE: 0.2802, R2_eff: 0.5548
+[De-normalized] RMSE: 11.0406, MAE: 9.4781
+
+seed=seed200 | lr=0.0005
+[Normalized]    RMSE: 0.2324, MAE: 0.1801, R2_eff: 0.7744
+[De-normalized] RMSE: 7.8599, MAE: 6.0937
+
+seed=seed300 | lr=0.0005
+[Normalized]    RMSE: 0.3496, MAE: 0.2658, R2_eff: 0.4893
+[De-normalized] RMSE: 11.8252, MAE: 8.9903
+
+seed=seed400 | lr=0.0005
+[Normalized]    RMSE: 0.2467, MAE: 0.1793, R2_eff: 0.7455
+[De-normalized] RMSE: 8.3467, MAE: 6.0656
+
+seed=seed500 | lr=0.0005
+[Normalized]    RMSE: 0.3163, MAE: 0.2731, R2_eff: 0.5818
+[De-normalized] RMSE: 10.7003, MAE: 9.2393
+
+seed=seed123 | lr=0.0005
+[Normalized]    RMSE: 0.2900, MAE: 0.2426, R2_eff: 0.6486
+[De-normalized] RMSE: 9.8085, MAE: 8.2078
+
+seed=seed234 | lr=0.0005
+[Normalized]    RMSE: 0.2870, MAE: 0.2191, R2_eff: 0.6558
+[De-normalized] RMSE: 9.7077, MAE: 7.4126
+
+seed=seed345 | lr=0.0005
+[Normalized]    RMSE: 0.2458, MAE: 0.2038, R2_eff: 0.7476
+[De-normalized] RMSE: 8.3135, MAE: 6.8952
+
+seed=seed456 | lr=0.0005
+[Normalized]    RMSE: 0.3669, MAE: 0.2877, R2_eff: 0.4374
+[De-normalized] RMSE: 12.4114, MAE: 9.7314
+
+seed=seed567 | lr=0.0005
+[Normalized]    RMSE: 0.2829, MAE: 0.1977, R2_eff: 0.6655
+[De-normalized] RMSE: 9.5701, MAE: 6.6880
+
+seed=seed789 | lr=0.0005
+[Normalized]    RMSE: 0.3021, MAE: 0.2656, R2_eff: 0.6187
+[De-normalized] RMSE: 10.2177, MAE: 8.9834
+
+seed=seed888 | lr=0.0005
+[Normalized]    RMSE: 0.3240, MAE: 0.2844, R2_eff: 0.5611
+[De-normalized] RMSE: 10.9615, MAE: 9.6203
+
+seed=seed999 | lr=0.0005
+[Normalized]    RMSE: 0.2646, MAE: 0.1832, R2_eff: 0.7074
+[De-normalized] RMSE: 8.9507, MAE: 6.1984
+
+seed=seed1000 | lr=0.0005
+[Normalized]    RMSE: 0.3095, MAE: 0.2609, R2_eff: 0.5996
+[De-normalized] RMSE: 10.4704, MAE: 8.8271
+
+seed=seed678 | lr=0.0005
+[Normalized]    RMSE: 0.2782, MAE: 0.2138, R2_eff: 0.6765
+[De-normalized] RMSE: 9.4105, MAE: 7.2340
+
+seed=seed200 | lr=0.0005
+[Normalized]    RMSE: 0.2324, MAE: 0.1801, R2_eff: 0.7744
+[De-normalized] RMSE: 7.8599, MAE: 6.0937
+
+seed=seed200 | lr=0.0005
+[Normalized]    RMSE: 0.2324, MAE: 0.1801, R2_eff: 0.7744
+[De-normalized] RMSE: 7.8599, MAE: 6.0937
+
+seed=seed200 | lr=0.0005
+[Normalized]    RMSE: 0.2324, MAE: 0.1801, R2_eff: 0.7744
+[De-normalized] RMSE: 7.8599, MAE: 6.0937
+---------------------
+seed=run1 | lr=0.0005
+[Normalized]    RMSE: 0.2532, MAE: 0.2228, R2_eff: 0.7319
+[De-normalized] RMSE: 8.5668, MAE: 7.5378
+
+seed=run2 | lr=0.0005
+[Normalized]    RMSE: 0.2725, MAE: 0.2225, R2_eff: 0.6897
+[De-normalized] RMSE: 9.2167, MAE: 7.5275
+
+seed=run3 | lr=0.0005
+[Normalized]    RMSE: 0.3704, MAE: 0.3354, R2_eff: 0.4266
+[De-normalized] RMSE: 12.5296, MAE: 11.3449
+
+seed=run4 | lr=0.0005
+[Normalized]    RMSE: 0.2985, MAE: 0.2175, R2_eff: 0.6277
+[De-normalized] RMSE: 10.0962, MAE: 7.3567
+
+seed=run5 | lr=0.0005
+[Normalized]    RMSE: 0.4600, MAE: 0.3832, R2_eff: 0.1155
+[De-normalized] RMSE: 15.5615, MAE: 12.9643
+
+seed=run6 | lr=0.0005
+[Normalized]    RMSE: 0.2885, MAE: 0.2617, R2_eff: 0.6520
+[De-normalized] RMSE: 9.7605, MAE: 8.8526
+
+seed=run7 | lr=0.0005
+[Normalized]    RMSE: 0.3423, MAE: 0.3042, R2_eff: 0.5102
+[De-normalized] RMSE: 11.5797, MAE: 10.2887
+
+seed=run8 | lr=0.0005
+[Normalized]    RMSE: 0.3208, MAE: 0.2510, R2_eff: 0.5699
+[De-normalized] RMSE: 10.8521, MAE: 8.4897
+
+seed=run9 | lr=0.0005
+[Normalized]    RMSE: 0.3138, MAE: 0.2570, R2_eff: 0.5884
+[De-normalized] RMSE: 10.6154, MAE: 8.6951
+
+seed=run10 | lr=0.0005
+[Normalized]    RMSE: 0.3829, MAE: 0.3258, R2_eff: 0.3873
+[De-normalized] RMSE: 12.9520, MAE: 11.0194
+
+seed=run11 | lr=0.0005
+[Normalized]    RMSE: 0.5369, MAE: 0.4606, R2_eff: -0.2050
+[De-normalized] RMSE: 18.1631, MAE: 15.5817
+
+seed=run12 | lr=0.0005
+[Normalized]    RMSE: 0.2802, MAE: 0.2240, R2_eff: 0.6719
+[De-normalized] RMSE: 9.4775, MAE: 7.5765
+
+seed=run13 | lr=0.0005
+[Normalized]    RMSE: 0.2854, MAE: 0.2438, R2_eff: 0.6595
+[De-normalized] RMSE: 9.6546, MAE: 8.2469
+
+seed=run14 | lr=0.0005
+[Normalized]    RMSE: 0.4442, MAE: 0.3979, R2_eff: 0.1751
+[De-normalized] RMSE: 15.0278, MAE: 13.4599
+
+seed=run15 | lr=0.0005
+[Normalized]    RMSE: 0.3959, MAE: 0.3538, R2_eff: 0.3450
+[De-normalized] RMSE: 13.3914, MAE: 11.9676
+
+seed=run16 | lr=0.0005
+[Normalized]    RMSE: 0.3012, MAE: 0.2488, R2_eff: 0.6208
+[De-normalized] RMSE: 10.1894, MAE: 8.4168
+
+seed=run17 | lr=0.0005
+[Normalized]    RMSE: 0.3320, MAE: 0.2633, R2_eff: 0.5392
+[De-normalized] RMSE: 11.2318, MAE: 8.9084
+
+seed=run18 | lr=0.0005
+[Normalized]    RMSE: 0.2740, MAE: 0.2235, R2_eff: 0.6863
+[De-normalized] RMSE: 9.2675, MAE: 7.5589
+
+seed=run19 | lr=0.0005
+[Normalized]    RMSE: 0.3618, MAE: 0.3057, R2_eff: 0.4528
+[De-normalized] RMSE: 12.2400, MAE: 10.3426
+
+seed=run20 | lr=0.0005
+[Normalized]    RMSE: 0.2896, MAE: 0.2394, R2_eff: 0.6494
+[De-normalized] RMSE: 9.7974, MAE: 8.0986
+
+seed=run1 | lr=0.0005
+[Normalized]    RMSE: 0.3797, MAE: 0.3401, R2_eff: 0.3975
+[De-normalized] RMSE: 12.8440, MAE: 11.5054
+
+seed=run1 | lr=0.0005
+[Normalized]    RMSE: 0.3797, MAE: 0.3401, R2_eff: 0.3975
+[De-normalized] RMSE: 12.8440, MAE: 11.5054
+
+seed=run2 | lr=0.0005
+[Normalized]    RMSE: 0.4869, MAE: 0.4127, R2_eff: 0.0091
+[De-normalized] RMSE: 16.4707, MAE: 13.9595
+
+seed=run2 | lr=0.0005
+[Normalized]    RMSE: 0.4869, MAE: 0.4127, R2_eff: 0.0091
+[De-normalized] RMSE: 16.4707, MAE: 13.9595
+
+seed=run3 | lr=0.0005
+[Normalized]    RMSE: 0.3304, MAE: 0.2753, R2_eff: 0.5437
+[De-normalized] RMSE: 11.1773, MAE: 9.3126
+
+seed=run3 | lr=0.0005
+[Normalized]    RMSE: 0.3304, MAE: 0.2753, R2_eff: 0.5437
+[De-normalized] RMSE: 11.1773, MAE: 9.3126
+
+seed=run4 | lr=0.0005
+[Normalized]    RMSE: 0.4540, MAE: 0.4096, R2_eff: 0.1386
+[De-normalized] RMSE: 15.3570, MAE: 13.8566
+
+seed=run4 | lr=0.0005
+[Normalized]    RMSE: 0.4540, MAE: 0.4096, R2_eff: 0.1386
+[De-normalized] RMSE: 15.3570, MAE: 13.8566
+
+seed=run5 | lr=0.0005
+[Normalized]    RMSE: 0.2634, MAE: 0.2096, R2_eff: 0.7100
+[De-normalized] RMSE: 8.9101, MAE: 7.0897
+
+seed=run5 | lr=0.0005
+[Normalized]    RMSE: 0.2634, MAE: 0.2096, R2_eff: 0.7100
+[De-normalized] RMSE: 8.9101, MAE: 7.0897
+
+seed=run6 | lr=0.0005
+[Normalized]    RMSE: 0.2938, MAE: 0.2415, R2_eff: 0.6392
+[De-normalized] RMSE: 9.9395, MAE: 8.1686
+
+seed=run6 | lr=0.0005
+[Normalized]    RMSE: 0.2938, MAE: 0.2415, R2_eff: 0.6392
+[De-normalized] RMSE: 9.9395, MAE: 8.1686
+
+seed=run7 | lr=0.0005
+[Normalized]    RMSE: 0.2057, MAE: 0.1511, R2_eff: 0.8232
+[De-normalized] RMSE: 6.9582, MAE: 5.1103
+
+seed=run7 | lr=0.0005
+[Normalized]    RMSE: 0.2057, MAE: 0.1511, R2_eff: 0.8232
+[De-normalized] RMSE: 6.9582, MAE: 5.1103
+
+seed=run8 | lr=0.0005
+[Normalized]    RMSE: 0.3386, MAE: 0.3010, R2_eff: 0.5209
+[De-normalized] RMSE: 11.4532, MAE: 10.1825
+
+seed=run8 | lr=0.0005
+[Normalized]    RMSE: 0.3386, MAE: 0.3010, R2_eff: 0.5209
+[De-normalized] RMSE: 11.4532, MAE: 10.1825
+
+seed=run9 | lr=0.0005
+[Normalized]    RMSE: 0.3413, MAE: 0.3205, R2_eff: 0.5130
+[De-normalized] RMSE: 11.5466, MAE: 10.8428
+
+seed=run9 | lr=0.0005
+[Normalized]    RMSE: 0.3413, MAE: 0.3205, R2_eff: 0.5130
+[De-normalized] RMSE: 11.5466, MAE: 10.8428
+
+seed=run10 | lr=0.0005
+[Normalized]    RMSE: 0.2559, MAE: 0.2003, R2_eff: 0.7264
+[De-normalized] RMSE: 8.6553, MAE: 6.7758
+
+seed=run10 | lr=0.0005
+[Normalized]    RMSE: 0.2559, MAE: 0.2003, R2_eff: 0.7264
+[De-normalized] RMSE: 8.6553, MAE: 6.7758
+
+seed=run11 | lr=0.0005
+[Normalized]    RMSE: 0.4194, MAE: 0.3631, R2_eff: 0.2648
+[De-normalized] RMSE: 14.1871, MAE: 12.2826
+
+seed=run11 | lr=0.0005
+[Normalized]    RMSE: 0.4194, MAE: 0.3631, R2_eff: 0.2648
+[De-normalized] RMSE: 14.1871, MAE: 12.2826
+
+seed=run12 | lr=0.0005
+[Normalized]    RMSE: 0.3535, MAE: 0.2716, R2_eff: 0.4778
+[De-normalized] RMSE: 11.9566, MAE: 9.1881
+
+seed=run12 | lr=0.0005
+[Normalized]    RMSE: 0.3535, MAE: 0.2716, R2_eff: 0.4778
+[De-normalized] RMSE: 11.9566, MAE: 9.1881
+
+seed=run13 | lr=0.0005
+[Normalized]    RMSE: 0.2714, MAE: 0.2234, R2_eff: 0.6922
+[De-normalized] RMSE: 9.1807, MAE: 7.5577
+
+seed=run13 | lr=0.0005
+[Normalized]    RMSE: 0.2714, MAE: 0.2234, R2_eff: 0.6922
+[De-normalized] RMSE: 9.1807, MAE: 7.5577
+
+seed=run14 | lr=0.0005
+[Normalized]    RMSE: 0.3275, MAE: 0.2589, R2_eff: 0.5518
+[De-normalized] RMSE: 11.0773, MAE: 8.7592
+
+seed=run14 | lr=0.0005
+[Normalized]    RMSE: 0.3275, MAE: 0.2589, R2_eff: 0.5518
+[De-normalized] RMSE: 11.0773, MAE: 8.7592
+
+seed=run15 | lr=0.0005
+[Normalized]    RMSE: 0.3415, MAE: 0.2735, R2_eff: 0.5127
+[De-normalized] RMSE: 11.5506, MAE: 9.2504
+
+seed=run15 | lr=0.0005
+[Normalized]    RMSE: 0.3415, MAE: 0.2735, R2_eff: 0.5127
+[De-normalized] RMSE: 11.5506, MAE: 9.2504
+
+seed=run16 | lr=0.0005
+[Normalized]    RMSE: 0.3639, MAE: 0.2944, R2_eff: 0.4465
+[De-normalized] RMSE: 12.3105, MAE: 9.9582
+
+seed=run16 | lr=0.0005
+[Normalized]    RMSE: 0.3639, MAE: 0.2944, R2_eff: 0.4465
+[De-normalized] RMSE: 12.3105, MAE: 9.9582
+
+seed=run17 | lr=0.0005
+[Normalized]    RMSE: 0.4155, MAE: 0.3729, R2_eff: 0.2783
+[De-normalized] RMSE: 14.0566, MAE: 12.6152
+
+seed=run17 | lr=0.0005
+[Normalized]    RMSE: 0.4155, MAE: 0.3729, R2_eff: 0.2783
+[De-normalized] RMSE: 14.0566, MAE: 12.6152
+
+seed=run18 | lr=0.0005
+[Normalized]    RMSE: 0.2540, MAE: 0.2250, R2_eff: 0.7304
+[De-normalized] RMSE: 8.5910, MAE: 7.6114
+
+seed=run18 | lr=0.0005
+[Normalized]    RMSE: 0.2540, MAE: 0.2250, R2_eff: 0.7304
+[De-normalized] RMSE: 8.5910, MAE: 7.6114
+
+seed=run19 | lr=0.0005
+[Normalized]    RMSE: 0.4537, MAE: 0.4143, R2_eff: 0.1398
+[De-normalized] RMSE: 15.3466, MAE: 14.0133
+
+seed=run19 | lr=0.0005
+[Normalized]    RMSE: 0.4537, MAE: 0.4143, R2_eff: 0.1398
+[De-normalized] RMSE: 15.3466, MAE: 14.0133
+
+seed=run20 | lr=0.0005
+[Normalized]    RMSE: 0.3500, MAE: 0.2657, R2_eff: 0.4879
+[De-normalized] RMSE: 11.8411, MAE: 8.9887
+
+seed=run20 | lr=0.0005
+[Normalized]    RMSE: 0.3500, MAE: 0.2657, R2_eff: 0.4879
+[De-normalized] RMSE: 11.8411, MAE: 8.9887
+
+seed=run21 | lr=0.0005
+[Normalized]    RMSE: 0.3215, MAE: 0.2772, R2_eff: 0.5679
+[De-normalized] RMSE: 10.8769, MAE: 9.3774
+
+seed=run21 | lr=0.0005
+[Normalized]    RMSE: 0.3215, MAE: 0.2772, R2_eff: 0.5679
+[De-normalized] RMSE: 10.8769, MAE: 9.3774
+
+seed=run22 | lr=0.0005
+[Normalized]    RMSE: 0.2903, MAE: 0.2344, R2_eff: 0.6478
+[De-normalized] RMSE: 9.8194, MAE: 7.9277
+
+seed=run22 | lr=0.0005
+[Normalized]    RMSE: 0.2903, MAE: 0.2344, R2_eff: 0.6478
+[De-normalized] RMSE: 9.8194, MAE: 7.9277
+
+seed=run23 | lr=0.0005
+[Normalized]    RMSE: 0.1882, MAE: 0.1466, R2_eff: 0.8520
+[De-normalized] RMSE: 6.3654, MAE: 4.9589
+
+seed=run23 | lr=0.0005
+[Normalized]    RMSE: 0.1882, MAE: 0.1466, R2_eff: 0.8520
+[De-normalized] RMSE: 6.3654, MAE: 4.9589
+
+seed=run24 | lr=0.0005
+[Normalized]    RMSE: 0.3464, MAE: 0.2850, R2_eff: 0.4985
+[De-normalized] RMSE: 11.7171, MAE: 9.6425
+
+seed=run24 | lr=0.0005
+[Normalized]    RMSE: 0.3464, MAE: 0.2850, R2_eff: 0.4985
+[De-normalized] RMSE: 11.7171, MAE: 9.6425
+
+seed=run25 | lr=0.0005
+[Normalized]    RMSE: 0.2862, MAE: 0.2521, R2_eff: 0.6577
+[De-normalized] RMSE: 9.6809, MAE: 8.5296
+
+seed=run25 | lr=0.0005
+[Normalized]    RMSE: 0.2862, MAE: 0.2521, R2_eff: 0.6577
+[De-normalized] RMSE: 9.6809, MAE: 8.5296
+
+seed=run26 | lr=0.0005
+[Normalized]    RMSE: 0.2848, MAE: 0.2122, R2_eff: 0.6611
+[De-normalized] RMSE: 9.6332, MAE: 7.1795
+
+seed=run26 | lr=0.0005
+[Normalized]    RMSE: 0.2848, MAE: 0.2122, R2_eff: 0.6611
+[De-normalized] RMSE: 9.6332, MAE: 7.1795
+
+seed=run27 | lr=0.0005
+[Normalized]    RMSE: 0.3996, MAE: 0.3497, R2_eff: 0.3326
+[De-normalized] RMSE: 13.5174, MAE: 11.8282
+
+seed=run27 | lr=0.0005
+[Normalized]    RMSE: 0.3996, MAE: 0.3497, R2_eff: 0.3326
+[De-normalized] RMSE: 13.5174, MAE: 11.8282
+
+seed=run28 | lr=0.0005
+[Normalized]    RMSE: 0.3375, MAE: 0.2868, R2_eff: 0.5241
+[De-normalized] RMSE: 11.4153, MAE: 9.7028
+
+seed=run28 | lr=0.0005
+[Normalized]    RMSE: 0.3375, MAE: 0.2868, R2_eff: 0.5241
+[De-normalized] RMSE: 11.4153, MAE: 9.7028
+
+seed=run29 | lr=0.0005
+[Normalized]    RMSE: 0.4191, MAE: 0.3776, R2_eff: 0.2659
+[De-normalized] RMSE: 14.1769, MAE: 12.7742
+
+seed=run29 | lr=0.0005
+[Normalized]    RMSE: 0.4191, MAE: 0.3776, R2_eff: 0.2659
+[De-normalized] RMSE: 14.1769, MAE: 12.7742
+
+seed=run30 | lr=0.0005
+[Normalized]    RMSE: 0.3206, MAE: 0.2674, R2_eff: 0.5703
+[De-normalized] RMSE: 10.8467, MAE: 9.0445
+
+seed=run30 | lr=0.0005
+[Normalized]    RMSE: 0.3206, MAE: 0.2674, R2_eff: 0.5703
+[De-normalized] RMSE: 10.8467, MAE: 9.0445
+
+seed=run31 | lr=0.0005
+[Normalized]    RMSE: 0.4243, MAE: 0.3451, R2_eff: 0.2476
+[De-normalized] RMSE: 14.3526, MAE: 11.6751
+
+seed=run31 | lr=0.0005
+[Normalized]    RMSE: 0.4243, MAE: 0.3451, R2_eff: 0.2476
+[De-normalized] RMSE: 14.3526, MAE: 11.6751
+
+seed=run32 | lr=0.0005
+[Normalized]    RMSE: 0.2690, MAE: 0.2145, R2_eff: 0.6976
+[De-normalized] RMSE: 9.0988, MAE: 7.2558
+
+seed=run32 | lr=0.0005
+[Normalized]    RMSE: 0.2690, MAE: 0.2145, R2_eff: 0.6976
+[De-normalized] RMSE: 9.0988, MAE: 7.2558
+
+seed=run33 | lr=0.0005
+[Normalized]    RMSE: 0.5180, MAE: 0.4865, R2_eff: -0.1213
+[De-normalized] RMSE: 17.5210, MAE: 16.4587
+
+seed=run33 | lr=0.0005
+[Normalized]    RMSE: 0.5180, MAE: 0.4865, R2_eff: -0.1213
+[De-normalized] RMSE: 17.5210, MAE: 16.4587
+
+seed=run34 | lr=0.0005
+[Normalized]    RMSE: 0.3533, MAE: 0.2969, R2_eff: 0.4784
+[De-normalized] RMSE: 11.9499, MAE: 10.0423
+
+seed=run34 | lr=0.0005
+[Normalized]    RMSE: 0.3533, MAE: 0.2969, R2_eff: 0.4784
+[De-normalized] RMSE: 11.9499, MAE: 10.0423
+
+seed=run35 | lr=0.0005
+[Normalized]    RMSE: 0.3146, MAE: 0.2721, R2_eff: 0.5864
+[De-normalized] RMSE: 10.6409, MAE: 9.2048
+
+seed=run35 | lr=0.0005
+[Normalized]    RMSE: 0.3146, MAE: 0.2721, R2_eff: 0.5864
+[De-normalized] RMSE: 10.6409, MAE: 9.2048
+
+seed=run36 | lr=0.0005
+[Normalized]    RMSE: 0.1779, MAE: 0.1426, R2_eff: 0.8677
+[De-normalized] RMSE: 6.0180, MAE: 4.8232
+
+seed=run36 | lr=0.0005
+[Normalized]    RMSE: 0.1779, MAE: 0.1426, R2_eff: 0.8677
+[De-normalized] RMSE: 6.0180, MAE: 4.8232
+
+seed=run37 | lr=0.0005
+[Normalized]    RMSE: 0.3401, MAE: 0.2688, R2_eff: 0.5165
+[De-normalized] RMSE: 11.5051, MAE: 9.0933
+
+seed=run37 | lr=0.0005
+[Normalized]    RMSE: 0.3401, MAE: 0.2688, R2_eff: 0.5165
+[De-normalized] RMSE: 11.5051, MAE: 9.0933
+
+seed=run38 | lr=0.0005
+[Normalized]    RMSE: 0.3388, MAE: 0.3059, R2_eff: 0.5202
+[De-normalized] RMSE: 11.4614, MAE: 10.3495
+
+seed=run38 | lr=0.0005
+[Normalized]    RMSE: 0.3388, MAE: 0.3059, R2_eff: 0.5202
+[De-normalized] RMSE: 11.4614, MAE: 10.3495
+
+seed=run39 | lr=0.0005
+[Normalized]    RMSE: 0.3474, MAE: 0.2683, R2_eff: 0.4956
+[De-normalized] RMSE: 11.7510, MAE: 9.0745
+
+seed=run39 | lr=0.0005
+[Normalized]    RMSE: 0.3474, MAE: 0.2683, R2_eff: 0.4956
+[De-normalized] RMSE: 11.7510, MAE: 9.0745
+
+seed=run40 | lr=0.0005
+[Normalized]    RMSE: 0.3534, MAE: 0.2771, R2_eff: 0.4780
+[De-normalized] RMSE: 11.9546, MAE: 9.3741
+
+seed=run40 | lr=0.0005
+[Normalized]    RMSE: 0.3534, MAE: 0.2771, R2_eff: 0.4780
+[De-normalized] RMSE: 11.9546, MAE: 9.3741
+
+seed=seed43 | lr=0.0005
+[Normalized]    RMSE: 0.3064, MAE: 0.2530, R2_eff: 0.6076
+[De-normalized] RMSE: 10.3648, MAE: 8.5593
+
+seed=seed9845 | lr=0.0005
+[Normalized]    RMSE: 0.2020, MAE: 0.1538, R2_eff: 0.8295
+[De-normalized] RMSE: 6.8319, MAE: 5.2020
+
+seed=seed9845 | lr=0.0005
+[Normalized]    RMSE: 0.3240, MAE: 0.2723, R2_eff: 0.5612
+[De-normalized] RMSE: 10.9604, MAE: 9.2105
+

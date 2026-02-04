@@ -1,0 +1,286 @@
+GRU
+lr=0.0001,rmse: 0.37899399528632294, mae: 0.30875712310945663
+lr=0.0001, Batch-based: rmse: 11.821213928428856, mae: 9.224122524261475, Full-sequence: rmse: 13.59170913696289, mae: 10.279034614562988
+lr=0.0001, Batch-based: rmse: 15.378530605419263, mae: 13.723474476788494, Full-sequence: rmse: 16.4027042388916, mae: 14.61230182647705
+lr=0.0001, Batch-based: rmse: 14.056198352092022, mae: 11.894730026657516, Full-sequence: rmse: 16.168237686157227, mae: 13.588910102844238
+lr=0.0001, Batch-based: rmse: 14.441327481656462, mae: 11.763709145623285, Full-sequence: rmse: 16.68970489501953, mae: 13.236002922058105
+lr=0.0001, Batch-based: rmse: 13.944667790387127, mae: 11.681968663189862, Full-sequence: rmse: 16.150495529174805, mae: 13.427371978759766
+lr=0.0001, Batch-based: rmse: 13.634605304614917, mae: 10.9192668811695, Full-sequence: rmse: 16.920961380004883, mae: 13.209637641906738
+lr=0.0001, Batch-based: rmse: 13.687595058131862, mae: 10.94182926899678, Full-sequence: rmse: 16.891502380371094, mae: 13.174612998962402
+lr=0.0001, Batch-based: rmse: 13.284468109543258, mae: 10.680713009189915, Full-sequence: rmse: 16.493167877197266, mae: 12.933985710144043
+lr=0.0001, Batch-based: rmse: 15.706884332605311, mae: 14.085131670977619, Full-sequence: rmse: 16.67824935913086, mae: 14.912114143371582
+lr=0.0001, Batch-based: rmse: 13.149184536289525, mae: 10.46300220489502, Full-sequence: rmse: 16.466903686523438, mae: 12.744690895080566
+lr=0.0001, Batch-based: rmse: 13.464476095663535, mae: 10.995385092657965, Full-sequence: rmse: 16.031736373901367, mae: 12.913311004638672
+lr=0.0001, Batch-based: rmse: 14.291290437853014, mae: 12.238229261862266, Full-sequence: rmse: 15.86176872253418, mae: 13.612869262695312
+lr=0.0001, Batch-based: rmse: 13.773341668618691, mae: 11.399786949157715, Full-sequence: rmse: 16.08540916442871, mae: 13.22675609588623
+lr=0.0001, Batch-based: rmse: 13.937948845528268, mae: 11.418969876057393, Full-sequence: rmse: 16.42412567138672, mae: 13.3529634475708
+lr=0.0001, Batch-based: rmse: 13.925932858441326, mae: 11.52969301069105, Full-sequence: rmse: 14.742716789245605, mae: 12.277911186218262
+lr=0.0001, Batch-based: rmse: 13.305545136735246, mae: 10.973156568166372, Full-sequence: rmse: 16.290721893310547, mae: 12.64944076538086
+lr=0.0001, Batch-based: rmse: 12.799249417073018, mae: 10.770216194359032, Full-sequence: rmse: 13.80115032196045, mae: 11.43418025970459
+lr=0.0001, Batch-based: rmse: 11.150632291226774, mae: 9.05877819576779, Full-sequence: rmse: 13.464990615844727, mae: 10.361221313476562
+lr=0.0001, Batch-based: rmse: 11.56441863807472, mae: 9.349789155496133, Full-sequence: rmse: 13.219206809997559, mae: 10.309042930603027
+lr=0.0001, Batch-based: rmse: 13.146498834764635, mae: 10.326886331712878, Full-sequence: rmse: 14.852720260620117, mae: 11.383041381835938
+lr=0.0001, Batch-based: rmse: 11.155587492762384, mae: 9.592820502616263, Full-sequence: rmse: 14.336082458496094, mae: 10.879997253417969
+lr=0.0001, Batch-based: rmse: 13.103486447720915, mae: 10.655454790270007, Full-sequence: rmse: 14.689537048339844, mae: 11.803902626037598
+lr=0.0001, Batch-based: rmse: 12.594182246440166, mae: 10.894734717704154, Full-sequence: rmse: 14.744175910949707, mae: 11.81105899810791
+lr=0.0001, Batch-based: rmse: 11.630431484531712, mae: 8.889694793804273, Full-sequence: rmse: 13.98840045928955, mae: 9.891660690307617
+lr=0.0005, Batch-based: rmse: 15.392962025057885, mae: 11.501913593661401, Full-sequence: rmse: 20.290462493896484, mae: 14.278800010681152
+lr=0.0005, Batch-based: rmse: 18.69046192784463, mae: 14.957197312385805, Full-sequence: rmse: 24.482112884521484, mae: 18.230905532836914
+lr=0.0005, Batch-based: rmse: 17.11007539687618, mae: 13.253248922286495, Full-sequence: rmse: 23.315513610839844, mae: 16.370071411132812
+lr=0.0005, Batch-based: rmse: 16.488982969714748, mae: 12.77001396302254, Full-sequence: rmse: 21.407548904418945, mae: 15.882594108581543
+lr=0.0005, Batch-based: rmse: 18.090544977495746, mae: 15.163785534520303, Full-sequence: rmse: 22.910463333129883, mae: 17.66440773010254
+lr=0.0005, Batch-based: rmse: 15.507438290503718, mae: 12.230444046758837, Full-sequence: rmse: 18.62248992919922, mae: 13.448039054870605
+lr=0.0005, Batch-based: rmse: 18.04798618439705, mae: 14.638971513317477, Full-sequence: rmse: 23.008493423461914, mae: 18.023000717163086
+lr=0.0005, Batch-based: rmse: 17.051266270299113, mae: 13.544062829786732, Full-sequence: rmse: 23.627931594848633, mae: 17.07961082458496
+lr=0.0005, Batch-based: rmse: 20.05370576920048, mae: 16.727457723309918, Full-sequence: rmse: 26.403684616088867, mae: 19.781356811523438
+lr=0.0005, Batch-based: rmse: 15.723462320143177, mae: 12.710623618095152, Full-sequence: rmse: 21.380773544311523, mae: 15.624009132385254
+lr=0.0005, Batch-based: rmse: 17.646300285093247, mae: 13.177105811334425, Full-sequence: rmse: 25.426511764526367, mae: 17.53664779663086
+lr=0.0005, Batch-based: rmse: 17.656331954463834, mae: 13.220103571491856, Full-sequence: rmse: 25.355792999267578, mae: 17.57851219177246
+lr=0.0005, Batch-based: rmse: 17.177689367725, mae: 12.198225667399745, Full-sequence: rmse: 24.8850154876709, mae: 16.184429168701172
+lr=0.0005, Batch-based: rmse: 17.832647508190526, mae: 12.853588534939673, Full-sequence: rmse: 24.769548416137695, mae: 16.523746490478516
+lr=0.0005, Batch-based: rmse: 15.878574032937326, mae: 11.344978547865345, Full-sequence: rmse: 24.669479370117188, mae: 15.465693473815918
+lr=0.0005, Batch-based: rmse: 17.07136486422631, mae: 11.618041007749495, Full-sequence: rmse: 24.791959762573242, mae: 15.628376007080078
+lr=0.0005, Batch-based: rmse: 17.484841931250788, mae: 12.714251333667386, Full-sequence: rmse: 25.2451171875, mae: 17.051294326782227
+lr=0.0005, Batch-based: rmse: 16.671346479846584, mae: 12.013232877177577, Full-sequence: rmse: 24.790693283081055, mae: 16.303646087646484
+lr=0.0005, Batch-based: rmse: 17.627810816611014, mae: 12.86988676747968, Full-sequence: rmse: 24.88543128967285, mae: 16.073528289794922
+lr=0.0005, Batch-based: rmse: 17.064316995682255, mae: 12.85924813055223, Full-sequence: rmse: 23.992338180541992, mae: 16.59988021850586
+lr=0.0005, Batch-based: rmse: 16.854331847160093, mae: 12.190169980449062, Full-sequence: rmse: 23.481035232543945, mae: 15.616721153259277
+lr=0.0005, Batch-based: rmse: 15.547369956970215, mae: 10.268324575116557, Full-sequence: rmse: 23.15847396850586, mae: 14.179896354675293
+lr=0.0005, Batch-based: rmse: 14.611646467639554, mae: 10.14690891388924, Full-sequence: rmse: 22.59691047668457, mae: 14.053804397583008
+lr=0.0005, Batch-based: rmse: 17.13717245286511, mae: 11.843703762177498, Full-sequence: rmse: 24.28928565979004, mae: 15.50218391418457
+lr=0.0005, Batch-based: rmse: 16.994657331897365, mae: 12.84189873356973, Full-sequence: rmse: 24.143234252929688, mae: 16.51224136352539
+lr=0.0005, Batch-based: rmse: 17.199050472628684, mae: 12.642343336536038, Full-sequence: rmse: 24.242734909057617, mae: 16.496566772460938
+lr=0.0005, Batch-based: rmse: 17.680351441906346, mae: 12.940145461790022, Full-sequence: rmse: 23.700668334960938, mae: 16.072086334228516
+lr=0.0005, Batch-based: rmse: 16.3473932204708, mae: 11.480177910097185, Full-sequence: rmse: 23.585695266723633, mae: 14.839299201965332
+lr=0.0005, Batch-based: rmse: 17.048372453258885, mae: 12.085309982299805, Full-sequence: rmse: 24.253997802734375, mae: 15.599029541015625
+lr=0.0005, Batch-based: rmse: 16.938731501179358, mae: 12.415337408742596, Full-sequence: rmse: 24.495426177978516, mae: 16.24672508239746
+lr=0.0001, Batch-based: rmse: 13.310643995130384, mae: 10.634444288305334, Full-sequence: rmse: 16.4632625579834, mae: 12.861370086669922
+lr=0.0001, Batch-based: rmse: 13.03434016253497, mae: 9.831644315977353, Full-sequence: rmse: 18.12044334411621, mae: 12.722472190856934
+lr=0.0001, Batch-based: rmse: 13.858749338098475, mae: 11.155079635413918, Full-sequence: rmse: 16.460359573364258, mae: 12.986660957336426
+lr=0.0001, Batch-based: rmse: 14.191431896106616, mae: 10.463591369422707, Full-sequence: rmse: 18.645347595214844, mae: 12.915840148925781
+lr=0.0001, Batch-based: rmse: 15.612328452032965, mae: 13.759155015687686, Full-sequence: rmse: 17.38170051574707, mae: 15.204575538635254
+lr=0.0001, Batch-based: rmse: 14.903199505161595, mae: 12.514935467694256, Full-sequence: rmse: 17.08710289001465, mae: 14.159095764160156
+lr=0.0001, Batch-based: rmse: 13.952447994335278, mae: 10.428850547687427, Full-sequence: rmse: 19.559904098510742, mae: 13.350560188293457
+lr=0.0001, Batch-based: rmse: 14.387643685212007, mae: 11.817395364916003, Full-sequence: rmse: 16.89552116394043, mae: 13.717692375183105
+lr=0.0001, Batch-based: rmse: 13.872036908123944, mae: 11.155339576102591, Full-sequence: rmse: 18.38479232788086, mae: 13.6710844039917
+lr=0.0001, Batch-based: rmse: 16.237439748403187, mae: 14.109006520864126, Full-sequence: rmse: 17.88631248474121, mae: 15.620705604553223
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.3935, MAE: 0.3144
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.3106, MAE: 10.6344
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4867, MAE: 0.3802
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.4633, MAE: 12.8614
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.3853, MAE: 0.2906
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.0343, MAE: 9.8316
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5357, MAE: 0.3761
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 18.1204, MAE: 12.7225
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4097, MAE: 0.3298
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.8587, MAE: 11.1551
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4866, MAE: 0.3839
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.4604, MAE: 12.9867
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4195, MAE: 0.3093
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.1914, MAE: 10.4636
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5512, MAE: 0.3818
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 18.6453, MAE: 12.9158
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4615, MAE: 0.4067
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 15.6123, MAE: 13.7592
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5138, MAE: 0.4495
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.3817, MAE: 15.2046
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4406, MAE: 0.3700
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.9032, MAE: 12.5149
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5051, MAE: 0.4186
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.0871, MAE: 14.1591
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4125, MAE: 0.3083
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.9524, MAE: 10.4289
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5782, MAE: 0.3947
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 19.5599, MAE: 13.3506
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4253, MAE: 0.3493
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.3876, MAE: 11.8174
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4995, MAE: 0.4055
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.8955, MAE: 13.7177
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4101, MAE: 0.3298
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.8720, MAE: 11.1553
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5435, MAE: 0.4041
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 18.3848, MAE: 13.6711
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4800, MAE: 0.4171
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 16.2374, MAE: 14.1090
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5287, MAE: 0.4618
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.8863, MAE: 15.6207
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4319, MAE: 0.3673
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.6085, MAE: 12.4232
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4902, MAE: 0.4159
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.5820, MAE: 14.0677
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4096, MAE: 0.3315
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.8553, MAE: 11.2155
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5046, MAE: 0.3991
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.0685, MAE: 13.4995
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4031, MAE: 0.3202
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.6352, MAE: 10.8311
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5050, MAE: 0.3905
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.0839, MAE: 13.2089
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.3928, MAE: 0.3110
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.2858, MAE: 10.5205
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5043, MAE: 0.3858
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.0577, MAE: 13.0511
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4819, MAE: 0.4413
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 16.3019, MAE: 14.9284
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5072, MAE: 0.4617
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.1585, MAE: 15.6195
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4093, MAE: 0.3292
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.8470, MAE: 11.1377
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5016, MAE: 0.3947
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.9669, MAE: 13.3509
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4181, MAE: 0.3460
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.1427, MAE: 11.7031
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4894, MAE: 0.4018
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.5565, MAE: 13.5931
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4486, MAE: 0.3932
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 15.1766, MAE: 13.3012
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4933, MAE: 0.4314
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.6857, MAE: 14.5940
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4294, MAE: 0.3611
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.5260, MAE: 12.2165
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4907, MAE: 0.4121
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.5998, MAE: 13.9400
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4181, MAE: 0.3459
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 14.1439, MAE: 11.7001
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4922, MAE: 0.4032
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.6491, MAE: 13.6378
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.6548, MAE: 0.5097
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 22.1511, MAE: 17.2436
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.7958, MAE: 0.5814
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 26.9192, MAE: 19.6675
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.6727, MAE: 0.5210
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 22.7555, MAE: 17.6232
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.8660, MAE: 0.6183
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 29.2954, MAE: 20.9173
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.6788, MAE: 0.5396
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 22.9608, MAE: 18.2545
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.8156, MAE: 0.6165
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 27.5895, MAE: 20.8555
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.6362, MAE: 0.5069
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 21.5202, MAE: 17.1468
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.7198, MAE: 0.5565
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 24.3476, MAE: 18.8234
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.7481, MAE: 0.6254
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 25.3049, MAE: 21.1544
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.8583, MAE: 0.6838
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 29.0332, MAE: 23.1305
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.6727, MAE: 0.5633
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 22.7542, MAE: 19.0536
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.6830, MAE: 0.5809
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 23.1033, MAE: 19.6511
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.7706, MAE: 0.6169
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 26.0683, MAE: 20.8676
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.9224, MAE: 0.6819
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 31.2023, MAE: 23.0683
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.8352, MAE: 0.6894
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 28.2523, MAE: 23.3220
+lr=0.0001, Full Normalized (Model Scale): RMSE: 1.0022, MAE: 0.7558
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 33.9030, MAE: 25.5680
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.5955, MAE: 0.4790
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 20.1455, MAE: 16.2043
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.7126, MAE: 0.5448
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 24.1043, MAE: 18.4285
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.7346, MAE: 0.5865
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 24.8510, MAE: 19.8395
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.9112, MAE: 0.6739
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 30.8222, MAE: 22.7967
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.3935, MAE: 0.3144
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.3106, MAE: 10.6344
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4867, MAE: 0.3802
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.4633, MAE: 12.8614
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.3935, MAE: 0.3144
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.3106, MAE: 10.6344
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4867, MAE: 0.3802
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.4633, MAE: 12.8614
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4117, MAE: 0.3408
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.9259, MAE: 11.5297
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4358, MAE: 0.3630
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 14.7427, MAE: 12.2779
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4122, MAE: 0.3453
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.9447, MAE: 11.6820
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4774, MAE: 0.3969
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.1505, MAE: 13.4274
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4122, MAE: 0.3453
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.9447, MAE: 11.6820
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4774, MAE: 0.3969
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.1505, MAE: 13.4274
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4122, MAE: 0.3453
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.9447, MAE: 11.6820
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4774, MAE: 0.3969
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 16.1505, MAE: 13.4274
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.4117, MAE: 0.3408
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 13.9259, MAE: 11.5297
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.4358, MAE: 0.3630
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 14.7427, MAE: 12.2779
+
+lr=0.0001, Batch Normalized (Model Scale): RMSE: 0.5083, MAE: 0.4099
+lr=0.0001, Batch Unnormalized (Original Scale): RMSE: 17.1950, MAE: 13.8657
+lr=0.0001, Full Normalized (Model Scale): RMSE: 0.5123, MAE: 0.3992
+lr=0.0001, Full Unnormalized (Original Scale): RMSE: 17.3293, MAE: 13.5056
+
+lr=0.0005, Batch Normalized (Model Scale): RMSE: 0.3910, MAE: 0.3200
+lr=0.0005, Batch Unnormalized (Original Scale): RMSE: 13.2277, MAE: 10.8246
+lr=0.0005, Full Normalized (Model Scale): RMSE: 0.3989, MAE: 0.3400
+lr=0.0005, Full Unnormalized (Original Scale): RMSE: 13.4928, MAE: 11.5006
+
+lr=0.0005, Batch Normalized (Model Scale): RMSE: 0.3678, MAE: 0.2963
+lr=0.0005, Batch Unnormalized (Original Scale): RMSE: 12.4425, MAE: 10.0241
+lr=0.0005, Full Normalized (Model Scale): RMSE: 0.3765, MAE: 0.3082
+lr=0.0005, Full Unnormalized (Original Scale): RMSE: 12.7357, MAE: 10.4249
+
+lr=0.0005, Batch Normalized (Model Scale): RMSE: 0.4393, MAE: 0.3462
+lr=0.0005, Batch Unnormalized (Original Scale): RMSE: 14.8595, MAE: 11.7097
+lr=0.0005, Full Normalized (Model Scale): RMSE: 0.4773, MAE: 0.3298
+lr=0.0005, Full Unnormalized (Original Scale): RMSE: 16.1451, MAE: 11.1547
+#--------------------GRU------------------
+lr=0.0005, Batch Normalized (Model Scale): RMSE: 0.3340, MAE: 0.2723
+lr=0.0005, Batch Unnormalized (Original Scale): RMSE: 11.2978, MAE: 9.2109
+lr=0.0005, Full Normalized (Model Scale): RMSE: 0.3683, MAE: 0.3041
+lr=0.0005, Full Unnormalized (Original Scale): RMSE: 12.4598, MAE: 10.2862
+-----------LSTM-------------------
+lr=0.0005, Batch Normalized (Model Scale): RMSE: 0.3559, MAE: 0.2764
+lr=0.0005, Batch Unnormalized (Original Scale): RMSE: 12.0394, MAE: 9.3499
+lr=0.0005, Full Normalized (Model Scale): RMSE: 0.3702, MAE: 0.2930
+lr=0.0005, Full Unnormalized (Original Scale): RMSE: 12.5217, MAE: 9.9107
+_________________Transformer-----------------------
+lr=0.0005, Batch Normalized (Model Scale): RMSE: 0.4360, MAE: 0.3201
+lr=0.0005, Batch Unnormalized (Original Scale): RMSE: 14.7499, MAE: 10.8270
+lr=0.0005, Full Normalized (Model Scale): RMSE: 0.4055, MAE: 0.2933
+lr=0.0005, Full Unnormalized (Original Scale): RMSE: 13.7156, MAE: 9.9221
+
