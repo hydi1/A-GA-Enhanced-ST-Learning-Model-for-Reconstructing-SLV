@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
-from models.GAConvGRU无11 import Model  # 根据文件和类的实际名称调整路径
+from models.GAConvGRU import Model  #
 import joblib
 from utils.timefeatures import time_features
 args = {

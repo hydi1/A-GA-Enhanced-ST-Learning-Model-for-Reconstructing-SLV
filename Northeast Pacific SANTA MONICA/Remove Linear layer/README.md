@@ -29,19 +29,27 @@ The repository currently includes:
 
 ## Repository Structure
 
-```
 
-SOFTS-main/
-├── GAConvGRU_run.py        # Main training and evaluation entry
-├── checkpoints/            # Directory for saving trained models
-├── core_qnn/              # Quantum / kernel-related modules
-├── data_provider/         # Data loading and preprocessing
-├── exp/                   # Experiment pipelines
-├── layers/                # Model layer definitions
-├── models/                # Model architectures
-├── test_result/           # Test results and outputs
-├── utils/                 # Utility functions
-└── README.md
+```
+Remove Linear layer/
+|-- .idea/
+|-- main/
+|   |-- checkpoints/           # Directory for saving model weights
+|   |-- core_qnn/              # Quaternion neural network components
+|   |-- data_provider/         # Data loading and preprocessing
+|   |-- exp/                   # Experiment pipelines
+|   |-- layers/                # Model building blocks
+|   |-- models/                # Model definitions
+|   |-- test_result/           # Test result outputs
+|   |-- utils/                 # Utility functions and time features
+|   |-- GAConvGRU_run.py       # Main training and evaluation entry
+|   |-- Reconstruction.py      # Reconstruction / post-processing script
+|   |-- __init__.py
+|   |-- ~$outputs_first_time_step1.xlsx
+|   |-- scaler_x_time.pkl      # Input data scaler (if used)
+|   `-- scaler_y_time.pkl      # Output data scaler (if used)
+|-- output_test/               # Test output files (examples or historical results)
+|-- README.md
 
 ````
 

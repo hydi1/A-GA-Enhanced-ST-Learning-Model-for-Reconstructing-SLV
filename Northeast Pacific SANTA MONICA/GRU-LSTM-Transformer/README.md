@@ -34,22 +34,23 @@ The repository currently includes:
 
 ## Repository Structure
 
+```text
 .
-├── main/
-│ ├── GRUrun.py # Main training and evaluation entry
-│ ├── Reconstruction.py # Reconstruction / post-processing script
-│ ├── checkpoints/ # Directory for saving model weights
-│ ├── data_provider/ # Data loading and preprocessing
-│ ├── exp/ # Experiment pipelines
-│ ├── layers/ # Model building blocks
-│ ├── models/ # Model definitions (GRU / LSTM / Transformer)
-│ ├── test_result/ # Test result outputs
-│ └── utils/ # Utility functions and time features
-├── output_test/ # Test output files (examples or historical results)
-├── scaler_x_time.pkl # Input data scaler (if used)
-├── scaler_y_time.pkl # Output data scaler (if used)
-└── README.md
-
+|-- main/
+|   |-- checkpoints/
+|   |-- data_provider/
+|   |-- exp/
+|   |-- layers/
+|   |-- models/
+|   |-- test_result/
+|   |-- utils/
+|   |-- GRUrun.py
+|   |-- Reconstruction.py
+|   |-- scaler_x_time.pkl
+|   `-- scaler_y_time.pkl
+|-- output_test/
+`-- README.md
+```
 
 ---
 

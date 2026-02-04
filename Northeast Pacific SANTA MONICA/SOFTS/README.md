@@ -28,14 +28,20 @@ It can be used as a **baseline model or a comparative method** for sea level var
 
 ```
 .
-├── softsrun.py        # Main entry for training and evaluation
-├── models/            # SOFTS model definitions
-├── layers/            # Network layers and embedding modules
-├── exp/               # Experiment pipelines (train / validation / test)
-├── data_provider/     # Data loading and DataLoader definitions
-├── checkpoints/       # Model checkpoint output directory
-├── utils/             # Utility functions and time feature encodings
-└── README.md
+├── README.md
+├── output_test/                # Output artifacts (generated)
+└── SOFTS-main/
+    ├── softsrun.py             # Main entry for training and evaluation
+    ├── Reconstruction.py       # Reconstruction utilities / script
+    ├── scaler_x_time.pkl       # Saved scaler (generated)
+    ├── scaler_y_time.pkl       # Saved scaler (generated)
+    ├── checkpoints/            # Model checkpoint output directory
+    ├── data_provider/          # Data loading and DataLoader definitions
+    ├── exp/                    # Experiment pipelines (train / validation / test)
+    ├── layers/                 # Network layers and embedding modules
+    ├── models/                 # SOFTS model definitions
+    ├── test_result/            # Evaluation outputs (generated)
+    └── utils/                  # Utility functions and time feature encodings
 ```
 
 ---
