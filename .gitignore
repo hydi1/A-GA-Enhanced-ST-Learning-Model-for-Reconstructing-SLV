@@ -1,0 +1,16 @@
+# IDE
+.idea/
+
+# data & outputs
+*.npy
+*.xlsx
+*.pkl
+
+# checkpoints / results
+checkpoints/
+output_test/
+test_result/
+
+# temp
+~$*.xlsx
+et
