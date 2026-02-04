@@ -78,19 +78,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     batch_x_mark = batch_x_mark.float().to(self.device)
                     batch_y_mark = batch_y_mark.float().to(self.device)
 
-                # decoder input
-                #创建一个与batch_y形状相同的零张量，用于解码器的输入 pred_len 96
-                # dec_inp = torch.zeros_like(batch_y[:, -self.args['pred_len']:, :]).float()
-                # #将batch_y的前label_len=48个时间步长的数据与dec_inp拼接，形成解码器的输入
-                # dec_inp = torch.cat([batch_y[:, :self.args['label_len'], :], dec_inp], dim=1).float().to(self.device)
-
-                # 解码器可以看到 batch_y 的全部前部分（label_len）
                 dec_inp = batch_y.float().to(self.device)
 
-                # print("dec_inp.shape", dec_inp.shape)#dec_inp.shape torch.Size([32, 96, 1])
-
-                # encoder - decoder 编码器-解码器结构的前向计算
-                #use_amp：是否使用自动混合精度训练
                 if self.args['use_amp']:
                     with torch.cuda.amp.autocast():
                         #output_attention是否在编码中输出注意力
@@ -110,54 +99,29 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 outputs = outputs[:, :, f_dim:]
                 #从真实目标值中取最后 pred_len 时间步的目标值
                 batch_y = batch_y[:, :, f_dim:].to(self.device)
-
-                # print("torch.isnan(outputs).any(), torch.isnan(batch_y).any()",torch.isnan(outputs).any(), torch.isnan(batch_y).any())
-                # print('torch.isinf(outputs).any(), torch.isinf(batch_y).any()',torch.isinf(outputs).any(), torch.isinf(batch_y).any())
-                # print('outputs.min().item()',outputs.min().item(),'outputs.max().item()', outputs.max().item())
-
                 loss = criterion(outputs, batch_y)
-                # print("loss",loss)
-                # assert not torch.isnan(loss), f"NaN in loss at step {i}"
-
-
-
                 total_loss.update(loss.item(), batch_x.size(0))
         total_loss = total_loss.avg
         self.model.train()
         return total_loss
-
-
 
     def train(self, setting):
         #调用 self._get_data 方法，将输入数据（训练、验证、测试）封装成 Dataset 和 DataLoader
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         test_data, test_loader = self._get_data(flag='test')
-        #保存模型权重文件的路径
-        # print(f"Setting: {setting}")
-        # print(f"self.args['checkpoints']: {self.args['checkpoints']}, type: {type(self.args['checkpoints'])}")
-        # print(f"Setting: {setting}, type: {type(setting)}")
         first_13_values = list(setting.values())[:13]  # 取前13个值
         result_string = '_'.join(map(str, first_13_values))
         path = os.path.join(self.args['checkpoints'], result_string)
-
-
         if not os.path.exists(path):
             os.makedirs(path)
-
         time_now = time.time()
 
         train_steps = len(train_loader)
         print("共{}个训练批次".format(train_steps))
-        # print("train_data的长度", len(train_data))#451
-        # print("vali_data的长度", len(vali_data))#79
-        # print("test_data的长度", len(test_data))#252-seq_len+1=157
-        #print("train_steps", train_steps)#1075
         early_stopping = EarlyStopping(patience=self.args['patience'], verbose=True)
-
         model_optim = self._select_optimizer()
         criterion = self._select_criterion()
-
         if self.args['use_amp']:
             scaler = torch.cuda.amp.GradScaler()
         for epoch in range(self.args['train_epochs']):
@@ -170,26 +134,13 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 iter_count += 1
                 model_optim.zero_grad(set_to_none=True)
                 batch_x = batch_x.float().to(self.device)
-                # print("train_batch_x shape:", batch_x.shape)#[32,96,441]
-                #print("batch_x.shape",batch_x.shape)#[32,96,7] 96-输入时间序列的长度 由 arg.seq_len 决定 7：每个时间步的特征数，由 args.enc_in
                 batch_y = batch_y.float().to(self.device)
-                # print("train_batch_y shape:", batch_y.shape)#[32,96,1]
-                #print("batch_y.shape", batch_y.shape)#[32,144,7] 144 -目标时间序列的长度，由 args.pred_len+label_len 决定
-                # print("batch_x_mark.shape", batch_x_mark.shape)#torch.Size([32, 96, 1])
-                # print("batch_y_mark.shape", batch_y_mark.shape)#torch.Size([32, 96, 1])
                 if 'PEMS' in self.args['data'] or 'Solar' in self.args['data']:
                     batch_x_mark = None
                     batch_y_mark = None
                 else:
                     batch_x_mark = batch_x_mark.float().to(self.device)
                     batch_y_mark = batch_y_mark.float().to(self.device)
-
-                # decoder input
-                # dec_inp = torch.zeros_like(batch_y[:, -self.args['pred_len']:, :]).float()
-                # dec_inp = torch.cat([batch_y[:, :self.args['label_len'], :], dec_inp], dim=1).float().to(self.device)
-
-                # 如果任务中不需要 pred_len，不使用 label_len 部分，二是直接使用上一个时间步的真实值
-                #解码器需要输入上一时间步的真实值（batch_y）来生成当前时间步的预测值
                 dec_inp = batch_y.float().to(self.device)
                 # encoder - decoder
                 if self.args['use_amp']:
@@ -217,11 +168,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     batch_y = batch_y[:, :, f_dim:].to(self.device)
 
                     loss = criterion(outputs, batch_y)
-                    # print("loss", loss)
-
-
-                # if (i + 1) % 100 == 0:
-                    #当当前迭代次数是 100 的倍数时
                 loss_float = loss.item()
                 train_loss.append(loss_float)
                 print("\titers: {0}, epoch: {1} | loss: {2:.7f}".format(i + 1, epoch + 1, loss_float))
@@ -237,12 +183,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     scaler.update()
                 else:
                     loss.backward()
-                # 在反向传播后，梯度裁剪前检查梯度
-                # for name, param in self.model.named_parameters():
-                #     if param.grad is not None:
-                #         print(f"{name} max grad: {param.grad.abs().max()}")
-
-                # 梯度裁剪
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
 
 
@@ -267,8 +207,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         #拼接出完整的保存路径
         best_model_path = path + '/' + 'checkpoint.pth'
-        #torch.load(best_model_path)：加载保存在 checkpoint.pth 文件中的模型权重参数
-        # self.model.load_state_dict(...)：将加载的参数赋给当前模型 self.model，用于恢复模型的状态。
         self.model.load_state_dict(torch.load(best_model_path))
         if not self.args['save_model']:
             import shutil
@@ -452,137 +390,3 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 'Batch Normalized: mae':mae_batch_norm_avg,
                 'Full Normalized: mae':mae_full_norm_avg
                }
-    # def test(self, setting, test=0):
-    #     test_data, test_loader = self._get_data(flag='test')
-    #     #如果 test 参数的值为非零（即 test=1），则进入这个条件语句块，打印 "loading model" 表示正在加载模型
-    #     if test:
-    #         print('loading model')
-    #         #这一行代码加载预先保存的模型权重
-    #         self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
-    #
-    #     #在测试阶段计算模型的损失，均方误差MSEloss和平均绝对误差MAEloss
-    #     rmse_loss = RMSELoss()
-    #     mae_loss = nn.L1Loss()
-    #     #用于跟踪在多个 batch 上计算的 mse_loss 和 mae_loss 的平均值
-    #     rmse_unnorm = AverageMeter()  # 未反归一化的 RMSE
-    #     mae_unnorm = AverageMeter()  # 未反归一化的 MAE
-    #     rmse_norm = AverageMeter()  # 反归一化的 RMSE
-    #     mae_norm = AverageMeter()  # 反归一化的 MAE
-    #     #将模型设置为评估模式
-    #     self.model.eval()
-    #     with torch.no_grad():
-    #         all_outputs = []  # 用于保存结果
-    #         all_batch_y = []  # 用于保存每个 batch_y 的第一个时间步数据
-    #         #在 test_loader 中迭代每个 batch，计算并跟踪每个 batch 的 MSELoss 和 L1Loss，通常之后会将这些指标的平均值输出或记录。
-    #         for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
-    #             batch_x = batch_x.float().to(self.device)
-    #             batch_y = batch_y.float().to(self.device)
-    #
-    #             if 'PEMS' in self.args['data'] or 'Solar' in self.args['data']:
-    #                 batch_x_mark = None
-    #                 batch_y_mark = None
-    #             else:
-    #                 batch_x_mark = batch_x_mark.float().to(self.device)
-    #                 batch_y_mark = batch_y_mark.float().to(self.device)
-    #
-    #             # decoder input
-    #             # dec_inp = torch.zeros_like(batch_y[:, -self.args['pred_len']:, :]).float()
-    #             # dec_inp = torch.cat([batch_y[:, :self.args['label_len'], :], dec_inp], dim=1).float().to(self.device)
-    #             dec_inp = torch.zeros_like(batch_y[:, :, :]).float()
-    #
-    #             # encoder - decoder
-    #             if self.args['use_amp']:
-    #                 with torch.cuda.amp.autocast():
-    #                     if self.args['output_attention']:
-    #                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
-    #                     else:
-    #                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-    #             else:
-    #                 if self.args['output_attention']:
-    #                     outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
-    #
-    #                 else:
-    #                     outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-    #
-    #             f_dim = -1 if self.args['features'] == 'MS' else 0
-    #             outputs = outputs[:, :, f_dim:]
-    #             batch_y = batch_y[:, :, f_dim:].to(self.device)
-    #             print('outputs', outputs.shape, 'batch_y', batch_y.shape)
-    #
-    #
-    #
-    #             outputs_cpu=outputs.cpu().numpy().reshape(-1,1)
-    #             batch_y_cpu=batch_y.cpu().numpy().reshape(-1,1)
-    #             # print('outputs', outputs.shape, 'batch_y', batch_y.shape)
-    #             outputs_unnormalized = test_data.inverse_transform(outputs_cpu, is_target=True)  # 反归一化模型输出
-    #             batch_y_unnormalized = test_data.inverse_transform(batch_y_cpu, is_target=True)  # 反归一化目标数据
-    #             outputs_unnormalized_tensor = torch.from_numpy(outputs_unnormalized).float()  # 转换为浮点型张量
-    #             batch_y_unnormalized_tensor = torch.from_numpy(batch_y_unnormalized).float()  # 转换为浮点型张量
-    #             outputs_unnormalized_tensor = outputs_unnormalized_tensor.reshape(-1, 12, 1)
-    #             batch_y_unnormalized_tensor = batch_y_unnormalized_tensor.reshape(-1, 12, 1)
-    #             print('batch_y', batch_y_unnormalized_tensor.shape, 'outputs',
-    #                   outputs_unnormalized_tensor.shape)  # batch_y torch.Size([16, 96, 1]) outputs torch.Size([16, 96, 1])
-    #
-    #             # 计算 rMSE 和 MAE 未反归一化后的数据
-    #             rmse_unnorm.update(rmse_loss(outputs, batch_y).item(), batch_x.size(0))
-    #             mae_unnorm.update(mae_loss(outputs, batch_y).item(), batch_x.size(0))
-    #             # 计算并更新反归一化的 RMSE 和 MAE
-    #             rmse_norm.update(rmse_loss(outputs_unnormalized_tensor, batch_y_unnormalized_tensor).item(),
-    #                              batch_x.size(0))
-    #             mae_norm.update(mae_loss(outputs_unnormalized_tensor, batch_y_unnormalized_tensor).item(),
-    #                             batch_x.size(0))
-    #
-    #
-    #     #
-    #             # 提取每个 batch 的反归一化数据（而不是归一化数据）
-    #             first_time_step_batch_y = batch_y_unnormalized.reshape(-1, 12, 1)[:, :]  # 反归一化后的目标数据
-    #             first_time_step_outputs = outputs_unnormalized.reshape(-1, 12, 1)[:, :]  # 反归一化后的模型输出
-    #
-    #             # 将反归一化数据添加到列表中
-    #             all_batch_y.append(first_time_step_batch_y)
-    #             all_outputs.append(first_time_step_outputs)
-    #
-    #         all_batch_y = np.concatenate(all_batch_y, axis=0)
-    #         all_outputs = np.concatenate(all_outputs, axis=0)
-    #         all_batch_y = all_batch_y.reshape(all_batch_y.shape[0], -1)  # (37, 12)
-    #         all_outputs = all_outputs.reshape(all_outputs.shape[0], -1)  # (37, 12)
-    #
-    #         # 转换为 pandas DataFrame
-    #         batch_y_df = pd.DataFrame(all_batch_y, columns=[f'batch_y_step_{i + 1}' for i in range(12)])
-    #         outputs_df = pd.DataFrame(all_outputs, columns=[f'outputs_step_{i + 1}' for i in range(12)])
-    #         results_df = pd.concat([batch_y_df, outputs_df], axis=1)
-    #
-    #         # 保存到 Excel 文件
-    #         save_path = r'D:\project\SOFTS_TS -反归一化\SOFTS-main\outputs_first_time_step11.xlsx'
-    #         results_df.to_excel(save_path, index=False)
-    #
-    #     rmse_unnorm_avg = rmse_unnorm.avg
-    #     mae_unnorm_avg = mae_unnorm.avg
-    #     rmse_norm_avg = rmse_norm.avg
-    #     mae_norm_avg = mae_norm.avg
-    #
-    #     # 打印未反归一化和反归一化的结果
-    #     print("未反归一化数据:")
-    #     print(f"RMSE: {rmse_unnorm_avg:.4f}")
-    #     print(f"MAE: {mae_unnorm_avg:.4f}")
-    #     print("\n反归一化数据:")
-    #     print(f"RMSE: {rmse_norm_avg:.4f}")
-    #     print(f"MAE: {mae_norm_avg:.4f}")
-    #     # 生成 test_result 字符串
-    #     if isinstance(setting, dict) and 'epoch' in setting:
-    #         test_result_unnorm = f"Epoch: {setting['epoch']},lr={self.args['learning_rate']}, rmse: {rmse_unnorm_avg}, mae: {mae_unnorm_avg}"
-    #         test_result_norm = f"Epoch: {setting['epoch']},lr={self.args['learning_rate']}, rmse: {rmse_norm_avg}, mae: {mae_norm_avg}"
-    #     else:
-    #         test_result_unnorm = f"lr={self.args['learning_rate']},rmse: {rmse_unnorm_avg}, mae: {mae_unnorm_avg}"
-    #         test_result_norm = f"lr={self.args['learning_rate']},rmse: {rmse_norm_avg}, mae: {mae_norm_avg}"
-    #
-    #     # 保存到 txt 文件中
-    #
-    #     save_path = os.path.join(r"D:\project\SOFTS_TS -反归一化\SOFTS-main\test_result", 'test_results.txt')
-    #     # 将结果写入文件
-    #     with open(save_path, 'a') as f:  # 使用 'a' 模式追加写入
-    #         f.write("未反归一化数据0: " + test_result_unnorm + '\n')
-    #         f.write("反归一化数据1: " + test_result_norm + '\n')
-    #         f.write('\n')  # 添加空行分隔每次测试的结果
-    #
-    #     return

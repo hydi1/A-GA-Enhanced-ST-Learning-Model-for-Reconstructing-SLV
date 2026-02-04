@@ -2,15 +2,15 @@
 .idea/
 
 # data & outputs
-*.npy
-*.xlsx
+#*.npy
+#*.xlsx
 *.pkl
 
 # checkpoints / results
-checkpoints/
+#checkpoints/
 output_test/
 test_result/
 
 # temp
-~$*.xlsx
+#~$*.xlsx
 et
