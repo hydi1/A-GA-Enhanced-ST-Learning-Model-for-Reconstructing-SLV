@@ -10,9 +10,6 @@ def count_param(model):
     return param_count
 
 def train_and_evaluate_model():
-    """
-    单次独立运行 LSTM（不固定随机种子）
-    """
 
     args = {
         'task_name': 'depth1993-2023',
@@ -63,7 +60,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -85,7 +82,6 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Validation set上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -105,7 +101,7 @@ if __name__ == "__main__":
     rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 50)
-    print(f"{'Single run结果':^50}")
+    print(f"{'Single run results':^50}")
     print("-" * 50)
     print(f"RMSE: {rmse:.3f}")
     print(f"MAE : {mae:.3f}")

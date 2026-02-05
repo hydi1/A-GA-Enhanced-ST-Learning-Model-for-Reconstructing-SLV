@@ -68,7 +68,6 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Validation set上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],

@@ -36,17 +36,14 @@ def train_and_evaluate_model():
         'use_norm': False,
         'd_core': 512,
         'freq': 'D',
-
         'input_size': 4 * 15 * 11 * 15,
         'hidden_size': 64,
         'output_size': 1,
         'num_layers': 3,
-
         'root_path': r'D:\sea level variability\DATA_eio\1589',
         'data_path': "anomaly_1993_2018_depth15_filtered.npy",
         'target_path': r"D:\sea level variability\DATA_eio\1589\processed_1589.xlsx",
         'target': "OT",
-
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
         'use_amp': False,
@@ -81,8 +78,6 @@ def train_and_evaluate_model():
 
     exp.train(args)
     print("Training completed!")
-
-    print("开始在Validation set上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],

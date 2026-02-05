@@ -10,9 +10,6 @@ def count_param(model):
     return param_count
 
 def train_and_evaluate_model():
-    """
-    Single independent run of GAconvgru (random seed not fixed)
-    """
 
     args = {
         'task_name': 'GAConvgru_610',
@@ -61,7 +58,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
 
@@ -84,7 +81,6 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -108,7 +104,7 @@ if __name__ == "__main__":
     rmse_norm, mae_norm, r2_eff_norm_full, rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 60)
-    print(f"{'Single run结果':^60}")
+    print(f"{'Single run results':^60}")
     print("-" * 60)
     print(f"RMSE(norm): {rmse_norm:.4f}")
     print(f"MAE(norm):  {mae_norm:.4f}")
