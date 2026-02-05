@@ -73,7 +73,7 @@ def train_and_evaluate_once():
 
     print(summary(model, input_data=input_data))
 
-    print("\nStart training（单次独立运行）...")
+    print("\nStart training...")
     exp.train(args)
     print("Training completed!")
 
@@ -102,7 +102,7 @@ def train_and_evaluate_once():
     rmse = result['rmse_full_norm_avg']
     mae = result['mae_full_norm_avg']
 
-    print("\n✅ Single runEvaluation结果")
+    print("\n✅ Single run results")
     print(f"RMSE: {rmse:.4f}")
     print(f"MAE : {mae:.4f}")
 
@@ -110,3 +110,4 @@ def train_and_evaluate_once():
 
 if __name__ == "__main__":
     train_and_evaluate_once()
+
