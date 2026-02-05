@@ -10,20 +10,7 @@ def count_param(model):
         param_count += param.view(-1).size()[0]
     return param_count
 
-def set_seed(seed):
-    """
-    Set random seed to ensure reproducibility（Single run也可以保留；若不想固定，删掉 train_and_evaluate_model 里这行调用即可）
-    """
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
-
-def train_and_evaluate_model(seed=42):
+def train_and_evaluate_model():
     """
     Single run：Training and Evaluation convGRU
     """
@@ -31,7 +18,7 @@ def train_and_evaluate_model(seed=42):
 
     args = {
         'task_name': 'Convgru',
-        'model_id': f"seed{seed}",
+        'model_id': "convGRU",
         'model': 'convGRU',
         'data': 'ssta',
         'features': 'MS',
@@ -76,7 +63,7 @@ def train_and_evaluate_model(seed=42):
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -134,7 +121,7 @@ if __name__ == "__main__":
      rmse_denorm, mae_denorm) = train_and_evaluate_model(seed=8240)
 
     print("\n" + "=" * 90)
-    print(f"{'Single run结果':^90}")
+    print(f"{'Single run result':^90}")
     print("-" * 90)
     print(f"RMSE(batchN):   {rmse_batch:.4f}")
     print(f"MAE(batchN):    {mae_batch:.4f}")
@@ -147,3 +134,4 @@ if __name__ == "__main__":
     print(f"RMSE(denorm):   {rmse_denorm:.4f}")
     print(f"MAE(denorm):    {mae_denorm:.4f}")
     print("=" * 90)
+
