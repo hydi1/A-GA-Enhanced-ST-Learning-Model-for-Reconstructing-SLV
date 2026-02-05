@@ -1,4 +1,4 @@
-import numpy as np
+limport numpy as np
 import torch
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
@@ -58,7 +58,7 @@ def train_and_evaluate_once():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}（单次独立运行，不固定随机种子）")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -66,7 +66,7 @@ def train_and_evaluate_once():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
+    print("Begin evaluation on the Test set (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],
@@ -101,3 +101,4 @@ def train_and_evaluate_once():
 
 if __name__ == "__main__":
     train_and_evaluate_once()
+
