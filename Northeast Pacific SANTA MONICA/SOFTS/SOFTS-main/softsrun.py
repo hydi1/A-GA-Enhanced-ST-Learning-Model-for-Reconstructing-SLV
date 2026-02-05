@@ -73,7 +73,7 @@ def train_and_evaluate_once():
     exp.train(args)
     print("Training completed!")
 
-    print("开始Evaluation...")
+    print("Begin Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -85,7 +85,7 @@ def train_and_evaluate_once():
     rmse = result['Full Normalized: rmse']
     mae = result['Full Normalized: mae']
 
-    print("\n✅ Single runEvaluation结果")
+    print("\n✅ Single runEvaluation reaults")
     print(f"RMSE: {rmse:.4f}")
     print(f"MAE : {mae:.4f}")
 
@@ -93,3 +93,4 @@ def train_and_evaluate_once():
 
 if __name__ == "__main__":
     train_and_evaluate_once()
+
