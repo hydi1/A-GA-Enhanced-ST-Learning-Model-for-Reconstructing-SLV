@@ -3,15 +3,12 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# 定义计算参数量的函数
 def count_param(model):
     return sum(p.numel() for p in model.parameters())
 
-
 def train_and_evaluate_model():
     """
-    单次独立运行 GAconvgru（不固定随机种子）
+    Single independent run of GAconvgru (random seed not fixed)
     """
 
     args = {
@@ -63,14 +60,12 @@ def train_and_evaluate_model():
         'num_heads': 4,
     }
 
-    # ===================== 初始化实验 =====================
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # ===================== summary（可选） =====================
     train_data, train_loader = exp._get_data(flag='train')
     batch_x, batch_y, batch_x_mark, batch_y_mark = next(iter(train_loader))
 
@@ -84,12 +79,10 @@ def train_and_evaluate_model():
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # ===================== 训练 =====================
     exp.train(args)
     print("Training complete.")
 
-    # ===================== 评估 =====================
-    print("开始在验证集上评估...")
+    print("开始在Validation set上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -98,19 +91,17 @@ def train_and_evaluate_model():
 
     result = exp.test(setting)
 
-    # ===== batch 归一化 =====
     rmse_batch_norm_avg = result['rmse_batch_norm_avg']
     mae_batch_norm_avg = result['mae_batch_norm_avg']
     r2_batch_norm_avg = result['r2_batch_norm_avg']
 
-    # ===== 去重叠 =====
     rmse_full_norm_avg = result['rmse_full_norm_avg']
     mae_full_norm_avg = result['mae_full_norm_avg']
     r2_full_norm_avg = result['r2_full_norm_avg']
     rmse_full_denorm_avg = result['rmse_full_denorm_avg']
     mae_full_denorm_avg = result['mae_full_denorm_avg']
 
-    print("评估完成！")
+    print("Evaluation completed！")
     print(
         f"BatchN: RMSE={rmse_batch_norm_avg:.3f}, "
         f"MAE={mae_batch_norm_avg:.3f}, "
@@ -133,15 +124,13 @@ def train_and_evaluate_model():
         mae_full_denorm_avg
     )
 
-
-# ===================== 主程序：单次运行 =====================
 if __name__ == "__main__":
     (rmse_b, mae_b, r2_b,
      rmse_n, mae_n, r2_n,
      rmse_d, mae_d) = train_and_evaluate_model()
 
     print("\n" + "=" * 90)
-    print(f"{'单次运行结果（Batch + 去重叠）':^90}")
+    print(f"{'Single run结果（Batch + De-overlapping）':^90}")
     print("-" * 90)
     print(f"RMSE(batchN): {rmse_b:.4f}")
     print(f"MAE(batchN):  {mae_b:.4f}")

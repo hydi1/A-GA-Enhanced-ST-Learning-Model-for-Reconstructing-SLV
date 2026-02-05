@@ -3,16 +3,11 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# ==============================
-# 参数量统计
-# ==============================
 def count_param(model):
     param_count = 0
     for param in model.parameters():
         param_count += param.view(-1).size()[0]
     return param_count
-
 
 def train_and_evaluate_model():
     """
@@ -67,18 +62,12 @@ def train_and_evaluate_model():
         'scale': True,
     }
 
-    # ==============================
-    # 初始化实验
-    # ==============================
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # ==============================
-    # summary 所需真实 batch
-    # ==============================
     train_data, train_loader = exp._get_data(flag='train')
     batch = next(iter(train_loader))
     batch_x, batch_y, batch_x_mark, batch_y_mark = batch
@@ -93,16 +82,10 @@ def train_and_evaluate_model():
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # ==============================
-    # 训练
-    # ==============================
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # ==============================
-    # 验证 / 测试
-    # ==============================
-    print("开始在验证集上评估...")
+    print("开始在Validation set上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -113,20 +96,16 @@ def train_and_evaluate_model():
     rmse = result['rmse_full_norm_avg']
     mae = result['mae_full_norm_avg']
 
-    print("评估完成！")
+    print("Evaluation completed！")
     print(f"RMSE: {rmse:.3f}, MAE: {mae:.3f}")
 
     return rmse, mae
 
-
-# ==============================
-# 主程序：单次运行
-# ==============================
 if __name__ == "__main__":
     rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 50)
-    print(f"{'单次运行结果':^50}")
+    print(f"{'Single run结果':^50}")
     print("-" * 50)
     print(f"RMSE: {rmse:.3f}")
     print(f"MAE : {mae:.3f}")

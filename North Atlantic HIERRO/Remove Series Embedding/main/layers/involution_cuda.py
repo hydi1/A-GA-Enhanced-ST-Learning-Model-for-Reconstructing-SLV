@@ -5,14 +5,11 @@ import torch.nn.functional as F
 import torch.nn as nn
 from mmcv.cnn import ConvModule
 
-
 from collections import namedtuple
 import cupy
 from string import Template
 
-
 Stream = namedtuple('Stream', ['ptr'])
-
 
 def Dtype(t):
     if isinstance(t, torch.cuda.FloatTensor):
@@ -20,13 +17,11 @@ def Dtype(t):
     elif isinstance(t, torch.cuda.DoubleTensor):
         return 'double'
 
-
 @cupy._util.memoize(for_each_device=True)
 def load_kernel(kernel_name, code, **kwargs):
     code = Template(code).substitute(**kwargs)
     kernel_code = cupy.cuda.compile_with_cache(code)
     return kernel_code.get_function(kernel_name)
-
 
 CUDA_NUM_THREADS = 1024
 
@@ -37,10 +32,8 @@ kernel_loop = '''
       i += blockDim.x * gridDim.x)
 '''
 
-
 def GET_BLOCKS(N):
     return (N + CUDA_NUM_THREADS - 1) // CUDA_NUM_THREADS
-
 
 _involution_kernel = kernel_loop + '''
 extern "C"
@@ -73,7 +66,6 @@ const ${Dtype}* bottom_data, const ${Dtype}* weight_data, ${Dtype}* top_data) {
   }
 }
 '''
-
 
 _involution_kernel_backward_grad_input = kernel_loop + '''
 extern "C"
@@ -111,7 +103,6 @@ __global__ void involution_backward_grad_input_kernel(
 }
 '''
 
-
 _involution_kernel_backward_grad_weight = kernel_loop + '''
 extern "C"
 __global__ void involution_backward_grad_weight_kernel(
@@ -145,7 +136,6 @@ __global__ void involution_backward_grad_weight_kernel(
 }
 '''
 
-
 class _involution(Function):
     @staticmethod
     def forward(ctx, input, weight, stride, padding, dilation):
@@ -176,7 +166,7 @@ class _involution(Function):
         ctx.save_for_backward(input, weight)
         ctx.stride, ctx.padding, ctx.dilation = stride, padding, dilation
         return output
-    
+
     @staticmethod
     def backward(ctx, grad_output):
         assert grad_output.is_cuda and grad_output.is_contiguous()
@@ -226,7 +216,6 @@ class _involution(Function):
                   stream=Stream(ptr=torch.cuda.current_stream().cuda_stream))
 
         return grad_input, grad_weight, None, None, None
- 
 
 def _involution_cuda(input, weight, bias=None, stride=1, padding=0, dilation=1):
     """ involution kernel
@@ -241,7 +230,6 @@ def _involution_cuda(input, weight, bias=None, stride=1, padding=0, dilation=1):
     else:
         raise NotImplementedError
     return out
-
 
 class involution(nn.Module):
 

@@ -1,11 +1,3 @@
-##########################################################
-# pytorch-qnn v1.0
-# Titouan Parcollet
-# LIA, Université d'Avignon et des Pays du Vaucluse
-# ORKIS, Aix-en-provence
-# October 2018
-##########################################################
-
 import numpy                   as np
 from   numpy.random            import RandomState
 import torch
@@ -47,7 +39,6 @@ class QuaternionTransposeConv(Module):
                                   'unitary'   : unitary_init,
                                   'random'    : random_init}[self.weight_init]
 
-
         (self.kernel_size, self.w_shape) = get_kernel_and_weight_shape( self.operation,
             self.out_channels, self.in_channels, kernel_size )
 
@@ -55,7 +46,6 @@ class QuaternionTransposeConv(Module):
         self.i_weight  = Parameter(torch.Tensor(*self.w_shape))
         self.j_weight  = Parameter(torch.Tensor(*self.w_shape))
         self.k_weight  = Parameter(torch.Tensor(*self.w_shape))
-
 
         if bias:
             self.bias = Parameter(torch.Tensor(out_channels))
@@ -70,7 +60,7 @@ class QuaternionTransposeConv(Module):
            self.bias.data.zero_()
 
     def forward(self, input):
-    #返回经过四元数转置卷积操作后的输出张量
+
         if self.rotation:
             return quaternion_tranpose_conv_rotation(input, self.r_weight, self.i_weight,
                 self.j_weight, self.k_weight, self.bias, self.stride, self.padding,
@@ -79,7 +69,6 @@ class QuaternionTransposeConv(Module):
             return quaternion_transpose_conv(input, self.r_weight, self.i_weight, self.j_weight,
                 self.k_weight, self.bias, self.stride, self.padding, self.output_padding,
                 self.groups, self.dilatation)
-
 
     def __repr__(self):
         return self.__class__.__name__ + '(' \
@@ -96,7 +85,7 @@ class QuaternionTransposeConv(Module):
             + ', operation='      + str(self.operation) + ')'
 
 class QuaternionConv(Module):
-    r"""Applies a Quaternion Convolution to the incoming data.这里是四元数卷积层
+    r"""Applies a Quaternion Convolution to the incoming data.Here is Quaternion ConvolutionLayer
     """
 
     def __init__(self, in_channels, out_channels, kernel_size, stride,
@@ -123,10 +112,9 @@ class QuaternionConv(Module):
                                      'random'    : random_init}[self.weight_init]
         self.scale             = scale
 
-
         (self.kernel_size, self.w_shape) = get_kernel_and_weight_shape( self.operation,
-            self.in_channels, self.out_channels, kernel_size )#kernel_size=(3,3),w_shape=(outchannels, in_channels, 3, 3)  这个 通道 是原始通道的1/4
-        self.r_weight  = Parameter(torch.Tensor(*self.w_shape))#未初始化张量
+            self.in_channels, self.out_channels, kernel_size )
+        self.r_weight  = Parameter(torch.Tensor(*self.w_shape))
         self.i_weight  = Parameter(torch.Tensor(*self.w_shape))
         self.j_weight  = Parameter(torch.Tensor(*self.w_shape))
         self.k_weight  = Parameter(torch.Tensor(*self.w_shape))
@@ -147,15 +135,14 @@ class QuaternionConv(Module):
     def reset_parameters(self):
         affect_init_conv(self.r_weight, self.i_weight, self.j_weight, self.k_weight,
                     self.kernel_size, self.winit, self.rng, self.init_criterion)
-        #通过指定的初始化标准初始化四元数卷积的权重部分通过指定的初始化标准初始化四元数卷积的权重部分
+
         if self.scale_param is not None:
             torch.nn.init.xavier_uniform_(self.scale_param.data)
-            #用 Xavier 初始化方法初始化缩放参数 self.scale_param
+
         if self.bias is not None:
            self.bias.data.zero_()
 
     def forward(self, input):
-
 
         if self.rotation:
             return quaternion_conv_rotation(input, self.zero_kernel, self.r_weight, self.i_weight, self.j_weight,
@@ -164,7 +151,6 @@ class QuaternionConv(Module):
         else:
             return quaternion_conv(input, self.r_weight, self.i_weight, self.j_weight,
                 self.k_weight, self.bias, self.stride, self.padding, self.groups, self.dilatation)
-
 
     def __repr__(self):
         return self.__class__.__name__ + '(' \
@@ -180,7 +166,6 @@ class QuaternionConv(Module):
             + ', rotation='       + str(self.rotation) \
             + ', q_format='       + str(self.quaternion_format) \
             + ', operation='      + str(self.operation) + ')'
-
 
 class QuaternionLinearAutograd(Module):
     r"""Applies a quaternion linear transformation to the incoming data. A custom
@@ -231,7 +216,7 @@ class QuaternionLinearAutograd(Module):
                     self.rng, self.init_criterion)
 
     def forward(self, input):
-        # See the autograd section for explanation of what happens here.
+
         if self.rotation:
             return quaternion_linear_rotation(input, self.zero_kernel, self.r_weight, self.i_weight, self.j_weight, self.k_weight, self.bias, self.quaternion_format, self.scale_param)
         else:
@@ -283,7 +268,7 @@ class QuaternionLinear(Module):
                     self.rng, self.init_criterion)
 
     def forward(self, input):
-        # See the autograd section for explanation of what happens here.
+
         if input.dim() == 3:
             T, N, C = input.size()
             input  = input.view(T * N, C)

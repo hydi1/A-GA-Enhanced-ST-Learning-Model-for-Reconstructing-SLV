@@ -3,13 +3,8 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# ------------------------------
-# 计算模型参数量
-# ------------------------------
 def count_param(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
-
 
 def train_and_evaluate_once():
 
@@ -58,18 +53,11 @@ def train_and_evaluate_once():
         'scale': True,
     }
 
-
     exp = Exp_Long_Term_Forecast(args)
 
-    # ------------------------------
-    # 构建模型 & 参数量
-    # ------------------------------
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # ------------------------------
-    # 打印模型结构（真实 batch）
-    # ------------------------------
     train_data, train_loader = exp._get_data(flag='train')
     batch = next(iter(train_loader))
     batch_x, batch_y, batch_x_mark, batch_y_mark = batch
@@ -85,17 +73,11 @@ def train_and_evaluate_once():
 
     print(summary(model, input_data=input_data))
 
-    # ------------------------------
-    # 训练
-    # ------------------------------
-    print("\n开始训练（单次独立运行）...")
+    print("\nStart training（单次独立运行）...")
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # ------------------------------
-    # 测试（去重叠指标）
-    # ------------------------------
-    print("\n开始在测试集上评估...")
+    print("\n开始在Test集上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],
@@ -120,12 +102,11 @@ def train_and_evaluate_once():
     rmse = result['rmse_full_norm_avg']
     mae = result['mae_full_norm_avg']
 
-    print("\n✅ 单次运行评估结果")
+    print("\n✅ Single runEvaluation结果")
     print(f"RMSE: {rmse:.4f}")
     print(f"MAE : {mae:.4f}")
 
     return rmse, mae
-
 
 if __name__ == "__main__":
     train_and_evaluate_once()

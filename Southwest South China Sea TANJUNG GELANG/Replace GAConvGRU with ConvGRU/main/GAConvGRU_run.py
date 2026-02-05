@@ -4,18 +4,15 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# 定义计算参数量的函数
 def count_param(model):
     param_count = 0
     for param in model.parameters():
         param_count += param.view(-1).size()[0]
     return param_count
 
-
 def set_seed(seed):
     """
-    设置随机种子以确保可重复性（单次运行也可以保留；若不想固定，删掉 train_and_evaluate_model 里这行调用即可）
+    Set random seed to ensure reproducibility（Single run也可以保留；若不想固定，删掉 train_and_evaluate_model 里这行调用即可）
     """
     random.seed(seed)
     np.random.seed(seed)
@@ -26,10 +23,9 @@ def set_seed(seed):
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
 
-
 def train_and_evaluate_model(seed=42):
     """
-    单次运行：训练并评估 convGRU
+    Single run：Training and Evaluation convGRU
     """
     set_seed(seed)
 
@@ -79,13 +75,11 @@ def train_and_evaluate_model(seed=42):
         'num_heads': 4,
     }
 
-    # ----------------- 构建实验对象 -----------------
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
-    # （可选）取一个 batch 做 summary / sanity check
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
     train_data, train_loader = exp._get_data(flag='train')
     batch_x, batch_y, batch_x_mark, batch_y_mark = next(iter(train_loader))
@@ -100,12 +94,10 @@ def train_and_evaluate_model(seed=42):
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # ----------------- 训练 -----------------
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # ----------------- 测试/验证 -----------------
-    print("开始在测试集上评估...")
+    print("开始在Test集上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -114,22 +106,20 @@ def train_and_evaluate_model(seed=42):
 
     result = exp.test(setting)
 
-    # ===================== batch(归一化) 3 指标 =====================
     rmse_batch_norm_avg = result['rmse_batch_norm_avg']
     mae_batch_norm_avg = result['mae_batch_norm_avg']
     r2_batch_norm_avg = result['r2_batch_norm_avg']
 
-    # ===================== 去重叠 5 指标 =====================
     rmse_full_norm_avg = result['rmse_full_norm_avg']
     mae_full_norm_avg = result['mae_full_norm_avg']
     r2_full_norm_avg = result['r2_full_norm_avg']
     rmse_full_denorm_avg = result['rmse_full_denorm_avg']
     mae_full_denorm_avg = result['mae_full_denorm_avg']
 
-    print("评估完成！")
-    print(f"  Batch归一化   - RMSE: {rmse_batch_norm_avg:.4f}, MAE: {mae_batch_norm_avg:.4f}, R²_eff: {r2_batch_norm_avg:.4f}")
-    print(f"  去重叠归一化   - RMSE: {rmse_full_norm_avg:.4f}, MAE: {mae_full_norm_avg:.4f}, R²_eff: {r2_full_norm_avg:.4f}")
-    print(f"  去重叠反归一化 - RMSE: {rmse_full_denorm_avg:.4f}, MAE: {mae_full_denorm_avg:.4f}")
+    print("Evaluation completed！")
+    print(f"  BatchNormalization   - RMSE: {rmse_batch_norm_avg:.4f}, MAE: {mae_batch_norm_avg:.4f}, R²_eff: {r2_batch_norm_avg:.4f}")
+    print(f"  De-overlappingNormalization   - RMSE: {rmse_full_norm_avg:.4f}, MAE: {mae_full_norm_avg:.4f}, R²_eff: {r2_full_norm_avg:.4f}")
+    print(f"  De-overlappingDenormalization - RMSE: {rmse_full_denorm_avg:.4f}, MAE: {mae_full_denorm_avg:.4f}")
 
     return (
         rmse_batch_norm_avg, mae_batch_norm_avg, r2_batch_norm_avg,
@@ -137,15 +127,14 @@ def train_and_evaluate_model(seed=42):
         rmse_full_denorm_avg, mae_full_denorm_avg
     )
 
-
 if __name__ == "__main__":
-    # ===== 单次运行 =====
+
     (rmse_batch, mae_batch, r2_batch,
      rmse_norm, mae_norm, r2_norm,
      rmse_denorm, mae_denorm) = train_and_evaluate_model(seed=8240)
 
     print("\n" + "=" * 90)
-    print(f"{'单次运行结果':^90}")
+    print(f"{'Single run结果':^90}")
     print("-" * 90)
     print(f"RMSE(batchN):   {rmse_batch:.4f}")
     print(f"MAE(batchN):    {mae_batch:.4f}")

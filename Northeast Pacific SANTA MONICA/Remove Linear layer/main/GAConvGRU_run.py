@@ -2,18 +2,16 @@ import numpy as np
 import torch
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
 def count_param(model):
-    """计算模型的总可训练参数量"""
+    """Calculate the total trainable parameters of the model"""
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
-
 
 def train_and_evaluate_once():
     """
     单次独立运行：
-    - 不设随机种子
-    - 不做多次 run / seed 对比
-    - 每次启动脚本即为一次全新实验
+    - No random seed set
+    - no multiple run / seed comparison
+    - Each script launch is a completely new experiment
     """
 
     args = {
@@ -62,23 +60,16 @@ def train_and_evaluate_once():
         'num_heads': 4,
     }
 
-    # ❌ 不设置 random / numpy / torch 随机种子
-    # ❌ 不强制 cudnn deterministic
-    # → 每次运行都是完全独立随机实验
-
     exp = Exp_Long_Term_Forecast(args)
 
-    # ---- 构建模型并统计参数量 ----
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # ---- 训练 ----
-    print("\n开始训练（单次独立运行）...")
+    print("\nStart training（单次独立运行）...")
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # ---- 测试（去重叠全局指标）----
-    print("\n开始在测试集上评估 (去重叠全局指标)...")
+    print("\n开始在Test集上Evaluation (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],
@@ -106,12 +97,11 @@ def train_and_evaluate_once():
     rmse_denorm_full = result.get('rmse_denorm_full')
     mae_denorm_full = result.get('mae_denorm_full')
 
-    print("\n✅ 单次运行评估结果")
+    print("\n✅ Single runEvaluation结果")
     print(f"[Normalized]    RMSE: {rmse_norm_full:.4f}, MAE: {mae_norm_full:.4f}, R2_eff: {r2_eff_norm_full:.4f}")
     print(f"[De-normalized] RMSE: {rmse_denorm_full:.4f}, MAE: {mae_denorm_full:.4f}")
 
     return rmse_norm_full, mae_norm_full, r2_eff_norm_full, rmse_denorm_full, mae_denorm_full
-
 
 if __name__ == "__main__":
     train_and_evaluate_once()

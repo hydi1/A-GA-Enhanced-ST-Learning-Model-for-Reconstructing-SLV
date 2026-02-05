@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 import torch.nn as nn
 from utils.tools import EarlyStopping, adjust_learning_rate, AverageMeter
 from torch.utils.data import Dataset
-from models.GAconvgru import Model  # 根据文件和类的实际名称调整路径
+from models.GAconvgru import Model
 from sklearn.preprocessing import StandardScaler
 import joblib
 from utils.timefeatures import time_features
@@ -43,34 +43,29 @@ args = {
     'output_size': 1,
     'num_layers': 3,
     'root_path': r'D:\sea level variability\DATA_eio\1589',
-    'data_path': "anomaly_1993_2018_depth15_filtered.npy",  # 数据形状 (shape): (306, 4, 15, 11, 15)
+    'data_path': "anomaly_1993_2018_depth15_filtered.npy",
     'target_path': r"D:\sea level variability\DATA_eio\1589\processed_1589.xlsx",
-    'target': "OT",  # OT 可能是目标变量名称（如 Ocean Temperature），需确认
+    'target': "OT",
     'seasonal_patterns': 'Monthly',
     'num_workers': 4,
     'use_amp': False,
     'output_attention': False,
     "lradj": "type1",
-    'checkpoints': r'D:\sea level variability\code_eio\convgru_TSVU - 反归一化\SOFTS-main\checkpoints',
+    'checkpoints': r'D:\sea level variability\code_eio\convgru_TSVU - Denormalization\SOFTS-main\checkpoints',
     'save_model': True,
     'device_ids': [0],
     'scale': True,
     'num_heads': 4,
 }
 
-# 假设模型初始化
 model = Model(args)
 
-# 加载模型参数
-state_dict = torch.load(r"D:\sea level variability\code_eio\convgru_TSVU - 反归一化\SOFTS-main\checkpoints\GAConvgru_610_seed42_GAconvgru_ssta_MS_0.0001_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
-# state_dict = torch.load(r"D:\sea level variability\code_eio\convgru_TSVU - 反归一化\SOFTS-main\checkpoints\GAConvgru_610_seed2024_GAconvgru_ssta_MS_0.0001_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
-# 移除 'module.' 前缀
+state_dict = torch.load(r"D:\sea level variability\code_eio\convgru_TSVU - Denormalization\SOFTS-main\checkpoints\GAConvgru_610_seed42_GAconvgru_ssta_MS_0.0001_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
+
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
-# print("Before loading, first parameter sample:", next(iter(model.parameters()))[0])  # 打印初始参数
-# 加载更新后的 state_dict
+
 model.load_state_dict(state_dict)
-# print("After loading, first parameter sample:", next(iter(model.parameters()))[0])  # 打印加载后的参数
-# 定义设备
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 class CustomDataset(Dataset):
@@ -95,57 +90,50 @@ class CustomDataset:
         self.__loda_data__()
 
     def __loda_data__(self):
-        # 加载372个时间点的X数据1993-2023
+
         file_path = r"D:\sea level variability\DATA_eio\1589\anomaly_1993_2023_depth15_372time.npy"
         all_x_data = np.load(file_path)
         all_x_data_2d = all_x_data.reshape(-1, 4*15*11*15)
 
-        # 检查数据类型
         if all_x_data_2d.dtype != np.float64:
-            print("警告：输入数据类型为 {}, 转换为 np.float64".format(all_x_data_2d.dtype))
+            print("警告：输入Data type为 {}, 转换为 np.float64".format(all_x_data_2d.dtype))
             all_x_data_2d = all_x_data_2d.astype(np.float64)
 
-        # 检查输入数据是否包含无效值
         if np.any(np.isnan(all_x_data_2d)):
-            print("警告：输入数据包含 NaN，已用均值填充")
+            print("警告：输入数据包Contains NaN，已用均值填充")
             all_x_data_2d = np.nan_to_num(all_x_data_2d, nan=np.nanmean(all_x_data_2d))
         if np.any(np.isinf(all_x_data_2d)):
             print("警告：输入数据包含 Inf，已用均值填充")
             all_x_data_2d = np.nan_to_num(all_x_data_2d, posinf=np.nanmean(all_x_data_2d), neginf=np.nanmean(all_x_data_2d))
 
-        # 检查数据是否包含极值
         if np.any(np.abs(all_x_data_2d) > 1e8):
             print("警告：输入数据包含极端值，已标准化")
             mean = np.nanmean(all_x_data_2d, axis=0)
             std = np.nanstd(all_x_data_2d, axis=0)
-            all_x_data_2d = (all_x_data_2d - mean) / (std + 1e-8)  # 避免除以零
+            all_x_data_2d = (all_x_data_2d - mean) / (std + 1e-8)
 
-        # 归一化输入数据
         scaler = StandardScaler()
         all_x_data_scaled = scaler.fit_transform(all_x_data_2d)
 
-        # 检查归一化后的数据是否包含无效值
         if np.any(np.isnan(all_x_data_scaled)):
-            print("错误：归一化后的数据包含 NaN")
-            raise ValueError("归一化后的数据包含 NaN")
+            print("错误：Data contains NaN after Normalization")
+            raise ValueError("Data contains NaN after Normalization")
         if np.any(np.isinf(all_x_data_scaled)):
-            print("错误：归一化后的数据包含 Inf")
-            raise ValueError("归一化后的数据包含 Inf")
+            print("错误：Data contains Inf after Normalization")
+            raise ValueError("Data contains Inf after Normalization")
 
         joblib.dump(scaler, 'new_scaler_anomalies_2d.pkl')
-        self.scaler_x = joblib.load(r'D:\sea level variability\code_eio\convgru_TSVU - 反归一化12\SOFTS-main\new_scaler_anomalies_2d.pkl')
+        self.scaler_x = joblib.load(r'D:\sea level variability\code_eio\convgru_TSVU - Denormalization12\SOFTS-main\new_scaler_anomalies_2d.pkl')
 
         self.data_x = all_x_data_scaled
 
-        # 加载y数据并归一化
         y_path = r"D:\sea level variability\DATA_eio\1589\processed_1589 - 372.xlsx"
         y_data = pd.read_excel(y_path).iloc[:, 1].values.reshape(-1, 1)
-        self.y_data = y_data  # 保留原始数据，包含 NaN
+        self.y_data = y_data
         y_data_filled = np.where(np.isnan(y_data), np.nanmean(y_data), y_data)
-        self.scaler_y = joblib.load(r"D:\sea level variability\code_eio\convgru_TSVU - 反归一化12\SOFTS-main\scaler_y_time.pkl")
+        self.scaler_y = joblib.load(r"D:\sea level variability\code_eio\convgru_TSVU - Denormalization12\SOFTS-main\scaler_y_time.pkl")
         self.y_data_normalized = self.scaler_y.transform(y_data_filled)
 
-        # 读取时间数据
         time_path = r"D:\sea level variability\DATA_eio\1589\processed_1589 - 372.xlsx"
         time_data = pd.read_excel(time_path).iloc[:, 0].values
         df_stamp = pd.to_datetime(time_data)
@@ -212,34 +200,29 @@ with torch.no_grad():
         batch_x_mark = batch_x_mark.float().to(device)
         batch_y_mark = batch_y_mark.float().to(device)
 
-        # 检查输入
         if torch.any(torch.isnan(batch_x)) or torch.any(torch.isinf(batch_x)):
-            print(f"批次 {i + 1} batch_x 包含 NaN 或 Inf")
+            print(f"Batch {i + 1} batch_x contains NaN or Inf")
 
-        # 前向推理
         output = model(batch_x, batch_x_mark, batch_y, batch_y_mark)
         print(f"Batch {i + 1} model_outputs shape: {output.shape}")
         if torch.any(torch.isnan(output)) or torch.any(torch.isinf(output)):
-            print(f"批次 {i + 1} 模型输出包含 NaN 或 Inf")
+            print(f"批次 {i + 1} Model output contains NaN or Inf")
 
-        # 转换为 numpy
         outputs_cpu = output.cpu().numpy()
         batch_y_cpu = batch_y.cpu().numpy()
         outputs_flat = outputs_cpu.reshape(-1, 1)
         batch_y_flat = batch_y_cpu.reshape(-1, 1)
 
-        # 反归一化
         outputs_fgyh = test_data.scaler_y.inverse_transform(outputs_flat)
         batch_y_fgyh = test_data.scaler_y.inverse_transform(batch_y_flat)
         if np.any(np.isnan(outputs_fgyh)):
-            print(f"批次 {i + 1} 反归一化后存在 NaN 值")
+            print(f"Batch {i + 1} contains NaN values after denormalization")
             print(f"问题值 (outputs_flat): {outputs_flat[np.isnan(outputs_fgyh)]}")
-            outputs_fgyh = np.nan_to_num(outputs_fgyh, nan=0.0)  # 替换 NaN
+            outputs_fgyh = np.nan_to_num(outputs_fgyh, nan=0.0)
 
         outputs_original = outputs_fgyh.reshape(outputs_cpu.shape)
         batch_y_original = batch_y_fgyh.reshape(batch_y_cpu.shape)
 
-        # 映射到时间轴
         batch_size = outputs_original.shape[0]
         start_idx = i * args['batch_size']
         for j in range(batch_size):
@@ -251,118 +234,27 @@ with torch.no_grad():
                 full_sequence[pred_start:valid_end] += outputs_original[j, :slice_len, 0].reshape(-1, 1)
                 full_y_true[pred_start:valid_end] += batch_y_original[j, :slice_len, 0].reshape(-1, 1)
                 counts[pred_start:valid_end] += 1
-                print(f"批次 {i + 1}, 序列 {j}, 填充时间步: {pred_start} 到 {valid_end - 1}")
+                print(f"批次 {i + 1}, 序列 {j}, Filling time steps: {pred_start} 到 {valid_end - 1}")
 
-    # 平均预测值
     full_sequence = full_sequence / np.maximum(counts, 1)
     full_y_true = full_y_true / np.maximum(counts, 1)
 
-    # 保存结果到 Excel
     df = pd.DataFrame({
         'True_Values': test_data.y_data.flatten(),
         'Predicted_Values': full_sequence.flatten()
     })
     df.to_excel('reconstructed_372_timesteps_with_true_seed2024.xlsx', index=False)
 
-    # ====================== 正确的 RMSE + MAE 计算 ======================
-    # 先统一转成一维数组（强烈推荐这样写，永不出错）
-    true_flat = test_data.y_data.flatten()  # shape: (372,)
-    pred_flat = full_sequence.flatten()  # shape: (372,)
+    true_flat = test_data.y_data.flatten()
+    pred_flat = full_sequence.flatten()
 
-    # 生成一维的掩码，只保留真实值非 NaN 的位置（预测值一般不会有 NaN）
     mask = ~np.isnan(true_flat)
 
-    # 取出有效数据
     true_valid = true_flat[mask]
     pred_valid = pred_flat[mask]
 
-    # 计算 RMSE 和 MAE
     rmse = np.sqrt(np.mean((true_valid - pred_valid) ** 2))
     mae = np.mean(np.abs(true_valid - pred_valid))
 
-    # 打印结果
     print(f"RMSE (non-NaN points): {rmse:.4f}")
     print(f"MAE  (non-NaN points): {mae:.4f}")
-    # =====================================================================
-#切换到评估模式
-# model.eval()
-#
-# # 推理并保存结果
-# full_sequence = np.zeros((372, 1))  # 存储预测值
-# full_y_true = np.zeros((372, 1))   # 存储真实值
-# counts = np.zeros((372, 1))        # 记录覆盖次数
-#
-# all_outputs = []  # 用于存储所有反归一化预测
-# full_sequence = np.zeros((372, 1))  # 目标序列：372 个时间步
-# counts = np.zeros((372, 1))  # 记录每个时间步的覆盖次数
-# with torch.no_grad():
-#     for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
-#         batch_x = batch_x.float().to(device)
-#         batch_y = batch_y.float().to(device)
-#         batch_x_mark = batch_x_mark.float().to(device)
-#         batch_y_mark = batch_y_mark.float().to(device)
-#         #前向推理
-#         output = model(batch_x, batch_x_mark, batch_y, batch_y_mark)
-#         print(f"Batch {i+1} model_outputs shape: {output.shape}")
-#         # 转换为 numpy
-#         outputs_cpu = output.cpu().numpy()  # (16, 12, 1)
-#         batch_y_cpu = batch_y.cpu().numpy()  # (16, 12, 1)
-#         # 反归一化
-#         outputs_flat = outputs_cpu.reshape(-1, 1)
-#         batch_y_flat = batch_y_cpu.reshape(-1, 1)
-#         outputs_fgyh = test_data.scaler_y.inverse_transform(outputs_flat)  # 用 scaler_y_time.pkl 反归一化 output
-#         if np.any(np.isnan(outputs_fgyh)):
-#             print(f"批次 {i + 1} 反归一化后存在 NaN 值")
-#         batch_y_fgyh = test_data.scaler_y.inverse_transform(batch_y_flat)  # 用 scaler_y_time.pkl 反归一化 batch_y
-#         # 恢复形状
-#         outputs_original = outputs_fgyh.reshape(outputs_cpu.shape)  # (16, 12, 1)
-#         batch_y_original = batch_y_fgyh.reshape(batch_y_cpu.shape)  # (16, 12, 1)
-#
-#         # 映射到完整时间轴
-#         batch_size = outputs_original.shape[0]
-#         start_idx = i * args['batch_size']
-#         pred_len = args['pred_len']
-#
-#         for j in range(batch_size):
-#             pred_start = start_idx + j
-#             pred_end = pred_start + pred_len
-#             valid_end = min(pred_end, 372)
-#             slice_len = valid_end - pred_start
-#
-#             # 累加预测值和真实值
-#             full_sequence[pred_start:valid_end] += outputs_original[j, :slice_len, 0].reshape(-1, 1)
-#             full_y_true[pred_start:valid_end] += batch_y_original[j, :slice_len, 0].reshape(-1, 1)
-#             counts[pred_start:valid_end] += 1
-#
-#     # # 计算平均值
-#     # full_sequence = full_sequence / np.maximum(counts, 1)  # 预测值平均
-#     # full_y_true = full_y_true / np.maximum(counts, 1)  # 真实值平均
-#     #
-#     # # 保存到 DataFrame
-#     # df = pd.DataFrame({
-#     #     'True_Values': full_y_true.flatten(),  # 反归一化的真实值
-#     #     'Predicted_Values': full_sequence.flatten()  # 反归一化的预测值
-#     # })
-#     # df.to_excel('reconstructed_372_timesteps_with_true.xlsx', index=False)
-#     # print("Reconstructed shape:", full_sequence.shape)
-#     # print("True values shape:", full_y_true.shape)
-#     # 计算平均值，仅对非 NaN 点
-#     full_sequence = full_sequence / np.maximum(counts, 1)
-#     # 恢复原始 y_data 的 NaN
-#     full_y_true_raw = test_data.y_data  # 直接使用原始 y_data，包含 NaN
-#     full_y_true = full_y_true / np.maximum(counts, 1)  # 计算平均后的 y_true
-#
-#     # 保存到 DataFrame
-#     df = pd.DataFrame({
-#         'True_Values': full_y_true_raw.flatten(),  # 保留 NaN 的原始真实值
-#         # 'True_Values_Averaged': full_y_true.flatten(),  # 平均后的真实值
-#         'Predicted_Values': full_sequence.flatten()
-#     })
-#     df.to_excel('reconstructed_372_timesteps_with_true2.xlsx', index=False)
-#
-#     # 计算 RMSE（仅非 NaN 点）
-#     mask = ~np.isnan(full_y_true_raw) & ~np.isnan(full_sequence)
-#     rmse = np.sqrt(np.mean((full_y_true_raw[mask] - full_sequence[mask]) ** 2))
-#     print(f"RMSE (non-NaN points): {rmse:.4f}")
-#     print("Reconstructed shape:", full_sequence.shape)
-#     print("True values shape:", full_y_true_raw.shape)

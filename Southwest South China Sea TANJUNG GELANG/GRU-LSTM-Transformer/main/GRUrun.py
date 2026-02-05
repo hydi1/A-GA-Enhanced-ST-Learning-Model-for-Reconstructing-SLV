@@ -3,24 +3,20 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# 定义计算参数量的函数
 def count_param(model):
     param_count = 0
     for param in model.parameters():
         param_count += param.view(-1).size()[0]
     return param_count
 
-
 def train_and_evaluate_model():
     """
     单次独立运行 Transformer（不固定随机种子）
     """
 
-    # 配置实验参数
     args = {
         'task_name': 'Transformerdepth41993-2023',
-        'model_id': 345,   # 你原本就固定为 345，这里保留不动
+        'model_id': 345,
         'model': 'Transformer',
         'data': 'ssta',
         'features': 'MS',
@@ -66,40 +62,31 @@ def train_and_evaluate_model():
         'scale': True,
     }
 
-    # 初始化实验
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
-    # 构建模型
     model = exp._build_model()
 
-    # 计算并打印参数量
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # 获取一个真实的输入批次
     train_data, train_loader = exp._get_data(flag='train')
     batch_x, batch_y, batch_x_mark, batch_y_mark = next(iter(train_loader))
 
-    # 移动到与模型相同的设备
     device = torch.device('cuda' if args['use_gpu'] and torch.cuda.is_available() else 'cpu')
     batch_x = batch_x.float().to(device)
     batch_x_mark = batch_x_mark.float().to(device) if batch_x_mark is not None else None
     batch_y = batch_y.float().to(device)
     batch_y_mark = batch_y_mark.float().to(device) if batch_y_mark is not None else None
 
-    # 构造 x_dec（根据 forward 方法逻辑）
     dec_inp = batch_y
 
-    # 使用 input_data 传递实际输入
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # 训练
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # 评估
-    print("开始在验证集上评估...")
+    print("开始在Validation set上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -110,17 +97,16 @@ def train_and_evaluate_model():
     rmse = result['rmse_full_norm_avg']
     mae = result['mae_full_norm_avg']
 
-    print("评估完成！")
+    print("Evaluation completed！")
     print(f"RMSE: {rmse:.3f}, MAE: {mae:.3f}")
 
     return rmse, mae
-
 
 if __name__ == "__main__":
     rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 50)
-    print(f"{'单次运行结果':^50}")
+    print(f"{'Single run结果':^50}")
     print("-" * 50)
     print(f"RMSE: {rmse:.3f}")
     print(f"MAE : {mae:.3f}")

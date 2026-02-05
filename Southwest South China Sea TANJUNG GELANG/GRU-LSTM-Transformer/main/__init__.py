@@ -1,9 +1,7 @@
-# 将这段代码写入 models/__init__.py
 from . import GRU, LSTM, Transformer
 
-
 def Model(configs):
-    model_name = configs['model']  # 获取 args 里的 model 字段
+    model_name = configs['model']
 
     if model_name == 'LSTM':
         return LSTM.Model(configs)

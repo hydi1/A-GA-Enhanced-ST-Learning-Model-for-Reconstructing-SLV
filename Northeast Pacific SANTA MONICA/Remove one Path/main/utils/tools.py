@@ -3,7 +3,6 @@ import math
 import numpy as np
 import torch
 
-
 class AverageMeter:
     """
     Computes and stores the average and current value
@@ -24,7 +23,6 @@ class AverageMeter:
         self.count += n
         self.avg = self.sum / self.count
 
-
 def adjust_learning_rate(optimizer, epoch, args):
     if args['lradj'] == 'type1':
         lr_adjust = {epoch: args['learning_rate'] * (0.5 ** ((epoch - 1) // 1))}
@@ -42,7 +40,6 @@ def adjust_learning_rate(optimizer, epoch, args):
         for param_group in optimizer.param_groups:
             param_group['lr'] = lr
         print('Updating learning rate to {}'.format(lr))
-
 
 class EarlyStopping:
     def __init__(self, patience=7, verbose=False, delta=0):

@@ -2,15 +2,13 @@ import numpy as np
 import torch
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
 def count_param(model):
-    """计算模型的可训练参数总数"""
+    """Calculate the total number of trainable parameters of the model"""
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
-
 
 def train_and_evaluate_once():
     """
-    单次训练 + 单次测试（不设置随机种子，每次运行独立）
+    Single Training + Single Test (no random seed set, each run is independent)
     """
 
     args = {
@@ -60,15 +58,15 @@ def train_and_evaluate_once():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}（单次独立运行，不固定随机种子）")
+    print(f"Start training，模型 ID: {args['model_id']}（单次独立运行，不固定随机种子）")
 
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    print("开始在测试集上评估 (去重叠全局指标)...")
+    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],
@@ -96,11 +94,10 @@ def train_and_evaluate_once():
     mae = result.get('mae', None)
 
     print(
-        f"评估完成！RMSE(norm): {rmse_norm:.4f}, MAE(norm): {mae_norm:.4f}, "
+        f"Evaluation completed！RMSE(norm): {rmse_norm:.4f}, MAE(norm): {mae_norm:.4f}, "
         f"R2_eff(norm,full): {r2_eff_norm_full:.4f} | RMSE: {rmse:.4f}, MAE: {mae:.4f}"
     )
     return rmse_norm, mae_norm, r2_eff_norm_full, rmse, mae
-
 
 if __name__ == "__main__":
     train_and_evaluate_once()

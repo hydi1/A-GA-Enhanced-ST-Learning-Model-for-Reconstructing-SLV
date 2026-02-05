@@ -13,7 +13,6 @@ import pandas as pd
 
 warnings.filterwarnings('ignore')
 
-
 class RMSELoss(nn.Module):
     def __init__(self):
         super(RMSELoss, self).__init__()
@@ -25,13 +24,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
     def __init__(self, args):
         super(Exp_Long_Term_Forecast, self).__init__(args)
 
-
-
     def _build_model(self):
-        #self.model_dict[self.args.model] 是一个模型字典，键为模型名称，值为对应的模型类。
-        #.Model(self.args) 表示实例化该模型类并传入实验参数 args
-        #.float() 将模型参数类型设置为 32 位浮点数，确保模型参数与输入数据的精度一致
-        # 支持 model_dict 中存放模块（包含 Model 类）或直接存放 Model 类两种情况
+
         model_entry = self.model_dict.get(self.args['model'])
         if model_entry is None:
             raise KeyError(f"Model '{self.args['model']}' not found in model_dict")
@@ -41,25 +35,22 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             model = model_entry(self.args).float()
         else:
             raise TypeError(f"Unsupported model entry for {self.args['model']}: {type(model_entry)}")
-        # print("self.model_dict[self.args['model']]", self.model_dict[self.args['model']])
-        # print("模型的名称是",model)
-        #如果 args.use_multi_gpu 和 args.use_gpu 都为 True，则使用 nn.DataParallel 将模型分布到多个 GPU 上运行。
-        #device_ids 指定要使用的 GPU 设备列表
+
         if self.args['use_gpu']:
             model = nn.DataParallel(model, device_ids=self.args['device_ids'])
         return model
-    #data_provider(self.args, flag) 是一个外部数据处理函数
+
     def _get_data(self, flag):
         data_set, data_loader = data_provider(self.args, flag)
-        #数据集对象data_set ,数据加载器data_loader
+
         return data_set, data_loader
-    #创建Adam优化器
+
     def _select_optimizer(self):
-        #torch.optim.Adam 初始化优化器  self.model.parameters() 获取模型的所有可训练参数
+
         model_optim = optim.Adam(self.model.parameters(), lr=self.args['learning_rate'],eps=1e-4)
-        # print("学习率是是",self.args['learning_rate'])
+
         return model_optim
-    #为模型选择损失函数
+
     def _select_criterion(self):
         criterion = nn.L1Loss()
         return criterion
@@ -76,21 +67,19 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             return 0.0
 
         return 1.0 - ss_res / ss_tot
-    #用于验证模型性能的函数 它通过遍历验证数据集计算模型的平均损失（total_loss),用于衡量模型在验证集上的表现
+
     def vali(self, vali_data, vali_loader, criterion):
-        #AverageMeter() 用于计算平均损失
+
         total_loss = AverageMeter()
-        #设置模型为评估模式
+
         self.model.eval()
-        #禁用梯度计算，减少现存占用和计算开销
+
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(vali_loader):
-                #batch_x:输入时间序列，形状[B,L，D],被转换为浮点数并移动到指定设备
+
                 batch_x = batch_x.float().to(self.device)
-                # print("vali_batch_x.shape", batch_x.shape)#torch.Size([15, 96, 441])?????为甚是15？
-                #batch_y:目标时间序列，形状【B,L,D]
+
                 batch_y = batch_y.float()
-                # print("vali_batch_y.shape", batch_y.shape)#torch.Size([15, 96, 1])
 
                 if 'PEMS' in self.args['data'] or 'Solar' in self.args['data']:
                     batch_x_mark = None
@@ -99,24 +88,13 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     batch_x_mark = batch_x_mark.float().to(self.device)
                     batch_y_mark = batch_y_mark.float().to(self.device)
 
-                # decoder input
-                #创建一个与batch_y形状相同的零张量，用于解码器的输入 pred_len 96
-                # dec_inp = torch.zeros_like(batch_y[:, -self.args['pred_len']:, :]).float()
-                # #将batch_y的前label_len=48个时间步长的数据与dec_inp拼接，形成解码器的输入
-                # dec_inp = torch.cat([batch_y[:, :self.args['label_len'], :], dec_inp], dim=1).float().to(self.device)
-
-                # 解码器可以看到 batch_y 的全部前部分（label_len）
                 dec_inp = batch_y.float().to(self.device)
 
-                # print("dec_inp.shape", dec_inp.shape)#dec_inp.shape torch.Size([32, 96, 1])
-
-                # encoder - decoder 编码器-解码器结构的前向计算
-                #use_amp：是否使用自动混合精度训练
                 if self.args['use_amp']:
                     with torch.cuda.amp.autocast():
-                        #output_attention是否在编码中输出注意力
+
                         if self.args['output_attention']:
-                            #调用 self.model，输入历史序列和解码器的初始输入，输出预测值 outputs
+
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                         else:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
@@ -125,43 +103,29 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                     else:
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-                #如果 self.args.features 为 'MS'，表示多变量输入，取最后一个特征维度
+
                 f_dim = -1 if self.args['features'] == 'MS' else 0
-                #从预测结果中取最后 pred_len 时间步的预测值。
+
                 outputs = outputs[:, :, f_dim:]
-                #从真实目标值中取最后 pred_len 时间步的目标值
+
                 batch_y = batch_y[:, :, f_dim:].to(self.device)
 
-                # print("torch.isnan(outputs).any(), torch.isnan(batch_y).any()",torch.isnan(outputs).any(), torch.isnan(batch_y).any())
-                # print('torch.isinf(outputs).any(), torch.isinf(batch_y).any()',torch.isinf(outputs).any(), torch.isinf(batch_y).any())
-                # print('outputs.min().item()',outputs.min().item(),'outputs.max().item()', outputs.max().item())
-
                 loss = criterion(outputs, batch_y)
-                # print("loss",loss)
-                # assert not torch.isnan(loss), f"NaN in loss at step {i}"
-
-
 
                 total_loss.update(loss.item(), batch_x.size(0))
         total_loss = total_loss.avg
         self.model.train()
         return total_loss
 
-
-
     def train(self, setting):
-        #调用 self._get_data 方法，将输入数据（训练、验证、测试）封装成 Dataset 和 DataLoader
+
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         test_data, test_loader = self._get_data(flag='test')
-        #保存模型权重文件的路径
-        # print(f"Setting: {setting}")
-        # print(f"self.args['checkpoints']: {self.args['checkpoints']}, type: {type(self.args['checkpoints'])}")
-        # print(f"Setting: {setting}, type: {type(setting)}")
-        first_13_values = list(setting.values())[:13]  # 取前13个值
+
+        first_13_values = list(setting.values())[:13]
         result_string = '_'.join(map(str, first_13_values))
         path = os.path.join(self.args['checkpoints'], result_string)
-
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -169,11 +133,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         time_now = time.time()
 
         train_steps = len(train_loader)
-        print("共{}个训练批次".format(train_steps))
-        # print("train_data的长度", len(train_data))#451
-        # print("vali_data的长度", len(vali_data))#79
-        # print("test_data的长度", len(test_data))#252-seq_len+1=157
-        #print("train_steps", train_steps)#1075
+        print("Total {} Training batches".format(train_steps))
+
         early_stopping = EarlyStopping(patience=self.args['patience'], verbose=True)
 
         model_optim = self._select_optimizer()
@@ -191,13 +152,9 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 iter_count += 1
                 model_optim.zero_grad(set_to_none=True)
                 batch_x = batch_x.float().to(self.device)
-                # print("train_batch_x shape:", batch_x.shape)#[32,96,441]
-                #print("batch_x.shape",batch_x.shape)#[32,96,7] 96-输入时间序列的长度 由 arg.seq_len 决定 7：每个时间步的特征数，由 args.enc_in
+
                 batch_y = batch_y.float().to(self.device)
-                # print("train_batch_y shape:", batch_y.shape)#[32,96,1]
-                #print("batch_y.shape", batch_y.shape)#[32,144,7] 144 -目标时间序列的长度，由 args.pred_len+label_len 决定
-                # print("batch_x_mark.shape", batch_x_mark.shape)#torch.Size([32, 96, 1])
-                # print("batch_y_mark.shape", batch_y_mark.shape)#torch.Size([32, 96, 1])
+
                 if 'PEMS' in self.args['data'] or 'Solar' in self.args['data']:
                     batch_x_mark = None
                     batch_y_mark = None
@@ -205,14 +162,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     batch_x_mark = batch_x_mark.float().to(self.device)
                     batch_y_mark = batch_y_mark.float().to(self.device)
 
-                # decoder input
-                # dec_inp = torch.zeros_like(batch_y[:, -self.args['pred_len']:, :]).float()
-                # dec_inp = torch.cat([batch_y[:, :self.args['label_len'], :], dec_inp], dim=1).float().to(self.device)
-
-                # 如果任务中不需要 pred_len，不使用 label_len 部分，二是直接使用上一个时间步的真实值
-                #解码器需要输入上一时间步的真实值（batch_y）来生成当前时间步的预测值
                 dec_inp = batch_y.float().to(self.device)
-                # encoder - decoder
+
                 if self.args['use_amp']:
                     with torch.cuda.amp.autocast():
                         if self.args['output_attention']:
@@ -230,19 +181,14 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                     else:
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-                    # print("outputs.shape", outputs.shape)#torch.Size([32, 96, 441])
+
                     f_dim = -1 if self.args['features'] == 'MS' else 0
-                    # 修改了这里
-                    # print("刚输出的outputs.shape", outputs.shape)
+
                     outputs = outputs[:, :, f_dim:]
                     batch_y = batch_y[:, :, f_dim:].to(self.device)
 
                     loss = criterion(outputs, batch_y)
-                    # print("loss", loss)
 
-
-                # if (i + 1) % 100 == 0:
-                    #当当前迭代次数是 100 的倍数时
                 loss_float = loss.item()
                 train_loss.append(loss_float)
                 print("\titers: {0}, epoch: {1} | loss: {2:.7f}".format(i + 1, epoch + 1, loss_float))
@@ -258,17 +204,10 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     scaler.update()
                 else:
                     loss.backward()
-                # 在反向传播后，梯度裁剪前检查梯度
-                # for name, param in self.model.named_parameters():
-                #     if param.grad is not None:
-                #         print(f"{name} max grad: {param.grad.abs().max()}")
 
-                # 梯度裁剪
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
 
-
                 model_optim.step()
-
 
             print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
 
@@ -283,13 +222,11 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             if early_stopping.early_stop:
                 print("Early stopping")
                 break
-            #根据当前的训练轮次调整优化器的学习率，model_optim代表模型的优化器对象，epoch+1代表当前轮次的索引，self.args代表学习率
+
             adjust_learning_rate(model_optim, epoch + 1, self.args)
 
-        #拼接出完整的保存路径
         best_model_path = path + '/' + 'checkpoint.pth'
-        #torch.load(best_model_path)：加载保存在 checkpoint.pth 文件中的模型权重参数
-        # self.model.load_state_dict(...)：将加载的参数赋给当前模型 self.model，用于恢复模型的状态。
+
         self.model.load_state_dict(torch.load(best_model_path))
         if not self.args['save_model']:
             import shutil
@@ -339,17 +276,14 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 all_outputs.append(outputs)
                 all_batch_y.append(batch_y)
 
-        # --- 严格按照你的要求设置参数 ---
-        total_samples = len(test_data)  # 37
-        seq_len = self.args['seq_len']  # 12
-        full_length = 48  # 指定 48
-        # full_length = total_samples + seq_len - 1
+        total_samples = len(test_data)
+        seq_len = self.args['seq_len']
+        full_length = 48
 
         outputs_full = np.zeros((full_length, 1))
         batch_y_full = np.zeros((full_length, 1))
         counts = np.zeros(full_length)
 
-        # --- 还原整条序列逻辑（去重叠拼接）---
         sample_global_idx = 0
         for b_out, b_y in zip(all_outputs, all_batch_y):
             batch_size = b_out.shape[0]
@@ -367,27 +301,18 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
                 sample_global_idx += 1
 
-        # 对重叠部分求平均
-        counts[counts == 0] = 1  # 避免除零
+        counts[counts == 0] = 1
         outputs_full /= counts[:, np.newaxis]
         batch_y_full /= counts[:, np.newaxis]
 
-        # =========================================================
-        # ① 归一化尺度（Normalized）去重叠全序列指标
-        # =========================================================
         rmse_norm = np.sqrt(np.mean((outputs_full - batch_y_full) ** 2))
         mae_norm = np.mean(np.abs(outputs_full - batch_y_full))
 
-        # ✅ 新增：归一化尺度 + 去重叠全序列 的 R2_eff
         r2_eff_norm_full = self.get_r2_eff(outputs_full, batch_y_full)
 
-        # --- 反归一化与误差计算 ---
         outputs_final = test_data.inverse_transform(outputs_full, is_target=True)
         targets_final = test_data.inverse_transform(batch_y_full, is_target=True)
 
-        # =========================================================
-        # ② 反归一化尺度（De-normalized）去重叠全序列指标
-        # =========================================================
         rmse = np.sqrt(np.mean((outputs_final - targets_final) ** 2))
         mae = np.mean(np.abs(outputs_final - targets_final))
 
@@ -398,7 +323,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         print(f"[De-normalized] RMSE: {rmse:.4f} | MAE: {mae:.4f}")
         print("=" * 60)
 
-        # 写入结果文件
         save_path_txt = os.path.join(
             r"D:\project\组件消融\东北太平洋\GAconvgru-移除path1\SOFTS-main\test_result",
             'test_results.txt'
@@ -415,4 +339,3 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             'rmse': rmse,
             'mae': mae
         }
-

@@ -3,11 +3,8 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# 定义计算参数量的函数
 def count_param(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
-
 
 def train_and_evaluate_once():
 
@@ -39,7 +36,7 @@ def train_and_evaluate_once():
         'freq': 'D',
         'root_path': r'D:\海平面变率\nepo',
         'data_path': 'Suvz_so_uovo_data_368_smart_filled.npy',
-        "target_path": r"D:\goole\GOPRdata\Y非nan -1993_2023.xlsx",  # 去掉末尾空格
+        "target_path": r"D:\goole\GOPRdata\Y非nan -1993_2023.xlsx",
         'target': "OT",
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
@@ -52,40 +49,31 @@ def train_and_evaluate_once():
         'scale': True,
     }
 
-
-    # 初始化实验
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}（单次独立运行，不固定随机种子）")
+    print(f"Start training，模型 ID: {args['model_id']}（单次独立运行，不固定随机种子）")
 
-    # 显式构建模型以访问它
     model = exp._build_model()
 
-    # 计算并打印参数量
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # 获取一个真实的输入批次（用于 torchinfo summary）
     train_data, train_loader = exp._get_data(flag='train')
     batch = next(iter(train_loader))
     batch_x, batch_y, batch_x_mark, batch_y_mark = batch
 
-    # 移动到与模型相同的设备
     device = torch.device('cuda' if args['use_gpu'] and torch.cuda.is_available() else 'cpu')
     batch_x = batch_x.float().to(device)
     batch_y = batch_y.float().to(device)
     batch_x_mark = batch_x_mark.float().to(device) if batch_x_mark is not None else None
     batch_y_mark = batch_y_mark.float().to(device) if batch_y_mark is not None else None
 
-    # 构造 dec_inp（按你原逻辑）
     dec_inp = batch_y
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # 训练
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # 测试/评估
-    print("开始评估...")
+    print("开始Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -97,12 +85,11 @@ def train_and_evaluate_once():
     rmse = result['Full Normalized: rmse']
     mae = result['Full Normalized: mae']
 
-    print("\n✅ 单次运行评估结果")
+    print("\n✅ Single runEvaluation结果")
     print(f"RMSE: {rmse:.4f}")
     print(f"MAE : {mae:.4f}")
 
     return rmse, mae
-
 
 if __name__ == "__main__":
     train_and_evaluate_once()

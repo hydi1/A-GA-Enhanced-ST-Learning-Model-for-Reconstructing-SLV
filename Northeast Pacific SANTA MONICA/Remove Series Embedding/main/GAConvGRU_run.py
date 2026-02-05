@@ -3,16 +3,11 @@ import random
 import torch
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# 定义计算参数量的函数
 def count_param(model):
-    """计算模型的可训练参数总数"""
+    """Calculate the total number of trainable parameters of the model"""
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
-
 def train_and_evaluate_model():
-
-
 
     args = {
         'task_name': 'uvst',
@@ -61,18 +56,15 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
-    # （可选）打印参数量：如果你需要的话可以保留
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # 训练
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # 测试
-    print("开始在测试集上评估 (去重叠全局指标)...")
+    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -87,12 +79,11 @@ def train_and_evaluate_model():
     mae = result.get('mae', None)
 
     print(
-        f"评估完成！RMSE(norm): {rmse_norm:.4f}, MAE(norm): {mae_norm:.4f}, "
+        f"Evaluation completed！RMSE(norm): {rmse_norm:.4f}, MAE(norm): {mae_norm:.4f}, "
         f"R2_eff(norm,full): {r2_eff_norm_full:.4f} | RMSE: {rmse:.4f}, MAE: {mae:.4f}"
     )
     return rmse_norm, mae_norm, r2_eff_norm_full, rmse, mae
 
-
 if __name__ == "__main__":
-    # ✅ 单次运行：只跑一次
+
     train_and_evaluate_model()

@@ -3,13 +3,8 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# ==============================
-# 参数量统计
-# ==============================
 def count_param(model):
     return sum(p.numel() for p in model.parameters())
-
 
 def train_and_evaluate_model():
     """
@@ -62,18 +57,12 @@ def train_and_evaluate_model():
         'num_heads': 4,
     }
 
-    # ==============================
-    # 初始化实验
-    # ==============================
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # ==============================
-    # summary 所需真实 batch
-    # ==============================
     train_data, train_loader = exp._get_data(flag='train')
     batch_x, batch_y, batch_x_mark, batch_y_mark = next(iter(train_loader))
 
@@ -87,16 +76,10 @@ def train_and_evaluate_model():
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # ==============================
-    # 训练
-    # ==============================
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # ==============================
-    # 测试
-    # ==============================
-    print("开始在测试集上评估...")
+    print("开始在Test集上Evaluation...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -111,25 +94,21 @@ def train_and_evaluate_model():
     rmse_denorm = result['rmse_full_denorm_avg']
     mae_denorm = result['mae_full_denorm_avg']
 
-    print("评估完成！")
-    print(f"归一化去重叠: RMSE={rmse_norm:.4f}, MAE={mae_norm:.4f}, R²_eff={r2_norm:.4f}")
-    print(f"反归一化去重叠: RMSE={rmse_denorm:.4f}, MAE={mae_denorm:.4f}")
+    print("Evaluation completed！")
+    print(f"NormalizationDe-overlapping: RMSE={rmse_norm:.4f}, MAE={mae_norm:.4f}, R²_eff={r2_norm:.4f}")
+    print(f"DenormalizationDe-overlapping: RMSE={rmse_denorm:.4f}, MAE={mae_denorm:.4f}")
 
     return rmse_norm, mae_norm, r2_norm, rmse_denorm, mae_denorm
 
-
-# ==============================
-# 主程序：单次运行
-# ==============================
 if __name__ == "__main__":
     rmse_n, mae_n, r2_n, rmse_d, mae_d = train_and_evaluate_model()
 
     print("\n" + "=" * 70)
-    print(f"{'单次运行最终结果':^70}")
+    print(f"{'Single run最终结果':^70}")
     print("-" * 70)
-    print(f"归一化去重叠 RMSE: {rmse_n:.4f}")
-    print(f"归一化去重叠 MAE : {mae_n:.4f}")
-    print(f"归一化去重叠 R²_eff: {r2_n:.4f}")
-    print(f"反归一化去重叠 RMSE: {rmse_d:.4f}")
-    print(f"反归一化去重叠 MAE : {mae_d:.4f}")
+    print(f"NormalizationDe-overlapping RMSE: {rmse_n:.4f}")
+    print(f"NormalizationDe-overlapping MAE : {mae_n:.4f}")
+    print(f"NormalizationDe-overlapping R²_eff: {r2_n:.4f}")
+    print(f"DenormalizationDe-overlapping RMSE: {rmse_d:.4f}")
+    print(f"DenormalizationDe-overlapping MAE : {mae_d:.4f}")
     print("=" * 70)

@@ -3,23 +3,17 @@ import torch
 from torchinfo import summary
 from exp.exp_long_term_forecasting import Exp_Long_Term_Forecast
 
-
-# ==============================
-# 参数量统计
-# ==============================
 def count_param(model):
     param_count = 0
     for param in model.parameters():
         param_count += param.view(-1).size()[0]
     return param_count
 
-
 def train_and_evaluate_model():
     """
-    单次独立运行 GAconvgru（不固定随机种子）
+    Single independent run of GAconvgru (random seed not fixed)
     """
 
-    # 配置实验参数
     args = {
         'task_name': 'GAConvgru_610',
         'model_id': 'run1',
@@ -66,18 +60,12 @@ def train_and_evaluate_model():
         'num_heads': 4,
     }
 
-    # ==============================
-    # 初始化实验
-    # ==============================
     exp = Exp_Long_Term_Forecast(args)
-    print(f"开始训练，模型 ID: {args['model_id']}")
+    print(f"Start training，模型 ID: {args['model_id']}")
 
     model = exp._build_model()
-    print("总可训练参数量：", count_param(model))
+    print("Total trainable parameter count：", count_param(model))
 
-    # ==============================
-    # summary 所需真实 batch
-    # ==============================
     train_data, train_loader = exp._get_data(flag='train')
     batch = next(iter(train_loader))
     batch_x, batch_y, batch_x_mark, batch_y_mark = batch
@@ -92,16 +80,10 @@ def train_and_evaluate_model():
     input_data = (batch_x, batch_x_mark, dec_inp, batch_y_mark)
     print(summary(model, input_data=input_data))
 
-    # ==============================
-    # 训练
-    # ==============================
     exp.train(args)
-    print("训练完成！")
+    print("Training completed!")
 
-    # ==============================
-    # 测试（去重叠全局指标）
-    # ==============================
-    print("开始在测试集上评估 (去重叠全局指标)...")
+    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -116,25 +98,21 @@ def train_and_evaluate_model():
     rmse = result.get('rmse')
     mae = result.get('mae')
 
-    print("评估完成！")
-    print(f"  归一化+去重叠: RMSE={rmse_norm:.4f}, MAE={mae_norm:.4f}, R2_eff(full)={r2_eff_norm_full:.4f}")
-    print(f"  反归一化: RMSE={rmse:.4f}, MAE={mae:.4f}")
+    print("Evaluation completed！")
+    print(f"  Normalization+De-overlapping: RMSE={rmse_norm:.4f}, MAE={mae_norm:.4f}, R2_eff(full)={r2_eff_norm_full:.4f}")
+    print(f"  Denormalization: RMSE={rmse:.4f}, MAE={mae:.4f}")
 
     return rmse_norm, mae_norm, r2_eff_norm_full, rmse, mae
 
-
-# ==============================
-# 主程序：单次运行
-# ==============================
 if __name__ == "__main__":
     rmse_norm, mae_norm, r2_eff_norm_full, rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 60)
-    print(f"{'单次运行结果':^60}")
+    print(f"{'Single run结果':^60}")
     print("-" * 60)
-    print(f"归一化+去重叠 RMSE: {rmse_norm:.4f}")
-    print(f"归一化+去重叠 MAE:  {mae_norm:.4f}")
-    print(f"R2_eff(归一化+去重叠, full): {r2_eff_norm_full:.4f}")
-    print(f"反归一化 RMSE: {rmse:.4f}")
-    print(f"反归一化 MAE:  {mae:.4f}")
+    print(f"Normalization+De-overlapping RMSE: {rmse_norm:.4f}")
+    print(f"Normalization+De-overlapping MAE:  {mae_norm:.4f}")
+    print(f"R2_eff(Normalization+De-overlapping, full): {r2_eff_norm_full:.4f}")
+    print(f"Denormalization RMSE: {rmse:.4f}")
+    print(f"Denormalization MAE:  {mae:.4f}")
     print("=" * 60)

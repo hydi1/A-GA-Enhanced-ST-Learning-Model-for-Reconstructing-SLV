@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
-from models.GAconvgru import Model  # 根据文件和类的实际名称调整路径
+from models.GAconvgru import Model
 from utils.timefeatures import time_features
 from sklearn.preprocessing import StandardScaler
 import joblib
@@ -53,21 +53,14 @@ args = {
         'num_heads': 4,
     }
 
-
-
-# 假设模型初始化
 model = Model(args)
 
-# 加载模型参数
 state_dict = torch.load(r"D:\sea level variability\code_neao\消融实验\北大西洋\GAconvgru\SOFTS-main\checkpoints\GAConvgru_610_seed888_GAconvgru_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
 
-# 移除 'module.' 前缀
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
-# print("Before loading, first parameter sample:", next(iter(model.parameters()))[0])  # 打印初始参数
-# 加载更新后的 state_dict
+
 model.load_state_dict(state_dict)
-# print("After loading, first parameter sample:", next(iter(model.parameters()))[0])  # 打印加载后的参数
-# 定义设备
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 SEQ_LEN = args['seq_len']
@@ -78,7 +71,6 @@ SCALER_Y_PATH = r"D:\sea level variability\code_neao\消融实验\北大西洋\G
 X_NPY_PATH  = r"D:\sea level variability\DATA_neao\Anomalies_1993-2023.npy"
 Y_XLSX_PATH = r"D:\sea level variability\DATA_neao\4processed_HIERRO_372.xlsx"
 
-
 class CustomDataset(Dataset):
     def __init__(self):
         self.__load_data__()
@@ -87,30 +79,26 @@ class CustomDataset(Dataset):
         self.scaler_x = joblib.load(SCALER_X_PATH)
         self.scaler_y = joblib.load(SCALER_Y_PATH)
 
-        # X: (372,4,33,5,9) -> (372,5940)
         all_x = np.load(X_NPY_PATH)
         self.T = all_x.shape[0]
-        all_x_2d = all_x.reshape(self.T, -1)  # ✅更稳，不写死 4*33*5*9
+        all_x_2d = all_x.reshape(self.T, -1)
         self.data_x = self.scaler_x.transform(all_x_2d)
 
-        # y：保留原始（含 NaN）——用于最终 Excel true
         df_y = pd.read_excel(Y_XLSX_PATH)
         y_raw = df_y.iloc[:, 1].values.reshape(-1, 1)
-        self.y_data = y_raw  # ✅保留 NaN
+        self.y_data = y_raw
 
-        # y：模型输入需要填 NaN（仅用于输入，不用于输出 true）
         y_filled = y_raw.copy()
         mean_val = np.nanmean(y_filled)
         y_filled[np.isnan(y_filled)] = mean_val
         self.y_norm = self.scaler_y.transform(y_filled)
 
-        # time
         time_data = df_y.iloc[:, 0].values
         dates = pd.DatetimeIndex(pd.to_datetime(time_data))
         self.data_stamp = time_features(dates, freq='D').transpose(1, 0)
 
     def __len__(self):
-        return self.T - SEQ_LEN + 1  # window 数
+        return self.T - SEQ_LEN + 1
 
     def __getitem__(self, idx):
         seq_x = torch.tensor(self.data_x[idx:idx + SEQ_LEN], dtype=torch.float32)
@@ -118,7 +106,6 @@ class CustomDataset(Dataset):
         seq_x_mark = torch.tensor(self.data_stamp[idx:idx + SEQ_LEN], dtype=torch.float32)
         seq_y_mark = torch.tensor(self.data_stamp[idx:idx + SEQ_LEN], dtype=torch.float32)
         return seq_x, seq_y, seq_x_mark, seq_y_mark
-
 
 def data_provider():
     def collate_fn(batch):
@@ -133,18 +120,13 @@ def data_provider():
                     num_workers=0, drop_last=False, collate_fn=collate_fn)
     return ds, dl
 
-
 test_data, test_loader = data_provider()
 
 model.eval()
 device = next(model.parameters()).device
 
-# ✅ full_length 直接用原始序列长度（372）
 FULL_LENGTH = test_data.T
 
-# =========================
-# 预测去重叠拼接（NEPO test 同款 sample_global_idx）
-# =========================
 pred_full = np.zeros((FULL_LENGTH, 1), dtype=np.float64)
 counts = np.zeros(FULL_LENGTH, dtype=np.float64)
 
@@ -161,14 +143,12 @@ with torch.no_grad():
 
         output = model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
 
-        # ✅ 与你 NEPO 逻辑一致：MS -> f_dim=-1，否则 0
         f_dim = -1 if args['features'] == 'MS' else 0
-        output = output[:, :, f_dim:]  # (B, L, 1) 通常
+        output = output[:, :, f_dim:]
 
         out_np = output.detach().cpu().numpy()
-        B, L, _ = out_np.shape  # L 理论上应为 12
+        B, L, _ = out_np.shape
 
-        # ✅ 核心：窗口编号 = sample_global_idx，时间点 = start_idx + s
         for i in range(B):
             start_idx = sample_global_idx
             end_idx = start_idx + L
@@ -185,23 +165,19 @@ with torch.no_grad():
 counts[counts == 0] = 1
 pred_full[:, 0] /= counts
 
-# 反归一化预测
 pred_denorm = test_data.scaler_y.inverse_transform(pred_full)
 
-# ✅ true：必须用原始 y（保留 NaN）
-true_raw = test_data.y_data  # (372,1) 含 NaN
+true_raw = test_data.y_data
 
-# 保存 Excel（true 不会被填充）
 df = pd.DataFrame({
     "time_idx": np.arange(FULL_LENGTH),
-    "true": true_raw.flatten(),              # ✅保留 NaN
+    "true": true_raw.flatten(),
     "pred": pred_denorm.flatten(),
-    # 可选：把 counts 一并输出方便你检查覆盖次数（建议保留）
+
     "counts": counts
 })
 df.to_excel("NEAO_reconstructed_372.xlsx", index=False)
 
-# 指标：只在非 NaN 位置算（避免 NaN 干扰）
 mask = ~np.isnan(true_raw.flatten()) & ~np.isnan(pred_denorm.flatten())
 rmse = np.sqrt(np.mean((true_raw.flatten()[mask] - pred_denorm.flatten()[mask]) ** 2))
 mae  = np.mean(np.abs(true_raw.flatten()[mask] - pred_denorm.flatten()[mask]))

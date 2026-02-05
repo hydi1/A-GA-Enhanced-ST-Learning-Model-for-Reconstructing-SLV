@@ -4,7 +4,6 @@ import torch
 
 from models import GAConvGRU
 
-
 class Exp_Basic(object):
     def __init__(self, args):
         self.args = args
@@ -19,10 +18,10 @@ class Exp_Basic(object):
 
     def _acquire_device(self):
         if 'use_gpu' in self.args and self.args['use_gpu']:
-            # 使用 GPU
+
             device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         else:
-            # 使用 CPU
+
             device = torch.device('cpu')
         return device
 
