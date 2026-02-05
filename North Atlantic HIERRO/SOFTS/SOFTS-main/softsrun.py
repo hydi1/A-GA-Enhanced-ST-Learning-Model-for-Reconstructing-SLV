@@ -7,9 +7,6 @@ def count_param(model):
     return sum(p.numel() for p in model.parameters())
 
 def train_and_evaluate_model():
-    """
-    单次独立运行 SOFTS（不固定随机种子）
-    """
 
     args = {
         'task_name': 'TSdepth51993-2023',
@@ -55,7 +52,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -96,8 +93,9 @@ if __name__ == "__main__":
     rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 50)
-    print(f"{'Single run结果':^50}")
+    print(f"{'Single run result':^50}")
     print("-" * 50)
     print(f"RMSE: {rmse:.3f}")
     print(f"MAE : {mae:.3f}")
     print("=" * 50)
+
