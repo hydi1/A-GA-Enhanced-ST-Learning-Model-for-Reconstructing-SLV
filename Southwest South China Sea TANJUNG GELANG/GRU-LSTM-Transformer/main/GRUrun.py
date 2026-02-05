@@ -10,10 +10,6 @@ def count_param(model):
     return param_count
 
 def train_and_evaluate_model():
-    """
-    单次独立运行 Transformer（不固定随机种子）
-    """
-
     args = {
         'task_name': 'Transformerdepth41993-2023',
         'model_id': 345,
@@ -63,7 +59,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
 
@@ -106,8 +102,9 @@ if __name__ == "__main__":
     rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 50)
-    print(f"{'Single run结果':^50}")
+    print(f"{'Single run results':^50}")
     print("-" * 50)
     print(f"RMSE: {rmse:.3f}")
     print(f"MAE : {mae:.3f}")
     print("=" * 50)
+
