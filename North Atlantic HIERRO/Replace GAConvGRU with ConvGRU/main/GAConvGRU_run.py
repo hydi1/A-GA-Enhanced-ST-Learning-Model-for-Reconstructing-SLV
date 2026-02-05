@@ -7,9 +7,6 @@ def count_param(model):
     return sum(p.numel() for p in model.parameters())
 
 def train_and_evaluate_model():
-    """
-    单次独立运行 GAconvGRU（不固定随机种子）
-    """
 
     args = {
         'task_name': 'uvst',
@@ -104,7 +101,7 @@ if __name__ == "__main__":
     rmse_n, mae_n, r2_n, rmse_d, mae_d = train_and_evaluate_model()
 
     print("\n" + "=" * 70)
-    print(f"{'Single run最终结果':^70}")
+    print(f"{'Single run Result':^70}")
     print("-" * 70)
     print(f"NormalizationDe-overlapping RMSE: {rmse_n:.4f}")
     print(f"NormalizationDe-overlapping MAE : {mae_n:.4f}")
@@ -112,3 +109,4 @@ if __name__ == "__main__":
     print(f"DenormalizationDe-overlapping RMSE: {rmse_d:.4f}")
     print(f"DenormalizationDe-overlapping MAE : {mae_d:.4f}")
     print("=" * 70)
+
