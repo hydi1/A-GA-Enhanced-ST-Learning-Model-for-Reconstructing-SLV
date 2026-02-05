@@ -31,7 +31,6 @@ The repository currently includes:
 
 ```
 Remove one Path/
-|-- .idea/
 |-- main/
 |   |-- GAConvGRU_run.py          # Main training and evaluation entry
 |   |-- scaler_x_time.pkl

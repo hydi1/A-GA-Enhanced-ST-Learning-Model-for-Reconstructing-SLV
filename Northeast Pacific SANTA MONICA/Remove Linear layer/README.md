@@ -32,7 +32,6 @@ The repository currently includes:
 
 ```
 Remove Linear layer/
-|-- .idea/
 |-- main/
 |   |-- checkpoints/           # Directory for saving model weights
 |   |-- core_qnn/              # Quaternion neural network components
@@ -45,7 +44,6 @@ Remove Linear layer/
 |   |-- GAConvGRU_run.py       # Main training and evaluation entry
 |   |-- Reconstruction.py      # Reconstruction / post-processing script
 |   |-- __init__.py
-|   |-- ~$outputs_first_time_step1.xlsx
 |   |-- scaler_x_time.pkl      # Input data scaler (if used)
 |   `-- scaler_y_time.pkl      # Output data scaler (if used)
 |-- output_test/               # Test output files (examples or historical results)

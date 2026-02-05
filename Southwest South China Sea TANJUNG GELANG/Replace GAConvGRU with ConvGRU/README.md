@@ -1,10 +1,10 @@
-# GAConvGRU Long-Term Time Series Forecasting Framework
+#   Replace GAConvGRU with ConvGRU in GA-enhanced mode
 
 ## Project Overview
 
 This repository is intended for experimental research on long-term time series forecasting.
 Based on a general long-sequence forecasting framework, it implements and extends the training
-and evaluation pipeline of the **GA-enhanced ConvGRU (GAConvGRU)** model.
+and evaluation pipeline of the GA-enhancedmodel.
 
 The codebase is designed for research and experimental purposes, supporting multi-random-seed
 training, model evaluation, and component ablation studies, enabling systematic comparison
