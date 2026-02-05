@@ -14,9 +14,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CHECKPOINT_DIR = os.path.join(BASE_DIR, "checkpoints")
 
 def train_and_evaluate_model():
-    """
-    单次独立运行：Training并Evaluate model（不固定随机种子）
-    """
 
     args = {
         'task_name': 'uvst',
@@ -66,7 +63,7 @@ def train_and_evaluate_model():
 
     exp = Exp_Long_Term_Forecast(args)
 
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
     model = exp._build_model()
 
     print("Total trainable parameter count：", count_param(model))
@@ -89,7 +86,7 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Validation set上Evaluation...")
+    print("Begin evaluation on the validation set...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],
@@ -127,7 +124,7 @@ if __name__ == "__main__":
     rmse_norm, mae_norm, r2_eff_norm, rmse_unnorm, mae_unnorm = train_and_evaluate_model()
 
     print("\n" + "=" * 60)
-    print(f"{'Single run结果':^60}")
+    print(f"{'Single run results':^60}")
     print("-" * 60)
     print(f"Normalization+De-overlapping RMSE: {rmse_norm:.4f}")
     print(f"Normalization+De-overlapping MAE:  {mae_norm:.4f}")
@@ -135,3 +132,4 @@ if __name__ == "__main__":
     print(f"Denormalization+De-overlapping RMSE: {rmse_unnorm:.4f}")
     print(f"Denormalization+De-overlapping MAE:  {mae_unnorm:.4f}")
     print("=" * 60)
+
