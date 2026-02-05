@@ -55,7 +55,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -109,4 +109,5 @@ if __name__ == "__main__":
     print(f"DenormalizationDe-overlapping RMSE: {rmse_d:.4f}")
     print(f"DenormalizationDe-overlapping MAE : {mae_d:.4f}")
     print("=" * 70)
+
 
