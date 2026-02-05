@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
     (rmse_batch, mae_batch, r2_batch,
      rmse_norm, mae_norm, r2_norm,
-     rmse_denorm, mae_denorm) = train_and_evaluate_model(seed=8240)
+     rmse_denorm, mae_denorm) = train_and_evaluate_model()
 
     print("\n" + "=" * 90)
     print(f"{'Single run result':^90}")
@@ -134,4 +134,5 @@ if __name__ == "__main__":
     print(f"RMSE(denorm):   {rmse_denorm:.4f}")
     print(f"MAE(denorm):    {mae_denorm:.4f}")
     print("=" * 90)
+
 
