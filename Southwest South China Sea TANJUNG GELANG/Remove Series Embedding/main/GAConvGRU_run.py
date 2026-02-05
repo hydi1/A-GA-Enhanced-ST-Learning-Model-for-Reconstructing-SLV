@@ -87,7 +87,7 @@ def train_and_evaluate_model(seed=42):
 
     result = exp.test(setting)
 
-    print("\n===== Single runEvaluation结果 =====")
+    print("\n===== Single runEvaluation results=====")
     print(
         f"Batch-Norm : RMSE={result['rmse_batch_norm_avg']:.4f}, "
         f"MAE={result['mae_batch_norm_avg']:.4f}, "
@@ -104,3 +104,4 @@ def train_and_evaluate_model(seed=42):
 if __name__ == "__main__":
 
     _ = train_and_evaluate_model()
+
