@@ -56,7 +56,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -64,7 +64,7 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
+    print("Begin evaluation on the Test set (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -87,3 +87,4 @@ def train_and_evaluate_model():
 if __name__ == "__main__":
 
     train_and_evaluate_model()
+
