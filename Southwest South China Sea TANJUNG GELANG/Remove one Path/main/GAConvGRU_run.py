@@ -7,10 +7,6 @@ def count_param(model):
     return sum(p.numel() for p in model.parameters())
 
 def train_and_evaluate_model():
-    """
-    Single independent run of GAconvgru (random seed not fixed)
-    """
-
     args = {
         'task_name': 'GAConvgru_610',
         'model_id': 'run1',
@@ -61,7 +57,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -82,7 +78,7 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training complete.")
 
-    print("开始在Validation set上Evaluation...")
+    print("Beginning evaluation on the validation set...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],
@@ -130,7 +126,7 @@ if __name__ == "__main__":
      rmse_d, mae_d) = train_and_evaluate_model()
 
     print("\n" + "=" * 90)
-    print(f"{'Single run结果（Batch + De-overlapping）':^90}")
+    print(f"{'Single run results':^90}")
     print("-" * 90)
     print(f"RMSE(batchN): {rmse_b:.4f}")
     print(f"MAE(batchN):  {mae_b:.4f}")
@@ -143,3 +139,4 @@ if __name__ == "__main__":
     print(f"RMSE(denorm): {rmse_d:.4f}")
     print(f"MAE(denorm):  {mae_d:.4f}")
     print("=" * 90)
+
