@@ -311,7 +311,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             results_df = pd.concat([batch_y_df, outputs_df], axis=0)
 
-            save_path_excel = r'D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\output_y48_deoverlapped.xlsx'
+            save_path_excel = r'../../Data/4processed_HIERRO_nomiss.xlsx'
             results_df.to_excel(save_path_excel, index=False)
 
             rmse_batch_unnorm_avg = rmse_batch_unnorm.avg
@@ -327,7 +327,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             print("\nBatch-based Denormalized data:")
             print(f"RMSE: {rmse_batch_norm_avg:.4f}")
             print(f"MAE: {mae_batch_norm_avg:.4f}")
-            print("\nDe-overlapping后的Denormalized data:")
+            print("\nDenormalized data after De-overlapping:")
             print(f"RMSE: {rmse_full_norm_avg:.4f}")
             print(f"MAE: {mae_full_norm_avg:.4f}")
 
@@ -340,7 +340,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 test_result_batch_norm = f"lr={self.args['learning_rate']}, Batch Normalized: rmse: {rmse_batch_norm_avg}, mae: {mae_batch_norm_avg}"
                 test_result_full_norm = f"lr={self.args['learning_rate']}, Full Normalized: rmse: {rmse_full_norm_avg}, mae: {mae_full_norm_avg}"
 
-            save_path_txt = os.path.join(r"D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\test_result", 'test_results.txt')
+            save_path_txt = os.path.join(r"../../test_result", 'test_results.txt')
             with open(save_path_txt, 'a') as f:
                 f.write(test_result_batch_unnorm + '\n')
                 f.write(test_result_batch_norm + '\n')

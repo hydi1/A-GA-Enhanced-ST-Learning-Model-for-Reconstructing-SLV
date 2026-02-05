@@ -324,7 +324,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         print("=" * 60)
 
         save_path_txt = os.path.join(
-            r"D:\project\组件消融\东北太平洋\GAconvgru-移除path1\SOFTS-main\test_result",
+            r"../../test_result",
             'test_results.txt'
         )
         with open(save_path_txt, 'a') as f:

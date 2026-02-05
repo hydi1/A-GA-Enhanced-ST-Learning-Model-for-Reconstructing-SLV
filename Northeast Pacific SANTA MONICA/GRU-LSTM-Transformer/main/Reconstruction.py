@@ -43,10 +43,10 @@ args = {
         'hidden_size': 64,
         'output_size': 1,
         'num_layers': 3,
-        'root_path': r'D:\goole\2025115',
+        'root_path': r'../../Data',
         "data_path": 'TSuv_data_368.npy',
 
-        "target_path": r"D:\goole\GOPRdata\Y非nan -1993_2023.xlsx",
+        "target_path": r"../../Data/Y_nonan-1993_2023.xlsx",
         'target': "OT",
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
@@ -54,7 +54,7 @@ args = {
         'output_attention': False,
         "lradj": "type1",
 
-        'checkpoints': r'D:\sea level variability\code_nepo\GRU - 12\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         "save_model": True,
         'device_ids': [0],
         'scale': True,
@@ -63,11 +63,11 @@ args = {
 
 model = Model(args)
 
-state_dict = torch.load(r"D:\sea level variability\code_nepo\GRU - 12\SOFTS-main\checkpoints\Transformerdepth41993-2023_seed200_Transformer_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
+state_dict = torch.load(r"../../checkpoints/checkpoint.pth",weights_only=True)
 
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 
-print("模型中的参数名:", [n for n, p in model.named_parameters()])
+print("Parameter names in model:", [n for n, p in model.named_parameters()])
 print("Parameter names in weight file:", list(state_dict.keys()))
 model.load_state_dict(state_dict)
 
@@ -79,23 +79,23 @@ class CustomDataset(Dataset):
 
     def __loda_data__(self):
 
-        self.scaler_x = joblib.load(r"D:\sea level variability\code_nepo\GRU - 12\SOFTS-main\scaler_x_time.pkl")
-        self.scaler_y = joblib.load(r"D:\sea level variability\code_nepo\GRU - 12\SOFTS-main\scaler_y_time.pkl")
+        self.scaler_x = joblib.load(r"scaler_x_time.pkl")
+        self.scaler_y = joblib.load(r"scaler_y_time.pkl")
 
-        file_path = r"D:\goole\2025115\GLOBA\combined_result.npy"
+        file_path = r"../../Data/combined_result.npy"
 
         all_x_data = np.load(file_path)
         all_x_data_2d = all_x_data.reshape(-1, 4 * 29 * 6 * 11)
         self.data_x = self.scaler_x.transform(all_x_data_2d)
 
-        y_path = r"D:\goole\GOPRdata\y.xlsx"
+        y_path = r"../../Data/Y_nonan-1993_2023.xlsx"
         y_data = pd.read_excel(y_path).iloc[:, 1].values.reshape(-1, 1)
         self.y_data = y_data
 
         y_data_filled = np.where(np.isnan(y_data), np.nanmean(y_data), y_data)
         self.y_data_normalized = self.scaler_y.transform(y_data_filled)
 
-        time_path = r"D:\goole\GOPRdata\time_data.xlsx"
+        time_path = r"../../Data/Y_nonan-1993_2023.xlsx"
         time_data = pd.read_excel(time_path).iloc[:, 0].values
         df_stamp = pd.to_datetime(time_data)
         dates = pd.DatetimeIndex(df_stamp)

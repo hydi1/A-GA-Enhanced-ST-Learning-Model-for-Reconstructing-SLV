@@ -137,7 +137,7 @@ def quaternion_exp(input):
 def quaternion_conv(input, r_weight, i_weight, j_weight, k_weight, bias, stride,
                     padding, groups, dilatation):
     """Here is Quaternion Convolution
-    Applies a quaternion convolution to the incoming data:应用四元数卷积到输入数据中，实现四元数卷积操作
+    Applies a quaternion convolution to the incoming data:Applies quaternion convolution to input data
     """
 
     cat_kernels_4_r = torch.cat([r_weight, -i_weight, -j_weight, -k_weight], dim=1)
@@ -381,7 +381,7 @@ def quaternion_linear_rotation(input, zero_kernel, r_weight, i_weight, j_weight,
 
 2. **Calculate quaternion for rotation transform:** Use normalized quaternion weights to calculate quaternion for rotation transform, obtaining respectively `rot_kernel_1`、`rot_kernel_2`、`rot_kernel_3`。
 
-3. **Concatenate rotation kernels:** 将上述计算得到的旋转核拼接成 `global_rot_kernel`。
+3. **Concatenate rotation kernels:** Concatenate the calculated rotation kernels into `global_rot_kernel`。
 
 4. **Apply linear transformation:** Use the concatenated rotation kernel to perform linear transformation and calculate output.
 

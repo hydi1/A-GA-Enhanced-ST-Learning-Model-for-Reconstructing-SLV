@@ -10,7 +10,7 @@ class STAR(nn.Module):
     def __init__(self, d_series, d_core):
         super(STAR, self).__init__()
         """
-        STar Aggregate-Redistribute Module，d_series：Input sequence的维度，d_core:Core dimension of module, used for internal processing
+        STar Aggregate-Redistribute Module，d_series：Input sequenceDimension，d_core:Core dimension of module, used for internal processing
         """
 
         self.gen1 = nn.Linear(d_series, d_series)

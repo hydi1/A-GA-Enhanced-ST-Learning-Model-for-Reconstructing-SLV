@@ -35,9 +35,9 @@ def train_and_evaluate_model():
         'd_core': 512,
         'freq': 'D',
 
-        'root_path': r'D:\sea level variability\DATA_neao',
+        'root_path': r'../../Data',
         'data_path': 'Anomalies_2004-2022_filtered.npy',
-        'target_path': r"D:\sea level variability\DATA_neao\4processed_HIERRO_nomiss.xlsx",
+        'target_path': r"../../Data/4processed_HIERRO_nomiss.xlsx",
         'target': 'OT',
 
         'seasonal_patterns': 'Monthly',
@@ -45,7 +45,7 @@ def train_and_evaluate_model():
         'use_amp': False,
         'output_attention': False,
         'lradj': 'type1',
-        'checkpoints': r'D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         'save_model': True,
         'device_ids': [0],
         'scale': True,
@@ -73,7 +73,7 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Validation set上Evaluation...")
+    print("Start Evaluation on Validation set...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],

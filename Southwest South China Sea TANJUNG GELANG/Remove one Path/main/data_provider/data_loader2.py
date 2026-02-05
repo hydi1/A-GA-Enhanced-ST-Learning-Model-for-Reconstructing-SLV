@@ -709,7 +709,7 @@ class Dataset_Npy(Dataset):
         if is_target:
             if self.scaler_y is None:
                 print("scaler_y is None, loading from file...")
-                scaler_path = r"D:\project\2SOFTS-main\SOFTS-main\scaler_y.pkl"
+                scaler_path = r"scaler_y_time.pkl"
                 self.scaler_y = joblib.load(scaler_path)
                 if self.scaler_y is None:
                     raise ValueError("scaler_y could not be loaded.")

@@ -41,9 +41,9 @@ def train_and_evaluate_model(seed=42):
         'output_size': 1,
         'num_layers': 3,
 
-        'root_path': r'D:\sea level variability\DATA_eio\1589',
+        'root_path': r'../../Data',
         'data_path': "anomaly_1993_2018_depth15_filtered.npy",
-        'target_path': r"D:\sea level variability\DATA_eio\1589\processed_1589.xlsx",
+        'target_path': r"../../Data/processed_1589.xlsx",
         'target': "OT",
 
         'seasonal_patterns': 'Monthly',
@@ -51,7 +51,7 @@ def train_and_evaluate_model(seed=42):
         'use_amp': False,
         'output_attention': False,
         'lradj': "type1",
-        'checkpoints': r'D:\sea level variability\code_eio\消融实验\GAconvGRU移除Series Embedding\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         'save_model': True,
         'device_ids': [0],
         'scale': True,

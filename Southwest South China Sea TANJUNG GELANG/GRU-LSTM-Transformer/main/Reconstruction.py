@@ -42,9 +42,9 @@ args = {
     'hidden_size': 64,
     'output_size': 1,
     'num_layers': 3,
-    'root_path': r'D:\sea level variability\DATA_eio\1589',
+    'root_path': r'../../Data',
     'data_path': "anomaly_1993_2018_depth15_filtered.npy",
-    'target_path': r"D:\sea level variability\DATA_eio\1589\processed_1589.xlsx",
+    'target_path': r"../../Data/processed_1589.xlsx",
     'target': "OT",
     'seasonal_patterns': 'Monthly',
     'num_workers': 4,
@@ -52,7 +52,7 @@ args = {
     'output_attention': False,
     "lradj": "type1",
 
-    'checkpoints': r'D:\sea level variability\code_eio\GRU - 12\SOFTS-main\checkpoints',
+    'checkpoints': r'../../checkpoints',
     "save_model": True,
     'device_ids': [0],
     'scale': True,
@@ -64,23 +64,23 @@ class CustomDataset(Dataset):
 
     def __loda_data__(self):
 
-        file_path = r"D:\sea level variability\DATA_eio\1589\anomaly_1993_2023_depth15_372time.npy"
+        file_path = r"../../Data/anomaly_1993_2018_depth15_filtered.npy"
         all_x_data = np.load(file_path)
 
         all_x_data_2d = all_x_data.reshape(-1, 4 * 15 * 11 * 15)
 
         if all_x_data_2d.dtype != np.float64:
-            print("警告：输入Data type为 {}, 转换为 np.float64".format(all_x_data_2d.dtype))
+            print("Warning: Input Data type is {}, converted to np.float64".format(all_x_data_2d.dtype))
             all_x_data_2d = all_x_data_2d.astype(np.float64)
 
         global_mean = np.nanmean(all_x_data_2d[np.isfinite(all_x_data_2d)])
 
         if np.any(np.isnan(all_x_data_2d)):
-            print("警告：输入数据包Contains NaN，已用均值填充")
+            print("Warning: Input data contains NaN, filled with mean")
             all_x_data_2d = np.nan_to_num(all_x_data_2d, nan=global_mean)
 
         if np.any(np.isinf(all_x_data_2d)):
-            print("警告：输入数据包含 Inf，已用均值填充")
+            print("Warning: Input data contains Inf, filled with mean")
             all_x_data_2d = np.nan_to_num(all_x_data_2d, posinf=global_mean, neginf=global_mean)
 
         if np.any(np.abs(all_x_data_2d) > 1e8):
@@ -95,15 +95,15 @@ class CustomDataset(Dataset):
         all_x_data_scaled = scaler.fit_transform(all_x_data_2d)
 
         if np.any(np.isnan(all_x_data_scaled)) or np.any(np.isinf(all_x_data_scaled)):
-            print("错误：Data still contains NaN or Inf after Normalization, trying to force zeroing")
+            print("Error: Data still contains NaN or Inf after Normalization, trying to force zeroing")
             all_x_data_scaled = np.nan_to_num(all_x_data_scaled, nan=0.0, posinf=0.0, neginf=0.0)
 
-        scaler_save_path = r'D:\sea level variability\code_eio\convgru_TSVU - Denormalization12\SOFTS-main\new_scaler_anomalies_2d.pkl'
+        scaler_save_path = r'../../Data/new_scaler_anomalies_2d.pkl'
         joblib.dump(scaler, scaler_save_path)
         self.scaler_x = joblib.load(scaler_save_path)
         self.data_x = all_x_data_scaled
 
-        y_path = r"D:\sea level variability\DATA_eio\1589\processed_1589 - 372.xlsx"
+        y_path = r"../../Data/processed_1589.xlsx"
         df_y = pd.read_excel(y_path)
         y_data = df_y.iloc[:, 1].values.reshape(-1, 1)
         self.y_data = y_data
@@ -111,7 +111,7 @@ class CustomDataset(Dataset):
         y_mean = np.nanmean(y_data)
         y_data_filled = np.where(np.isnan(y_data), y_mean, y_data)
         self.scaler_y = joblib.load(
-            r"D:\sea level variability\code_eio\convgru_TSVU - Denormalization12\SOFTS-main\scaler_y_time.pkl")
+            r"scaler_y_time.pkl")
         self.y_data_normalized = self.scaler_y.transform(y_data_filled)
 
         time_data = df_y.iloc[:, 0].values
@@ -147,7 +147,7 @@ def data_provider():
 
 model = Model(args)
 
-checkpoint_path = r"D:\sea level variability\code_eio\GRU - 12\SOFTS-main\checkpoints\Transformerdepth41993-2023_345_Transformer_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth"
+checkpoint_path = r"../../checkpoints/checkpoint.pth"
 state_dict = torch.load(checkpoint_path, map_location='cpu', weights_only=True)
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 model.load_state_dict(state_dict)
@@ -205,4 +205,4 @@ df_res = pd.DataFrame({
 })
 
 df_res.to_excel('reconstructed_372_timesteps_with_trueTransformer.xlsx', index=False)
-print("保存成功！文件包含 372 行数据。")
+print("Saved successfully! File contains 372 lines of data.")

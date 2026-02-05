@@ -41,16 +41,16 @@ args = {
         'hidden_size': 16,
         'output_size': 1,
         'num_layers': 3,
-        'root_path': r'D:\sea level variability\DATA_eio\1589',
+        'root_path': r'../../Data',
         'data_path': "anomaly_1993_2018_depth15_filtered.npy",
-        'target_path': r"D:\sea level variability\DATA_eio\1589\processed_1589.xlsx",
+        'target_path': r"../../Data/processed_1589.xlsx",
         'target': "OT",
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
         'use_amp': False,
         'output_attention': False,
         "lradj": "type1",
-        'checkpoints':  r'D:\sea level variability\code_eio\消融实验\convgru-Qconvgru替换为convgru\SOFTS-main\checkpoints',
+        'checkpoints':  r'../../checkpoints',
         'save_model': True,
         'device_ids': [0],
         'scale': True,
@@ -59,7 +59,7 @@ args = {
 
 model = Model(args)
 
-state_dict = torch.load(r"D:\sea level variability\code_eio\消融实验\GAconvGRU替换为convgru\SOFTS-main\checkpoints\Convgru_seed8240_convGRU_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
+state_dict = torch.load(r"../../checkpoints/checkpoint.pth",weights_only=True)
 
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 
@@ -90,23 +90,23 @@ class CustomDataset:
 
     def __loda_data__(self):
 
-        file_path = r"D:\sea level variability\DATA_eio\1589\anomaly_1993_2023_depth15_372time.npy"
+        file_path = r"../../Data/anomaly_1993_2018_depth15_filtered.npy"
         all_x_data = np.load(file_path)
         all_x_data_2d = all_x_data.reshape(-1, 4*15*11*15)
 
         if all_x_data_2d.dtype != np.float64:
-            print("警告：输入Data type为 {}, 转换为 np.float64".format(all_x_data_2d.dtype))
+            print("Warning: Input Data type is {}, converted to np.float64".format(all_x_data_2d.dtype))
             all_x_data_2d = all_x_data_2d.astype(np.float64)
 
         if np.any(np.isnan(all_x_data_2d)):
-            print("警告：输入数据包Contains NaN，已用均值填充")
+            print("Warning: Input data contains NaN, filled with mean")
             all_x_data_2d = np.nan_to_num(all_x_data_2d, nan=np.nanmean(all_x_data_2d))
         if np.any(np.isinf(all_x_data_2d)):
-            print("警告：输入数据包含 Inf，已用均值填充")
+            print("Warning: Input data contains Inf, filled with mean")
             all_x_data_2d = np.nan_to_num(all_x_data_2d, posinf=np.nanmean(all_x_data_2d), neginf=np.nanmean(all_x_data_2d))
 
         if np.any(np.abs(all_x_data_2d) > 1e8):
-            print("警告：输入数据包含极端值，已标准化")
+            print("Warning: Input data contains extreme values, standardized")
             mean = np.nanmean(all_x_data_2d, axis=0)
             std = np.nanstd(all_x_data_2d, axis=0)
             all_x_data_2d = (all_x_data_2d - mean) / (std + 1e-8)
@@ -115,25 +115,25 @@ class CustomDataset:
         all_x_data_scaled = scaler.fit_transform(all_x_data_2d)
 
         if np.any(np.isnan(all_x_data_scaled)):
-            print("错误：Data contains NaN after Normalization")
+            print("Error: Data contains NaN after Normalization")
             raise ValueError("Data contains NaN after Normalization")
         if np.any(np.isinf(all_x_data_scaled)):
-            print("错误：Data contains Inf after Normalization")
+            print("Error: Data contains Inf after Normalization")
             raise ValueError("Data contains Inf after Normalization")
 
         joblib.dump(scaler, 'new_scaler_anomalies_2d.pkl')
-        self.scaler_x = joblib.load(r"D:\sea level variability\code_eio\消融实验\南中国海\GAconvGRU替换为convgru\SOFTS-main\scaler_x_time.pkl")
+        self.scaler_x = joblib.load(r"scaler_x_time.pkl")
 
         self.data_x = all_x_data_scaled
 
-        y_path = r"D:\sea level variability\DATA_eio\1589\processed_1589 - 372.xlsx"
+        y_path = r"../../Data/processed_1589.xlsx"
         y_data = pd.read_excel(y_path).iloc[:, 1].values.reshape(-1, 1)
         self.y_data = y_data
         y_data_filled = np.where(np.isnan(y_data), np.nanmean(y_data), y_data)
-        self.scaler_y = joblib.load(r"D:\sea level variability\code_eio\消融实验\南中国海\GAconvGRU替换为convgru\SOFTS-main\scaler_y_time.pkl")
+        self.scaler_y = joblib.load(r"scaler_y_time.pkl")
         self.y_data_normalized = self.scaler_y.transform(y_data_filled)
 
-        time_path = r"D:\sea level variability\DATA_eio\1589\processed_1589 - 372.xlsx"
+        time_path = r"../../Data/processed_1589.xlsx"
         time_data = pd.read_excel(time_path).iloc[:, 0].values
         df_stamp = pd.to_datetime(time_data)
         dates = pd.DatetimeIndex(df_stamp)
@@ -205,7 +205,7 @@ with torch.no_grad():
         output = model(batch_x, batch_x_mark, batch_y, batch_y_mark)
         print(f"Batch {i + 1} model_outputs shape: {output.shape}")
         if torch.any(torch.isnan(output)) or torch.any(torch.isinf(output)):
-            print(f"批次 {i + 1} Model output contains NaN or Inf")
+            print(f"Batch {i + 1} Model output contains NaN or Inf")
 
         outputs_cpu = output.cpu().numpy()
         batch_y_cpu = batch_y.cpu().numpy()
@@ -216,7 +216,7 @@ with torch.no_grad():
         batch_y_fgyh = test_data.scaler_y.inverse_transform(batch_y_flat)
         if np.any(np.isnan(outputs_fgyh)):
             print(f"Batch {i + 1} contains NaN values after denormalization")
-            print(f"问题值 (outputs_flat): {outputs_flat[np.isnan(outputs_fgyh)]}")
+            print(f"Problematic values (outputs_flat): {outputs_flat[np.isnan(outputs_fgyh)]}")
             outputs_fgyh = np.nan_to_num(outputs_fgyh, nan=0.0)
 
         outputs_original = outputs_fgyh.reshape(outputs_cpu.shape)
@@ -233,7 +233,7 @@ with torch.no_grad():
                 full_sequence[pred_start:valid_end] += outputs_original[j, :slice_len, 0].reshape(-1, 1)
                 full_y_true[pred_start:valid_end] += batch_y_original[j, :slice_len, 0].reshape(-1, 1)
                 counts[pred_start:valid_end] += 1
-                print(f"批次 {i + 1}, 序列 {j}, Filling time steps: {pred_start} 到 {valid_end - 1}")
+                print(f"Batch {i + 1}, Sequence {j}, Filling time steps: {pred_start} to {valid_end - 1}")
 
     full_sequence = full_sequence / np.maximum(counts, 1)
     full_y_true = full_y_true / np.maximum(counts, 1)

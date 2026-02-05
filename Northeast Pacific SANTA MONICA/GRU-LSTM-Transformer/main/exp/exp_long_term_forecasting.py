@@ -289,7 +289,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
                     print("DenormalizationTrue values (batch_y_unnormalized_tensor[:2]):")
                     print(batch_y_unnormalized_tensor[:2].cpu().numpy())
-                    print("Denormalized prediction值 (outputs_unnormalized_tensor[:2]):")
+                    print("Denormalized prediction (outputs_unnormalized_tensor[:2]):")
                     print(outputs_unnormalized_tensor[:2].cpu().numpy())
                     print("--------------------------------------------------\n")
 
@@ -345,16 +345,16 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             mae_full_unnorm_avg = mae_full_unnorm.avg
 
             print("--------------------------------------------------")
-            print("基于 Batch 的损失:")
+            print("Loss based on Batch:")
             print(
-                f"  [Normalization Loss] (Normalized, 模型尺度): RMSE: {rmse_batch_norm_avg:.4f}, MAE: {mae_batch_norm_avg:.4f}")
+                f"  [Normalization Loss] (Normalized, Model scale): RMSE: {rmse_batch_norm_avg:.4f}, MAE: {mae_batch_norm_avg:.4f}")
             print(
-                f"  [Denormalization Loss] (Unnormalized, 原始尺度): RMSE: {rmse_batch_unnorm_avg:.4f}, MAE: {mae_batch_unnorm_avg:.4f}")
-            print("\nDe-overlapping后的完整序列损失:")
+                f"  [Denormalization Loss] (Unnormalized, Original scale): RMSE: {rmse_batch_unnorm_avg:.4f}, MAE: {mae_batch_unnorm_avg:.4f}")
+            print("\nDe-overlappingSequence:")
             print(
-                f"  [Normalization Loss] (Normalized, 模型尺度): RMSE: {rmse_full_norm_avg:.4f}, MAE: {mae_full_norm_avg:.4f}")
+                f"  [Normalization Loss] (Normalized, Model scale): RMSE: {rmse_full_norm_avg:.4f}, MAE: {mae_full_norm_avg:.4f}")
             print(
-                f"  [Denormalization Loss] (Unnormalized, 原始尺度): RMSE: {rmse_full_unnorm_avg:.4f}, MAE: {mae_full_unnorm_avg:.4f}")
+                f"  [Denormalization Loss] (Unnormalized, Original scale): RMSE: {rmse_full_unnorm_avg:.4f}, MAE: {mae_full_unnorm_avg:.4f}")
             print("--------------------------------------------------")
 
             outputs_full_unnormalized = outputs_full_unnormalized.T
@@ -368,7 +368,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             results_df_full = pd.concat([batch_y_df_full, outputs_df_full], axis=0)
 
-            save_path_full = r"D:\sea level variability\code_nepo\GRU - 12\output_test\Transformer.xlsx"
+            save_path_full = r"../../Data/Y_nonan-1993_2023.xlsx"
             results_df_full.to_excel(save_path_full, index=False)
 
             prefix = f"Epoch: {setting['epoch']}, lr={self.args['learning_rate']}" if isinstance(setting,
@@ -379,7 +379,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             test_result_full_norm = f"{prefix}, Full Normalized (Model Scale): RMSE: {rmse_full_norm_avg:.4f}, MAE: {mae_full_norm_avg:.4f}"
             test_result_full_unnorm = f"{prefix}, Full Unnormalized (Original Scale): RMSE: {rmse_full_unnorm_avg:.4f}, MAE: {mae_full_unnorm_avg:.4f}"
 
-            save_path_txt = os.path.join(r"D:\sea level variability\code_nepo\GRU - 12\SOFTS-main\test_result",
+            save_path_txt = os.path.join(r"../../test_result",
                                          'test_results.txt')
             with open(save_path_txt, 'a') as f:
                 f.write(test_result_batch_norm + '\n')

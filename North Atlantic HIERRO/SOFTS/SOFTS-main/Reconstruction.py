@@ -39,9 +39,9 @@ args = {
         'd_core': 512,
         'freq': 'D',
      'input_size': 4 * 33 * 5 * 9,
-        'root_path': r'D:\sea level variability\DATA_neao',
+        'root_path': r'../../Data',
         "data_path": 'Anomalies_2004-2022_filtered.npy',
-        "target_path": r"D:\sea level variability\DATA_neao\4processed_HIERRO_nomiss.xlsx" ,
+        "target_path": r"../../Data/4processed_HIERRO_nomiss.xlsx" ,
         'target': "OT",
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
@@ -49,7 +49,7 @@ args = {
         'output_attention':False,
         "lradj": "type1",
 
-        'checkpoints': r'D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         "save_model":True,
         'device_ids':[0],
         'scale': True,
@@ -63,16 +63,16 @@ class CustomDataset(Dataset):
     def __loda_data__(self):
 
         self.scaler_x = joblib.load(
-            r"D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\scaler_x_time.pkl")
+            r"scaler_x_time.pkl")
         self.scaler_y = joblib.load(
-            r"D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\scaler_y_time.pkl")
+            r"scaler_y_time.pkl")
 
-        file_path = r"D:\sea level variability\DATA_neao\Anomalies_1993-2023.npy"
+        file_path = r"../../Data/Anomalies_2004-2022_filtered.npy"
         all_x_data = np.load(file_path)
         all_x_data_2d = all_x_data.reshape(-1, args['input_size'])
         self.data_x = self.scaler_x.transform(all_x_data_2d)
 
-        y_path = r"D:\sea level variability\DATA_neao\4processed_HIERRO_372.xlsx"
+        y_path = r"../../Data/4processed_HIERRO_nomiss.xlsx"
         df_y = pd.read_excel(y_path)
         y_raw = df_y.iloc[:, 1].values.reshape(-1, 1)
         self.y_data = y_raw
@@ -80,7 +80,7 @@ class CustomDataset(Dataset):
         y_data_filled = np.where(np.isnan(y_raw), np.nanmean(y_raw), y_raw)
         self.y_data_normalized = self.scaler_y.transform(y_data_filled)
 
-        time_path = r"D:\goole\GOPRdata\time_data.xlsx"
+        time_path = r"../../Data/4processed_HIERRO_nomiss.xlsx"
         time_df = pd.read_excel(time_path)
         df_stamp = pd.to_datetime(time_df.iloc[:, 0].values)
         self.data_stamp = time_features(pd.DatetimeIndex(df_stamp), freq=args['freq'])
@@ -114,7 +114,7 @@ def data_provider():
 
 model = Model(args)
 
-ckpt_path = r"D:\sea level variability\code_neao\不同回溯窗口\SOFTS_TS -12\SOFTS-main\checkpoints\TSdepth51993-2023_456_SOFTS_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth"
+ckpt_path = r"../../checkpoints/checkpoint.pth"
 state_dict = torch.load(ckpt_path, map_location='cpu', weights_only=True)
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 model.load_state_dict(state_dict)

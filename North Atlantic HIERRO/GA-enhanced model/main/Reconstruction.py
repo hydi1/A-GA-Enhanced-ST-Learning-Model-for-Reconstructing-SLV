@@ -37,16 +37,16 @@ args = {
         'hidden_size': 720,
         'output_size': 1,
         'num_layers': 3,
-        'root_path': r'D:\sea level variability\DATA_neao',
+        'root_path': r'../../Data',
         'data_path': 'Anomalies_2004-2022_filtered_reordered.npy',
-        'target_path': r"D:\sea level variability\DATA_neao\4processed_HIERRO_nomiss.xlsx",
+        'target_path': r"../../Data/4processed_HIERRO_nomiss.xlsx",
         'target': 'OT',
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
         'use_amp': False,
         'output_attention': False,
         'lradj': 'type1',
-        'checkpoints': r'D:\sea level variability\code_neao\消融实验\GAconvgru\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         'save_model': True,
         'device_ids': [0],
         'scale': True,
@@ -55,7 +55,7 @@ args = {
 
 model = Model(args)
 
-state_dict = torch.load(r"D:\sea level variability\code_neao\消融实验\北大西洋\GAconvgru\SOFTS-main\checkpoints\GAConvgru_610_seed888_GAconvgru_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
+state_dict = torch.load(r"../../checkpoints/checkpoint.pth",weights_only=True)
 
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 
@@ -65,11 +65,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 SEQ_LEN = args['seq_len']
 
-SCALER_X_PATH = r"D:\sea level variability\code_neao\消融实验\北大西洋\GAconvgru\SOFTS-main\scaler_x_time.pkl"
-SCALER_Y_PATH = r"D:\sea level variability\code_neao\消融实验\北大西洋\GAconvgru\SOFTS-main\scaler_y_time.pkl"
+SCALER_X_PATH = r"scaler_x_time.pkl"
+SCALER_Y_PATH = r"scaler_y_time.pkl"
 
-X_NPY_PATH  = r"D:\sea level variability\DATA_neao\Anomalies_1993-2023.npy"
-Y_XLSX_PATH = r"D:\sea level variability\DATA_neao\4processed_HIERRO_372.xlsx"
+X_NPY_PATH  = r"../../Data/Anomalies_2004-2022_filtered.npy"
+Y_XLSX_PATH = r"../../Data/4processed_HIERRO_nomiss.xlsx"
 
 class CustomDataset(Dataset):
     def __init__(self):

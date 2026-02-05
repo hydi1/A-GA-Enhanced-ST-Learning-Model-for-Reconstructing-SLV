@@ -339,7 +339,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             results_df = pd.concat([batch_y_df, outputs_df], axis=0)
 
-            save_path_excel = r"D:\sea level variability\code_neao\不同回溯窗口\GRU - 12\output_test\LSTM.xlsx"
+            save_path_excel = r"../../Data/4processed_HIERRO_nomiss.xlsx"
             results_df.to_excel(save_path_excel, index=False)
 
             metrics_df = pd.DataFrame([{
@@ -365,7 +365,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         print('Full-sequence (de-overlapped, unnormalized): rmse:{}, mae:{}'.format(rmse_full.avg, mae_full.avg))
 
         save_path_txt = os.path.join(
-            r"D:\sea level variability\code_neao\不同回溯窗口\GRU - 12\SOFTS-main\test_result",
+            r"../../test_result",
             'test_results.txt'
         )
         with open(save_path_txt, 'a') as f:

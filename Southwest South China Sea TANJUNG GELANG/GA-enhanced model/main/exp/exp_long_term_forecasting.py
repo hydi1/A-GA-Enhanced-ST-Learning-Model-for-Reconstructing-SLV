@@ -370,7 +370,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             df_denorm = pd.DataFrame(data_dict)
 
-            save_dir_excel = r"D:\sea level variability\code_eio\消融实验\GAconvGRU\SOFTS-main\test_result"
+            save_dir_excel = r"../../test_result"
             os.makedirs(save_dir_excel, exist_ok=True)
 
             save_path_excel = os.path.join(
@@ -394,10 +394,10 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             print("\nBatch-based Normalization scale:")
             print(f"RMSE: {rmse_batch_norm_avg:.4f}, MAE: {mae_batch_norm_avg:.4f}, R2_eff: {r2_batch_norm_avg:.4f}")
 
-            print("\nDe-overlapping后的Normalization尺度:")
+            print("\nNormalization scale after De-overlapping:")
             print(f"RMSE: {rmse_full_norm_avg:.4f}, MAE: {mae_full_norm_avg:.4f}, R2_eff: {r2_full_norm_avg:.4f}")
 
-            print("\nDe-overlapping后的Denormalization尺度:")
+            print("\nDenormalization scale after De-overlapping:")
             print(f"RMSE: {rmse_full_denorm_avg:.4f}, MAE: {mae_full_denorm_avg:.4f}")
 
             if isinstance(setting, dict) and 'epoch' in setting:
@@ -434,7 +434,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 )
 
             save_path_txt = os.path.join(
-                r"D:\sea level variability\code_eio\消融实验\GAconvGRU\SOFTS-main\test_result",
+                r"../../test_result",
                 'test_results.txt'
             )
             with open(save_path_txt, 'a') as f:

@@ -42,9 +42,9 @@ args = {
     'hidden_size': 64,
     'output_size': 1,
     'num_layers': 3,
-    'root_path': r'D:\sea level variability\DATA_neao',
+    'root_path': r'../../Data',
     'data_path': 'Anomalies_2004-2022_filtered_reordered.npy',
-    'target_path': r"D:\sea level variability\DATA_neao\4processed_HIERRO_nomiss.xlsx",
+    'target_path': r"../../Data/4processed_HIERRO_nomiss.xlsx",
     'target': "OT",
     'seasonal_patterns': 'Monthly',
     'num_workers': 4,
@@ -52,7 +52,7 @@ args = {
     'output_attention': False,
     "lradj": "type1",
 
-    'checkpoints': r'D:\sea level variability\code_neao\消融实验\convgru-Qconvgru替换为convgru\SOFTS-main\checkpoints',
+    'checkpoints': r'../../checkpoints',
     'save_model': True,
     'device_ids': [0],
     'scale': True,
@@ -61,7 +61,7 @@ args = {
 
 model = Model(args)
 
-state_dict = torch.load(r"D:\sea level variability\code_neao\消融实验\GAconvGRU替换为convgru\SOFTS-main\checkpoints\uvst_seed2829_GAconvGRU_ssta_MS_0.0005_12_12_12_64_2_1_256\checkpoint.pth",weights_only=True)
+state_dict = torch.load(r"../../checkpoints/checkpoint.pth",weights_only=True)
 
 state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 
@@ -74,10 +74,10 @@ class CustomDataset(Dataset):
         self.__loda_data__()
 
     def __loda_data__(self):
-        self.scaler_x = joblib.load(r"D:\sea level variability\code_neao\消融实验\北大西洋\GAconvGRU替换为convgru\SOFTS-main\scaler_x_time.pkl")
-        self.scaler_y = joblib.load(r"D:\sea level variability\code_neao\消融实验\北大西洋\GAconvGRU替换为convgru\SOFTS-main\scaler_y_time.pkl")
+        self.scaler_x = joblib.load(r"scaler_x_time.pkl")
+        self.scaler_y = joblib.load(r"scaler_y_time.pkl")
 
-        file_path = r"D:\sea level variability\DATA_neao\Anomalies_1993-2023.npy"
+        file_path = r"../../Data/Anomalies_2004-2022_filtered.npy"
         all_x_data = np.load(file_path)
         all_x_data_2d = all_x_data.reshape(-1, 4*33*5*9)
         scaler = StandardScaler()
@@ -86,7 +86,7 @@ class CustomDataset(Dataset):
         joblib.dump(scaler, 'new_scaler_anomalies_2d.pkl')
         self.data_x = all_x_data_scaled
 
-        y_path = r"D:\sea level variability\DATA_neao\4processed_HIERRO_372.xlsx"
+        y_path = r"../../Data/4processed_HIERRO_nomiss.xlsx"
         self.y_data = pd.read_excel(y_path).iloc[:, 1].values.reshape(-1, 1)
         y_series = pd.read_excel(y_path).iloc[:, 1]
 
@@ -103,7 +103,7 @@ class CustomDataset(Dataset):
 
         joblib.dump(scaler_y, "scaler_y.pkl")
 
-        time_path = r"D:\sea level variability\DATA_neao\4processed_HIERRO_372.xlsx"
+        time_path = r"../../Data/4processed_HIERRO_nomiss.xlsx"
         time_data = pd.read_excel(time_path).iloc[:, 0].values
         df_stamp = pd.to_datetime(time_data)
         dates = pd.DatetimeIndex(df_stamp)

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0816be37-e8c1-4dd7-bcae-10f8eacb16e4" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/GA-enhanced model/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/GA-enhanced model/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/GRU-LSTM-Transformer/main/GRUrun.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/GRU-LSTM-Transformer/main/GRUrun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Remove Linear layer/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Remove Linear layer/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Remove Series Embedding/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Remove Series Embedding/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Remove one Path/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Remove one Path/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Replace GAConvGRU with ConvGRU/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/Replace GAConvGRU with ConvGRU/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../North Atlantic HIERRO/SOFTS/SOFTS-main/softsrun.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../North Atlantic HIERRO/SOFTS/SOFTS-main/softsrun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/GA-enhanced model/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/GA-enhanced model/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/GRU-LSTM-Transformer/main/GRUrun.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/GRU-LSTM-Transformer/main/GRUrun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Remove Linear layer/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Remove Linear layer/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Remove Series Embedding/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Remove Series Embedding/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Remove one Path/main/GAconvgru_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Remove one Path/main/GAconvgru_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Replace GAConvGRU with ConvGRU/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/Replace GAConvGRU with ConvGRU/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/SOFTS/SOFTS-main/softsrun.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Northeast Pacific SANTA MONICA/SOFTS/SOFTS-main/softsrun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GA-enhanced model/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GA-enhanced model/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../GRU-LSTM-Transformer/main/GRUrun.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../GRU-LSTM-Transformer/main/GRUrun.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Remove Linear layer/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Remove Linear layer/main/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/GAConvGRU_run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Remove one Path/main/GAConvGRU_run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Remove one Path/main/GAConvGRU_run.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2yGolxo2aUMgrBh49MPzg2IOOKZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/sea level variability/code_nepo/convgru_TSVU - 反归一化"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="0816be37-e8c1-4dd7-bcae-10f8eacb16e4" name="更改" comment="" />
+      <created>1749470425843</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749470425843</updated>
+    </task>
+    <servers />
+  </component>
+</project>

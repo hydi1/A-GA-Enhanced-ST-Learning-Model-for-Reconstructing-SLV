@@ -379,7 +379,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         df_out = pd.DataFrame(out_save, columns=col_names, index=['Prediction'])
         results_df_full = pd.concat([df_tar, df_out], axis=0)
 
-        save_path_full = r"D:\sea level variability\code_nepo\组件消融\东北太平洋组件消融+其他模型\GAconvgru替换为convgru\output_test\output_y12_deoverlapped.xlsx"
+        save_path_full = r"../../Data/Y_nonan-1993_2023.xlsx"
         results_df_full.to_excel(save_path_full)
 
         print("\n" + "=" * 45)
@@ -389,7 +389,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         print("=" * 45)
 
         save_path_txt = os.path.join(
-            r"D:\sea level variability\code_nepo\组件消融\东北太平洋组件消融+其他模型\GAconvgru替换为convgru\SOFTS-main\test_result",
+            r"../../test_result",
             'test_results.txt'
         )
         with open(save_path_txt, 'a') as f:

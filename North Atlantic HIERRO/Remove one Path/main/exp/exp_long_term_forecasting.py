@@ -338,7 +338,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         df = pd.DataFrame(data_dict)
 
-        save_dir = r"D:\sea level variability\code_neao\消融实验\GAconvgru -移除path\SOFTS-main\test_result"
+        save_dir = r"../../test_result"
         os.makedirs(save_dir, exist_ok=True)
         save_path_excel = os.path.join(save_dir, f"{setting}_deoverlap_denorm111.xlsx")
         df.to_excel(save_path_excel, index=False)

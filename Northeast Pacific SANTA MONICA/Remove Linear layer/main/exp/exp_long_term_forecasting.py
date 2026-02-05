@@ -319,7 +319,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             r2_eff_denorm_full = self.get_r2_eff(outputs_full_unnormalized, batch_y_full_unnormalized)
 
             print("\n" + "=" * 50)
-            print(f"De-overlapping后的Test结果 (Full Length={full_length}):")
+            print(f"Test results after De-overlapping (Full Length={full_length}):")
             print("=" * 50)
             print(f"[Normalized]    RMSE: {rmse_norm_full:.4f} | MAE: {mae_norm_full:.4f} | R2_eff: {r2_eff_norm_full:.4f}")
             print(f"[De-normalized] RMSE: {rmse_denorm_full:.4f} | MAE: {mae_denorm_full:.4f}")
@@ -330,7 +330,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             else:
                 result_str = f"lr={self.args['learning_rate']}\n,seed={self.args['model_id']}"
 
-            save_path_txt = os.path.join(r"D:\project\组件消融\东北太平洋\GAconvgru-移除Linear\SOFTS-main\test_result", 'test_results.txt')
+            save_path_txt = os.path.join(r"../../test_result", 'test_results.txt')
             with open(save_path_txt, 'a') as f:
                 f.write(result_str)
                 f.write(f"[Normalized]    RMSE: {rmse_norm_full:.4f}, MAE: {mae_norm_full:.4f}, R2_eff: {r2_eff_norm_full:.4f}\n")

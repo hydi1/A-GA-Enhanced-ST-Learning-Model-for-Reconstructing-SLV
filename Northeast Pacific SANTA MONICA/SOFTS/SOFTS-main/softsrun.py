@@ -34,23 +34,23 @@ def train_and_evaluate_once():
         "use_norm": False,
         'd_core': 512,
         'freq': 'D',
-        'root_path': r'D:\海平面变率\nepo',
+        'root_path': r'../../Data',
         'data_path': 'Suvz_so_uovo_data_368_smart_filled.npy',
-        "target_path": r"D:\goole\GOPRdata\Y非nan -1993_2023.xlsx",
+        "target_path": r"../../Data/Y_nonan-1993_2023.xlsx",
         'target': "OT",
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
         'use_amp': False,
         'output_attention': False,
         "lradj": "type1",
-        'checkpoints': r'D:\sea level variability\code_nepo\SOFTS_TS -12\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         "save_model": True,
         'device_ids': [0],
         'scale': True,
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}（单次独立运行，不固定随机种子）")
+    print(f"Start training，Model ID: {args['model_id']}（Single independent run，random seed not fixed）")
 
     model = exp._build_model()
 

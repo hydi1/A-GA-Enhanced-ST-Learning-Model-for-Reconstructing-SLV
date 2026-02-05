@@ -44,9 +44,9 @@ def train_and_evaluate_model():
         'd_core': 512,
         'freq': 'D',
 
-        'root_path': r'D:\sea level variability\DATA_eio\1589',
+        'root_path': r'../../Data',
         'data_path': "anomaly_1993_2018_depth15_filtered.npy",
-        'target_path': r"D:\sea level variability\DATA_eio\1589\processed_1589.xlsx",
+        'target_path': r"../../Data/processed_1589.xlsx",
         'target': "OT",
 
         'seasonal_patterns': 'Monthly',
@@ -54,14 +54,14 @@ def train_and_evaluate_model():
         'use_amp': False,
         'output_attention': False,
         "lradj": "type1",
-        'checkpoints': r'D:\sea level variability\code_eio\SOFTS_TS -12\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         "save_model": True,
         'device_ids': [0],
         'scale': True,
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，Model ID: {args['model_id']}")
 
     model = exp._build_model()
 
@@ -83,7 +83,7 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Validation set上Evaluation...")
+    print("Start Evaluation on Validation set...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],

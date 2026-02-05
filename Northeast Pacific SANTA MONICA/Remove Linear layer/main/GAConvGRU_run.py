@@ -38,16 +38,16 @@ def train_and_evaluate_once():
         'hidden_size': 64,
         'output_size': 1,
         'num_layers': 3,
-        'root_path': r'D:\goole\2025115',
+        'root_path': r'../../Data',
         "data_path": 'TSuv_data_368.npy',
-        "target_path": r"D:\goole\GOPRdata\Y非nan -1993_2023.xlsx",
+        "target_path": r"../../Data/Y_nonan-1993_2023.xlsx",
         'target': "OT",
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
         'use_amp': False,
         'output_attention': False,
         "lradj": "type1",
-        'checkpoints': r'D:\project\组件消融\convgru-移除Linear\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         "save_model": True,
         'device_ids': [0],
         'scale': True,
@@ -63,7 +63,7 @@ def train_and_evaluate_once():
     exp.train(args)
     print("Training completed!")
 
-    print("\n开始在Test集上Evaluation (De-overlapping global Metrics)...")
+    print("\nStart Evaluation on Test set (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'],
         args['model_id'],

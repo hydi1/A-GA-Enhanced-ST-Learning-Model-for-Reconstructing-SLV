@@ -30,7 +30,7 @@ class Dataset_Custom(Dataset):
     def __read_data__(self):
         """
         self.data.columns: ['date', ...(other features)]
-        目的是 Read and process input data, dividing it into feature data self.data_x and time features self.data_stamp
+        Purpose is to Read and process input data, dividing it into feature data self.data_x and time features self.data_stamp
         """
         if 'date' in self.data.columns:
 

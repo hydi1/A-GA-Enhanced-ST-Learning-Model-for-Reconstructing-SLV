@@ -42,16 +42,16 @@ def train_and_evaluate_model():
         'hidden_size': 720,
         'output_size': 1,
         'num_layers': 3,
-        'root_path': r'D:\sea level variability\DATA_neao',
+        'root_path': r'../../Data',
         'data_path': 'Anomalies_2004-2022_filtered_reordered.npy',
-        'target_path': r"D:\sea level variability\DATA_neao\4processed_HIERRO_nomiss.xlsx",
+        'target_path': r"../../Data/4processed_HIERRO_nomiss.xlsx",
         'target': 'OT',
         'seasonal_patterns': 'Monthly',
         'num_workers': 4,
         'use_amp': False,
         'output_attention': False,
         'lradj': 'type1',
-        'checkpoints': r'D:\sea level variability\code_neao\消融实验\GAconvgru\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         'save_model': True,
         'device_ids': [0],
         'scale': True,
@@ -81,7 +81,7 @@ def train_and_evaluate_model():
     exp.train(args)
     print("Training completed!")
 
-    print("开始在Test集上Evaluation (De-overlapping global Metrics)...")
+    print("Start Evaluation on Test set (De-overlapping global Metrics)...")
     setting = '{}_{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}'.format(
         args['task_name'], args['model_id'], args['model'], args['data'], args['features'],
         args['seq_len'], args['label_len'], args['pred_len'], args['d_model'], args['e_layers'],

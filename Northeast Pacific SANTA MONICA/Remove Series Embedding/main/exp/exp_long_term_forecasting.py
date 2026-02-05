@@ -309,7 +309,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         df = pd.DataFrame(data_dict)
 
-        save_dir = r"D:\project\组件消融\东北太平洋\GAconvgru-移除DataEmbedding\output_test"
+        save_dir = r"../../test_result"
         os.makedirs(save_dir, exist_ok=True)
         save_path_excel = os.path.join(save_dir, f"{setting}_deoverlap_denorm.xlsx")
         df.to_excel(save_path_excel, index=False)
@@ -324,7 +324,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         print("=" * 60)
 
         save_path_txt = os.path.join(
-            r"D:\project\组件消融\东北太平洋\GAconvgru-移除DataEmbedding\SOFTS-main\test_result",
+            r"../../test_result",
             'test_results.txt'
         )
         with open(save_path_txt, 'a') as f:

@@ -28,19 +28,19 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         """
         Calculate effective explanation rate (R²) - Applicable to De-overlapping Denormalization Test set data
 
-        有效解释率的定义：
+        Definition of effective explanation rate：
         R² = 1 - (SS_res / SS_tot)
-        其中：
+        Where:
         - SS_res: Residual Sum of Squares = Σ(y_pred - y_true)²
         - SS_tot: Total Sum of Squares = Σ(y_true - y_mean)²
         - R² ∈ (-∞, 1]：Values closer to 1 indicate better model fit; negative values indicate model performance worse than mean model
 
         Args:
-            preds (array-like): Predicted values，形状为 (N,) 或 (N, 1)
+            preds (array-like): Predicted values，Shape is (N,)  (N, 1)
             targets (array-like): True target values, shape (N,) or (N, 1)
 
         Returns:
-            float: 有效解释率 R² 值
+            float: Effective explanation rate R² value
 
         Example:
             >>> exp = Exp_Long_Term_Forecast(args)
@@ -400,7 +400,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             outputs_df = pd.DataFrame(all_outputs_reshaped, columns=[f'outputs_step_{i + 1}' for i in range(seq_len)])
             results_df = pd.concat([batch_y_df, outputs_df], axis=1)
 
-            save_path_batch = r"D:\sea level variability\code_eio\消融实验\GAconvGRU替换为convgru\output_test\output_y12.xlsx"
+            save_path_batch = r"../../Data/processed_1589.xlsx"
             results_df.to_excel(save_path_batch, index=False)
 
             outputs_full_unnormalized_T = outputs_full_unnormalized.T
@@ -413,7 +413,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             outputs_df_full = pd.DataFrame(outputs_full_unnormalized_T, columns=outputs_columns)
 
             results_df_full = pd.concat([batch_y_df_full, outputs_df_full], axis=0)
-            save_path_full = r"D:\sea level variability\code_eio\消融实验\GAconvGRU替换为convgru\output_test\output_y12_deoverlapped.xlsx"
+            save_path_full = r"../../Data/processed_1589.xlsx"
             results_df_full.to_excel(save_path_full, index=False)
 
             rmse_batch_norm_avg = rmse_batch_norm.avg
@@ -461,7 +461,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                 )
 
             save_path_txt = os.path.join(
-                r"D:\sea level variability\code_eio\消融实验\GAconvGRU替换为convgru\SOFTS-main\test_result",
+                r"../../test_result",
                 'test_results.txt'
             )
             with open(save_path_txt, 'a') as f:

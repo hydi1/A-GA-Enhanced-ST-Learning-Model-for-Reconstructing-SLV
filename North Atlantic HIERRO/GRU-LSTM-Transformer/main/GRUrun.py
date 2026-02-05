@@ -43,9 +43,9 @@ def train_and_evaluate_model():
         'output_size': 1,
         'num_layers': 3,
 
-        'root_path': r'D:\sea level variability\DATA_neao',
+        'root_path': r'../../Data',
         'data_path': 'Anomalies_2004-2022_filtered.npy',
-        'target_path': r"D:\sea level variability\DATA_neao\4processed_HIERRO_nomiss.xlsx",
+        'target_path': r"../../Data/4processed_HIERRO_nomiss.xlsx",
         'target': 'OT',
 
         'seasonal_patterns': 'Monthly',
@@ -53,7 +53,7 @@ def train_and_evaluate_model():
         'use_amp': False,
         'output_attention': False,
         'lradj': 'type1',
-        'checkpoints': r'D:\sea level variability\neaocode\不同回溯窗口\GRU - 12\SOFTS-main\checkpoints',
+        'checkpoints': r'../../checkpoints',
         'save_model': True,
         'device_ids': [0],
         'scale': True,

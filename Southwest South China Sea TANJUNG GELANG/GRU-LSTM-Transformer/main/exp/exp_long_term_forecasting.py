@@ -351,7 +351,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             results_df = pd.concat([batch_y_df, outputs_df], axis=0)
 
-            save_path_excel = r"D:\sea level variability\code_eio\GRU - 12\output_test\Transformer.xlsx"
+            save_path_excel = r"../../Data/processed_1589.xlsx"
             results_df.to_excel(save_path_excel, index=False)
 
             metrics_df = pd.DataFrame([{
@@ -379,7 +379,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         print('Batch-based (unnormalized): rmse:{}, mae:{}'.format(rmse_batch.avg, mae_batch.avg))
         print('Full-sequence (de-overlapped, unnormalized): rmse:{}, mae:{}'.format(rmse_full.avg, mae_full.avg))
 
-        save_path_txt = os.path.join(r"D:\sea level variability\code_eio\GRU - 12\SOFTS-main\test_result",
+        save_path_txt = os.path.join(r"../../test_result",
                                      'test_results.txt')
         with open(save_path_txt, 'a') as f:
             if isinstance(setting, dict) and 'epoch' in setting:
