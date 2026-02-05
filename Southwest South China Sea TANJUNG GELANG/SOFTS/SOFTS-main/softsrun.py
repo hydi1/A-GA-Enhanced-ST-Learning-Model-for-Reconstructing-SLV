@@ -10,20 +10,8 @@ def count_param(model):
         param_count += param.view(-1).size()[0]
     return param_count
 
-def set_seed(seed):
-    """
-    Set random seed to ensure reproducibility（Single run可保留；若不想固定，删掉 train_and_evaluate_model 里这行调用即可）
-    """
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
 
-def train_and_evaluate_model(seed=345):
+def train_and_evaluate_model():
     """
     Single run：Training and Evaluation SOFTS
     """
@@ -31,7 +19,7 @@ def train_and_evaluate_model(seed=345):
 
     args = {
         'task_name': 'TSdepth51993-2023',
-        'model_id': f"seed{seed}",
+        'model_id': "SOFTS",
         'model': 'SOFTS',
         'data': 'ssta',
         'features': 'MS',
@@ -113,11 +101,12 @@ def train_and_evaluate_model(seed=345):
 
 if __name__ == "__main__":
 
-    rmse, mae = train_and_evaluate_model(seed=345)
+    rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 50)
-    print(f"{'Single run结果':^50}")
+    print(f"{'Single run results':^50}")
     print("-" * 50)
     print(f"RMSE: {rmse:.3f}")
     print(f"MAE : {mae:.3f}")
     print("=" * 50)
+
