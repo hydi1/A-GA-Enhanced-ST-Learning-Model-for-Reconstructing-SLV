@@ -10,9 +10,7 @@ def count_param(model):
     return param_count
 
 def train_and_evaluate_model():
-    """
-    Single independent run of GAconvgru (random seed not fixed)
-    """
+
 
     args = {
         'task_name': 'GAConvgru_610',
@@ -61,7 +59,7 @@ def train_and_evaluate_model():
     }
 
     exp = Exp_Long_Term_Forecast(args)
-    print(f"Start training，模型 ID: {args['model_id']}")
+    print(f"Start training，model ID: {args['model_id']}")
 
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
@@ -108,7 +106,7 @@ if __name__ == "__main__":
     rmse_norm, mae_norm, r2_eff_norm_full, rmse, mae = train_and_evaluate_model()
 
     print("\n" + "=" * 60)
-    print(f"{'Single run结果':^60}")
+    print(f"{'Single run results':^60}")
     print("-" * 60)
     print(f"Normalization+De-overlapping RMSE: {rmse_norm:.4f}")
     print(f"Normalization+De-overlapping MAE:  {mae_norm:.4f}")
@@ -116,3 +114,4 @@ if __name__ == "__main__":
     print(f"Denormalization RMSE: {rmse:.4f}")
     print(f"Denormalization MAE:  {mae:.4f}")
     print("=" * 60)
+
