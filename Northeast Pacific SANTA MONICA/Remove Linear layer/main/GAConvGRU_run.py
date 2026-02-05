@@ -7,12 +7,6 @@ def count_param(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 def train_and_evaluate_once():
-    """
-    单次独立运行：
-    - No random seed set
-    - no multiple run / seed comparison
-    - Each script launch is a completely new experiment
-    """
 
     args = {
         'task_name': 'uvst',
@@ -65,7 +59,7 @@ def train_and_evaluate_once():
     model = exp._build_model()
     print("Total trainable parameter count：", count_param(model))
 
-    print("\nStart training（单次独立运行）...")
+    print("\nStart training...")
     exp.train(args)
     print("Training completed!")
 
@@ -97,7 +91,7 @@ def train_and_evaluate_once():
     rmse_denorm_full = result.get('rmse_denorm_full')
     mae_denorm_full = result.get('mae_denorm_full')
 
-    print("\n✅ Single runEvaluation结果")
+    print("\n✅ Begin evaluation on the Test set")
     print(f"[Normalized]    RMSE: {rmse_norm_full:.4f}, MAE: {mae_norm_full:.4f}, R2_eff: {r2_eff_norm_full:.4f}")
     print(f"[De-normalized] RMSE: {rmse_denorm_full:.4f}, MAE: {mae_denorm_full:.4f}")
 
@@ -105,3 +99,4 @@ def train_and_evaluate_once():
 
 if __name__ == "__main__":
     train_and_evaluate_once()
+
