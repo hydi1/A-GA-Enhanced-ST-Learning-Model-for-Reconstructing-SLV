@@ -32,7 +32,7 @@ def train_and_evaluate_model():
         'use_gpu': True,
         'train_epochs': 128,
         'batch_size': 16,
-        'patience': 128,
+        'patience': 20,
         'use_norm': False,
         'd_core': 512,
         'freq': 'D',
